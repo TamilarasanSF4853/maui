@@ -28,7 +28,7 @@ stages:
               packageSourceAuth: patAuth
               patVariable: ${{ parameters.CeapexPat }}
               isCreatePrSelected: true
-              isReusePr: true
+              reusePr: true
               isAutoCompletePrSelected: false
               repoType: gitHub
               prSourceBranchPrefix: $(LocBranchPrefix)
