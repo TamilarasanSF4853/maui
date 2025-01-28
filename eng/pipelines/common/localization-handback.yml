@@ -19,7 +19,7 @@ stages:
         steps:
           - task: OneLocBuild@2
             displayName: 'Localization Build'
-            condition: eq(variables['hasLclFiles'], 'true')
+            # condition: eq(variables['hasLclFiles'], 'true')
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             inputs:
