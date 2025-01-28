@@ -6,7 +6,7 @@ stages:
   - stage: localization_handback
     displayName: Localization Handback
     dependsOn: []
-    condition: eq(variables.isLocHandoffBranch, true)
+    # condition: eq(variables.isLocHandoffBranch, true)
 
     jobs:
       - job: generate_resx
@@ -17,17 +17,6 @@ stages:
           - group: OneLocBuildVariables # Contains the CeapexPat and GithubPat
 
         steps:
-          - powershell: |
-              $hasLclFiles = git diff --name-only HEAD~1 HEAD | Select-String '\.lcl$'
-              if ($hasLclFiles) {
-                Write-Host "##vso[task.setvariable variable=hasLclFiles]true"
-                Write-Host "Result: Found .lcl files (true)"
-              } else {
-                Write-Host "##vso[task.setvariable variable=hasLclFiles]false"
-                Write-Host "Result: No .lcl files found (false)"
-              }
-            displayName: 'Check for .lcl files'
-
           - task: OneLocBuild@2
             displayName: 'Localization Build'
             condition: eq(variables['hasLclFiles'], 'true')
@@ -39,6 +28,7 @@ stages:
               packageSourceAuth: patAuth
               patVariable: ${{ parameters.CeapexPat }}
               isCreatePrSelected: true
+              isReusePr: true
               isAutoCompletePrSelected: false
               repoType: gitHub
               prSourceBranchPrefix: $(LocBranchPrefix)
