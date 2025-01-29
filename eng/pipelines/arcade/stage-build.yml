@@ -16,7 +16,7 @@ parameters:
   default: false
 - name: buildProjects
   type: string
-  default: 'Microsoft.Maui.sln'
+  default: 'Microsoft.Maui.BuildTasks.csproj;Microsoft.Maui.sln'
 
 stages:
 - stage: Build
