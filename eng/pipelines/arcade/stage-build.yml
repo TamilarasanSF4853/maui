@@ -14,7 +14,7 @@ parameters:
 - name: runAsPublic
   type: boolean
   default: false
-- name: BuildProjects
+- name: buildProjects
   type: string
   default: 'Microsoft.Maui.sln'
 
@@ -53,9 +53,9 @@ stages:
         - script: $(_buildScript)
                   -restore -build
                   -configuration $(_BuildConfig)
-                  -projects $(BuildProjects)
+                  -projects ${{ parameters.buildProjects }}
                   /p:ArchiveTests=true
                   /p:TreatWarningsAsErrors=false
                   /bl:$(Build.Arcade.LogsPath)build.binlog
                   $(_OfficialBuildIdArgs)
-          displayName: 🛠️ Build $(BuildProjects)
+          displayName: 🛠️ Build ${{ parameters.buildProjects }}
