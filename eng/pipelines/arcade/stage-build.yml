@@ -19,8 +19,8 @@ parameters:
   default: 'Microsoft.Maui.sln'
 
 stages:
-- stage: Pack
-  displayName: Pack .NET MAUI
+- stage: Build
+  displayName: Build .NET MAUI
   dependsOn: []
   jobs:
   - template: /eng/common/templates-official/jobs/jobs.yml
