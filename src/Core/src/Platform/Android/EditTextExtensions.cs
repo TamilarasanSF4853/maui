@@ -45,7 +45,7 @@ namespace Microsoft.Maui.Platform
 		{
 			if (textColor is not null && PlatformInterop.CreateEditTextColorStateList(editText.TextColors, textColor.ToPlatform()) is ColorStateList c)
 				editText.SetTextColor(c);
-			else
+			else if (textColor is null)
 			{
 				// Fallback to system default color
 				if (OperatingSystem.IsAndroidVersionAtLeast(23) && editText.Context?.Theme is Resources.Theme theme)
@@ -151,7 +151,7 @@ namespace Microsoft.Maui.Platform
 		{
 			if (placeholderTextColor is not null && PlatformInterop.CreateEditTextColorStateList(editText.HintTextColors, placeholderTextColor.ToPlatform()) is ColorStateList c)
 				editText.SetHintTextColor(c);
-			else
+			else if (placeholderTextColor is null)
 			{
 				// Fallback to system default color
 				var typedValue = new TypedValue();
@@ -233,7 +233,23 @@ namespace Microsoft.Maui.Platform
 			}
 			else
 			{
-				clearButtonDrawable?.ClearColorFilter();
+				if (OperatingSystem.IsAndroidVersionAtLeast(23) && editText.Context?.Theme is Resources.Theme theme)
+				{
+					using var ta = theme.ObtainStyledAttributes([Android.Resource.Attribute.TextColorPrimary]);
+					var cs = ta.GetColorStateList(0);
+
+					if (cs is not null)
+					{
+						// Clear button is only visible when enabled, so just use the enabled state
+						int[] EnabledState = [Android.Resource.Attribute.StateEnabled];
+						var color = new Android.Graphics.Color(cs.GetColorForState(EnabledState, Colors.Black.ToPlatform()));
+						clearButtonDrawable?.SetColorFilter(color, FilterMode.SrcIn);
+					}
+				}
+				else
+				{
+					clearButtonDrawable?.ClearColorFilter();
+				}
 			}
 		}
 
