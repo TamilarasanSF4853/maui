@@ -13,9 +13,16 @@ public class Issue30575 : ContentPage
 			FlowDirection = FlowDirection.RightToLeft,
 		};
 
-		webView.Source = new UrlWebViewSource
+		webView.Source = new HtmlWebViewSource
 		{
-			Url = "https://example.com/"
+			Html = @"
+                <html>
+                <body>
+                <H1>.NET MAUI</H1>
+                <p>Welcome to WebView.</p>
+                </body>
+                </html>
+            "
 		};
 
 		Label label = new Label
