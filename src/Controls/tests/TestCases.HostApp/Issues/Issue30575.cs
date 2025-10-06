@@ -8,6 +8,7 @@ public class Issue30575 : ContentPage
 		VerticalStackLayout stackLayout = new VerticalStackLayout();
 		WebView webView = new WebView
 		{
+			HorizontalOptions = LayoutOptions.Start,
 			HeightRequest = 400,
 			WidthRequest = 400,
 			FlowDirection = FlowDirection.RightToLeft,
