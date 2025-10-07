@@ -2,4 +2,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.Controls.Sample.MainPage"
              xmlns:local="clr-namespace:Maui.Controls.Sample">
+    <VerticalStackLayout Spacing="20"
+                         HorizontalOptions="Center">
+        <HorizontalStackLayout>
+            <Label Text="Entry: "
+                   VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            <Entry AutomationId="TestEntry"
+                   ClearButtonVisibility="WhileEditing"
+                   IsSpellCheckEnabled="False"
+                   Placeholder="Entry Placeholder"
+                   PlaceholderColor="{AppThemeBinding Light=Green, Dark=Orange}"
+                   Text="Entry Text"
+                   WidthRequest="200"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10"
+                               HorizontalOptions="Center">
+            <Button AutomationId="LightThemeButton"
+                    Text="Light Theme"
+                    Clicked="OnLightThemeButtonClicked"
+                    HorizontalOptions="Center"/>
+            <Button AutomationId="DarkThemeButton"
+                    Text="Dark Theme"
+                    Clicked="OnDarkThemeButtonClicked"
+                    HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>
