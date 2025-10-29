@@ -135,15 +135,7 @@ namespace Microsoft.Maui.Handlers
 
 		void ShowPickerDialog(int year, int month, int day)
 		{
-			if (_dialog == null)
-				_dialog = CreateDatePickerDialog(year, month, day);
-			else
-			{
-				EventHandler? setDateLater = null;
-				setDateLater = (sender, e) => { _dialog!.UpdateDate(year, month, day); _dialog.ShowEvent -= setDateLater; };
-				_dialog.ShowEvent += setDateLater;
-			}
-
+			_dialog = CreateDatePickerDialog(year, month, day);
 			_dialog.Show();
 		}
 
