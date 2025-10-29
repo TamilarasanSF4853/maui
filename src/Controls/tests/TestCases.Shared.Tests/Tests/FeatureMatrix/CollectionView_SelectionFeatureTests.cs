@@ -27,6 +27,14 @@ public class CollectionView_SelectionFeatureTests : UITest
 	public const string CurrentSelectionTextLabel = "CurrentSelectionTextLabel";
 	public const string PreviousSelectionTextLabel = "PreviousSelectionTextLabel";
 	public const string SelectionChangedEventCountLabel = "SelectionChangedEventCountLabel";
+	public const string FlowDirectionLTR = "FlowDirectionLeftToRight";
+	public const string FlowDirectionRTL = "FlowDirectionRightToLeft";
+	public const string HeaderString = "HeaderString";
+	public const string HeaderGrid = "HeaderGrid";
+	public const string FooterString = "FooterString";
+	public const string FooterGrid = "FooterGrid";
+	public const string HeaderTemplateGrid = "HeaderTemplateGrid";
+	public const string FooterTemplateGrid = "FooterTemplateGrid";
 	public CollectionView_SelectionFeatureTests(TestDevice device)
 		: base(device)
 	{
@@ -759,4 +767,341 @@ public class CollectionView_SelectionFeatureTests : UITest
 		Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
 		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
 	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithVerticalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(ItemsLayoutVerticalList);
+		App.Tap(ItemsLayoutVerticalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithVerticalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(ItemsLayoutVerticalList);
+		App.Tap(ItemsLayoutVerticalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeNoneWithHeaderStringAndFooterString()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeNone);
+		App.Tap(SelectionModeNone);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeSingleWithHeaderStringAndFooterString()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeSingle);
+		App.Tap(SelectionModeSingle);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		App.WaitForElement("Banana");
+		App.Tap("Banana");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+	}
+
+#if TEST_FAILS_ON_CATALYST //related issue link: https://github.com/dotnet/maui/issues/18028
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeMultipleWithHeaderStringAndFooterString()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeMultiple);
+		App.Tap(SelectionModeMultiple);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		App.WaitForElement("Banana");
+		App.Tap("Banana");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
+	}
+#endif
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeNoneWithHeaderGridAndFooterGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeNone);
+		App.Tap(SelectionModeNone);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeSingleWithHeaderGridAndFooterGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeSingle);
+		App.Tap(SelectionModeSingle);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		App.WaitForElement("Banana");
+		App.Tap("Banana");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+	}
+
+#if TEST_FAILS_ON_CATALYST //related issue link: https://github.com/dotnet/maui/issues/18028
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeMultipleWithHeaderGridAndFooterGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeMultiple);
+		App.Tap(SelectionModeMultiple);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		App.WaitForElement("Banana");
+		App.Tap("Banana");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
+	}
+#endif
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeNoneWithHeaderTemplateAndFooterTemplate()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeNone);
+		App.Tap(SelectionModeNone);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+	}
+
+#if TEST_FAILS_ON_ANDROID // Issue Link - https://github.com/dotnet/maui/issues/32212
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeSingleWithHeaderTemplateAndFooterTemplate()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeSingle);
+		App.Tap(SelectionModeSingle);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		App.WaitForElement("Banana");
+		App.Tap("Banana");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+	}
+
+#if TEST_FAILS_ON_CATALYST //related issue link: https://github.com/dotnet/maui/issues/18028
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifySelectionModeMultipleWithHeaderTemplateAndFooterTemplate()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(SelectionModeMultiple);
+		App.Tap(SelectionModeMultiple);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("Orange");
+		App.Tap("Orange");
+		App.WaitForElement("Banana");
+		App.Tap("Banana");
+		Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana"));
+		Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
+	}
+#endif
+
+#endif
 }
