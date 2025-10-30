@@ -25,6 +25,8 @@ public class CollectionView_ScrollingFeatureTests : UITest
 	public const string ItemsLayoutVerticalList = "ItemsLayoutVerticalList";
 	public const string ItemsLayoutHorizontalList = "ItemsLayoutHorizontalList";
 	public const string AddButton = "AddButton";
+	public const string FlowDirectionLTR = "FlowDirectionLeftToRight";
+	public const string FlowDirectionRTL = "FlowDirectionRightToLeft";
 
 
 	public CollectionView_ScrollingFeatureTests(TestDevice device)
@@ -55,6 +57,23 @@ public class CollectionView_ScrollingFeatureTests : UITest
 		VerifyScreenshot();
 	}
 
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithObservableCollection()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceObservableCollection2);
+		App.Tap(ItemsSourceObservableCollection2);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
 #if TEST_FAILS_ON_WINDOWS // [Windows] NullReferenceException thrown When Toggling IsGrouped to True in ObservableCollection Binding Issue Link: https://github.com/dotnet/maui/issues/28824
 	[Test]
 	[Category(UITestCategories.CollectionView)]
@@ -64,6 +83,25 @@ public class CollectionView_ScrollingFeatureTests : UITest
 		App.Tap(Options);
 		App.WaitForElement(ItemSizingMeasureAllItems);
 		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(IsGroupedTrue);
+		App.Tap(IsGroupedTrue);
+		App.WaitForElement(ItemsSourceGroupedList2);
+		App.Tap(ItemsSourceGroupedList2);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithGroupedList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(IsGroupedTrue);
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(ItemsSourceGroupedList2);
@@ -96,6 +134,23 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureFirstItemsWithObservableCollection()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceObservableCollection2);
+		App.Tap(ItemsSourceObservableCollection2);
+		App.WaitForElement(ItemSizingMeasureFirstItem);
+		App.Tap(ItemSizingMeasureFirstItem);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyMeasureFirstItemsWithObservableCollectionWhenVerticalGrid()
 	{
 		App.WaitForElement(Options);
@@ -113,12 +168,50 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureFirstItemsWithObservableCollectionWhenVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceObservableCollection2);
+		App.Tap(ItemsSourceObservableCollection2);
+		App.WaitForElement(ItemSizingMeasureFirstItem);
+		App.Tap(ItemSizingMeasureFirstItem);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyMeasureFirstItemsWithGroupedList()
 	{
 		App.WaitForElement(Options);
 		App.Tap(Options);
 		App.WaitForElement(ItemSizingMeasureFirstItem);
 		App.Tap(ItemSizingMeasureFirstItem);
+		App.WaitForElement(IsGroupedTrue);
+		App.Tap(IsGroupedTrue);
+		App.WaitForElement(ItemsSourceGroupedList2);
+		App.Tap(ItemsSourceGroupedList2);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+	
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureFirstItemsWithGroupedList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemSizingMeasureFirstItem);
+		App.Tap(ItemSizingMeasureFirstItem);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(IsGroupedTrue);
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(ItemsSourceGroupedList2);
@@ -147,6 +240,25 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithObservableCollectionWhenHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceObservableCollection2);
+		App.Tap(ItemsSourceObservableCollection2);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyMeasureAllItemsWithObservableCollectionWhenHorizontalList()
 	{
 		App.WaitForElement(Options);
@@ -164,6 +276,25 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithObservableCollectionWhenHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceObservableCollection2);
+		App.Tap(ItemsSourceObservableCollection2);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyMeasureAllItemsWithObservableCollectionWhenVerticalGrid()
 	{
 		App.WaitForElement(Options);
@@ -174,6 +305,25 @@ public class CollectionView_ScrollingFeatureTests : UITest
 		App.Tap(ItemSizingMeasureAllItems);
 		App.WaitForElement(ItemsLayoutVerticalGrid);
 		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithObservableCollectionWhenVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceObservableCollection2);
+		App.Tap(ItemsSourceObservableCollection2);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		VerifyScreenshot();
@@ -200,6 +350,27 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithGroupedListWhenVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(IsGroupedTrue);
+		App.Tap(IsGroupedTrue);
+		App.WaitForElement(ItemsSourceGroupedList2);
+		App.Tap(ItemsSourceGroupedList2);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyMeasureAllItemsWithGroupedListWhenHorizontalGrid()
 	{
 		App.WaitForElement(Options);
@@ -219,12 +390,54 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithGroupedListWhenHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(IsGroupedTrue);
+		App.Tap(IsGroupedTrue);
+		App.WaitForElement(ItemsSourceGroupedList2);
+		App.Tap(ItemsSourceGroupedList2);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyMeasureAllItemsWithGroupedListWhenHorizontalList()
 	{
 		App.WaitForElement(Options);
 		App.Tap(Options);
 		App.WaitForElement(ItemSizingMeasureAllItems);
 		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(IsGroupedTrue);
+		App.Tap(IsGroupedTrue);
+		App.WaitForElement(ItemsSourceGroupedList2);
+		App.Tap(ItemsSourceGroupedList2);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndMeasureAllItemsWithGroupedListWhenHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemSizingMeasureAllItems);
+		App.Tap(ItemSizingMeasureAllItems);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(IsGroupedTrue);
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(ItemsSourceGroupedList2);
@@ -333,8 +546,8 @@ public class CollectionView_ScrollingFeatureTests : UITest
 #endif
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST
-//[Android] KeepItemsInView and KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link: https://github.com/dotnet/maui/issues/29131
-//[iOS] KeepItemsInView Does Not Show Newly Added Items After Scrolling Down in CollectionView Issue Link: https://github.com/dotnet/maui/issues/29145
+	//[Android] KeepItemsInView and KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link: https://github.com/dotnet/maui/issues/29131
+	//[iOS] KeepItemsInView Does Not Show Newly Added Items After Scrolling Down in CollectionView Issue Link: https://github.com/dotnet/maui/issues/29145
 	[Test]
 	[Category(UITestCategories.CollectionView)]
 	public void VerifyKeepItemsInViewWithObservableList()
@@ -353,7 +566,7 @@ public class CollectionView_ScrollingFeatureTests : UITest
 		App.WaitForElement("Passionfruit");
 	}
 
-	
+
 	[Test]
 	[Category(UITestCategories.CollectionView)]
 	public void VerifyKeepItemsInViewWithGroupedList()
@@ -549,6 +762,26 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndKeepLastItemInViewWithObservableListWhenVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsUpdatingKeepLastItemInView);
+		App.Tap(ItemsUpdatingKeepLastItemInView);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement(AddButton);
+		App.Tap(AddButton);
+		App.WaitForElement("Cabbage");
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyKeepLastItemInViewWithObservableListWhenHorizontalList()
 	{
 		App.WaitForElement(Options);
@@ -566,6 +799,26 @@ public class CollectionView_ScrollingFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndKeepLastItemInViewWithObservableListWhenHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsUpdatingKeepLastItemInView);
+		App.Tap(ItemsUpdatingKeepLastItemInView);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement(AddButton);
+		App.Tap(AddButton);
+		App.WaitForElement("Cabbage");
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
 	public void VerifyKeepLastItemInViewWithObservableListWhenHorizontalGrid()
 	{
 		App.WaitForElement(Options);
@@ -579,6 +832,26 @@ public class CollectionView_ScrollingFeatureTests : UITest
 		App.WaitForElement(AddButton);
 		App.Tap(AddButton);
 		App.WaitForElement("Cabbage");
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndKeepLastItemInViewWithObservableListWhenHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsUpdatingKeepLastItemInView);
+		App.Tap(ItemsUpdatingKeepLastItemInView);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement(AddButton);
+		App.Tap(AddButton);
+		App.WaitForElement("Cabbage");
+		VerifyScreenshot();
 	}
 
 #if TEST_FAILS_ON_ANDROID
@@ -668,7 +941,7 @@ public class CollectionView_ScrollingFeatureTests : UITest
 #endif
 
 #if TEST_FAILS_ON_ANDROID
-//[Android] KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link:  https://github.com/dotnet/maui/issues/29131
+	//[Android] KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link:  https://github.com/dotnet/maui/issues/29131
 	[Test]
 	[Category(UITestCategories.CollectionView)]
 	public void VerifyKeepScrollOffsetWithObservableList()
@@ -715,6 +988,35 @@ public class CollectionView_ScrollingFeatureTests : UITest
 		App.Tap(AddButton);
 		App.WaitForNoElement("Mango");
 		App.WaitForElement("Pumpkin");
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLAndKeepScrollOffsetWithGroupedList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(ItemsSourceGroupedList3);
+		App.Tap(ItemsSourceGroupedList3);
+		App.WaitForElement(IsGroupedTrue);
+		App.Tap(IsGroupedTrue);
+		App.WaitForElement(ItemsUpdatingKeepScrollOffset);
+		App.Tap(ItemsUpdatingKeepScrollOffset);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElement("CollectionViewControl");
+		App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
+		App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
+		App.WaitForElement(AddButton);
+		App.Tap(AddButton);
+		App.WaitForNoElement("WaterMelon");
+		App.WaitForElement(AddButton);
+		App.Tap(AddButton);
+		App.WaitForNoElement("Mango");
+		App.WaitForElement("Pumpkin");
+		VerifyScreenshot();
 	}
 
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS

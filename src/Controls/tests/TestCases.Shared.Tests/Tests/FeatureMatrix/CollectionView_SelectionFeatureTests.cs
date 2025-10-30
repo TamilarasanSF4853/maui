@@ -889,6 +889,343 @@ public class CollectionView_SelectionFeatureTests : UITest
 		App.Tap(Apply);
 		VerifyScreenshot();
 	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderStringAndFooterStringAndVerticalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(ItemsLayoutVerticalList);
+		App.Tap(ItemsLayoutVerticalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderViewAndFooterViewAndVerticalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(ItemsLayoutVerticalList);
+		App.Tap(ItemsLayoutVerticalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderStringAndFooterStringAndHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderViewAndFooterViewAndHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderStringAndFooterStringAndVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderViewAndFooterViewAndVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderStringAndFooterStringAndHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderString);
+		App.Tap(HeaderString);
+		App.WaitForElement(FooterString);
+		App.Tap(FooterString);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderViewAndFooterViewAndHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderTemplateAndFooterTemplateAndVerticalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutVerticalList);
+		App.Tap(ItemsLayoutVerticalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithHeaderTemplateAndFooterTemplateAndVerticalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutVerticalList);
+		App.Tap(ItemsLayoutVerticalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderTemplateAndFooterTemplateAndHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithHeaderTemplateAndFooterTemplateAndHorizontalList()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutHorizontalList);
+		App.Tap(ItemsLayoutHorizontalList);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderTemplateAndFooterTemplateAndVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithHeaderTemplateAndFooterTemplateAndVerticalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutVerticalGrid);
+		App.Tap(ItemsLayoutVerticalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionRTLWithHeaderTemplateAndFooterTemplateAndHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionRTL);
+		App.Tap(FlowDirectionRTL);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void VerifyFlowDirectionLTRWithHeaderTemplateAndFooterTemplateAndHorizontalGrid()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(FlowDirectionLTR);
+		App.Tap(FlowDirectionLTR);
+		App.WaitForElement(HeaderGrid);
+		App.Tap(HeaderGrid);
+		App.WaitForElement(HeaderTemplateGrid);
+		App.Tap(HeaderTemplateGrid);
+		App.WaitForElement(FooterGrid);
+		App.Tap(FooterGrid);
+		App.WaitForElement(FooterTemplateGrid);
+		App.Tap(FooterTemplateGrid);
+		App.WaitForElement(ItemsLayoutHorizontalGrid);
+		App.Tap(ItemsLayoutHorizontalGrid);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		VerifyScreenshot();
+	}
+
 #endif
 
 	[Test]
