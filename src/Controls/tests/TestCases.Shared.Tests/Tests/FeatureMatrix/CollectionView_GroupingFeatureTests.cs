@@ -555,7 +555,7 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("GroupHeaderTemplate");
-		App.WaitForElement("Apple");
+		App.WaitForElement("Banana");
 		App.ScrollRight("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.ScrollRight("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.WaitForElement("Carrot");
@@ -585,7 +585,7 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("GroupHeaderTemplate");
-		App.WaitForElement("Apple");
+		App.WaitForElement("Banana");
 		App.ScrollLeft("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.ScrollLeft("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.WaitForElement("Carrot");
@@ -613,7 +613,7 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("GroupHeaderTemplate");
-		App.WaitForElement("Apple");
+		App.WaitForElement("Banana");
 		App.ScrollRight("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.ScrollRight("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.WaitForElement("Carrot");
@@ -641,7 +641,7 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("GroupHeaderTemplate");
-		App.WaitForElement("Apple");
+		App.WaitForElement("Banana");
 		App.ScrollLeft("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.ScrollLeft("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
 		App.WaitForElement("Carrot");
@@ -667,7 +667,7 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("GroupHeaderTemplate");
-		App.WaitForElement("Apple");
+		App.WaitForElement("Banana");
 		App.WaitForElement("Carrot");
 		App.WaitForElement("GroupFooterTemplate");
 	}
@@ -711,7 +711,7 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("Fruits");
-		App.WaitForElement("Apple");
+		App.WaitForElement("Banana");
 		App.WaitForElement("Carrot");
 		App.WaitForElement("Vegetables");
 	}
@@ -802,7 +802,7 @@ public class CollectionView_GroupingFeatureTests : UITest
             App.WaitForElement(Apply);
             App.Tap(Apply);
             App.WaitForNoElement("Fruits");
-            App.WaitForElement("Apple");
+            App.WaitForElement("Banana");
             App.ScrollRight("CollectionViewControl");
             App.WaitForElement("Carrot");
             App.WaitForNoElement("Vegetables");
@@ -821,7 +821,7 @@ public class CollectionView_GroupingFeatureTests : UITest
             App.WaitForElement(Apply);
             App.Tap(Apply);
             App.WaitForNoElement("Fruits");
-            App.WaitForElement("Apple");
+            App.WaitForElement("Banana");
             App.ScrollRight("CollectionViewControl");
             App.WaitForElement("Carrot");
             App.WaitForNoElement("Vegetables");
@@ -840,7 +840,7 @@ public class CollectionView_GroupingFeatureTests : UITest
             App.WaitForElement(Apply);
             App.Tap(Apply);
             App.WaitForNoElement("Fruits");
-            App.WaitForElement("Apple");
+            App.WaitForElement("Banana");
             App.WaitForElement("Carrot");
             App.WaitForNoElement("Vegetables");
         }
@@ -856,7 +856,7 @@ public class CollectionView_GroupingFeatureTests : UITest
             App.WaitForElement(Apply);
             App.Tap(Apply);
             App.WaitForNoElement("Fruits");
-            App.WaitForElement("Apple");
+            App.WaitForElement("Banana");
             App.WaitForElement("Carrot");
             App.WaitForNoElement("Vegetables");
         }
@@ -878,7 +878,7 @@ public class CollectionView_GroupingFeatureTests : UITest
             App.Tap(Apply);
             App.WaitForNoElement("GroupHeaderTemplate");
             App.WaitForNoElement("GroupFooterTemplate");
-            App.WaitForElement("Apple");
+            App.WaitForElement("Banana");
             App.WaitForElement("Carrot");
         }
 #endif
@@ -899,10 +899,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
 		var newY = App.WaitForElement("Carrot").GetRect().Y;
-		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Carrot' should be greater than Apple after the drag-and-drop operation.");
+		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Carrot' should be greater than Banana after the drag-and-drop operation.");
 	}
 
 	[Test]
@@ -921,10 +921,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
 		var newY = App.WaitForElement("Carrot").GetRect().Y;
-		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Carrot' should be greater than Apple after the drag-and-drop operation.");
+		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Carrot' should be greater than Banana after the drag-and-drop operation.");
 		// VerifyScreenshot();
 	}
 
@@ -944,10 +944,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
-		var newY = App.WaitForElement("Apple").GetRect().Y;
-		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Apple' should be greater after the drag-and-drop operation.");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
+		var newY = App.WaitForElement("Banana").GetRect().Y;
+		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Banana' should be greater after the drag-and-drop operation.");
 	}
 
 	[Test]
@@ -968,10 +968,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
-		var newY = App.WaitForElement("Apple").GetRect().Y;
-		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Apple' should be greater after the drag-and-drop operation.");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
+		var newY = App.WaitForElement("Banana").GetRect().Y;
+		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Banana' should be greater after the drag-and-drop operation.");
 		// VerifyScreenshot();
 	}
 
@@ -991,10 +991,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
-		var newY = App.WaitForElement("Apple").GetRect().Y;
-		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Apple' should be greater after the drag-and-drop operation.");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
+		var newY = App.WaitForElement("Banana").GetRect().Y;
+		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Banana' should be greater after the drag-and-drop operation.");
 	}
 
 	[Test]
@@ -1015,10 +1015,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
-		var newY = App.WaitForElement("Apple").GetRect().Y;
-		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Apple' should be greater after the drag-and-drop operation.");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
+		var newY = App.WaitForElement("Banana").GetRect().Y;
+		Assert.That(newY, Is.GreaterThan(initialY), "The Y position of 'Banana' should be greater after the drag-and-drop operation.");
 		// VerifyScreenshot();
 	}
 
@@ -1036,10 +1036,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(IsGroupedTrue);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
-		var newY = App.WaitForElement("Apple").GetRect().Y;
-		Assert.That(newY, Is.EqualTo(initialY), "The Y position of 'Apple' should be Same Value after the drag-and-drop operation.");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
+		var newY = App.WaitForElement("Banana").GetRect().Y;
+		Assert.That(newY, Is.EqualTo(initialY), "The Y position of 'Banana' should be Same Value after the drag-and-drop operation.");
 	}
 
 	[Test]
@@ -1058,10 +1058,10 @@ public class CollectionView_GroupingFeatureTests : UITest
 		App.Tap(FlowDirectionRTL);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		var initialY = App.WaitForElement("Apple").GetRect().Y;
-		App.DragAndDrop("Apple", "Potato");
-		var newY = App.WaitForElement("Apple").GetRect().Y;
-		Assert.That(newY, Is.EqualTo(initialY), "The Y position of 'Apple' should be Same Value after the drag-and-drop operation.");
+		var initialY = App.WaitForElement("Banana").GetRect().Y;
+		App.DragAndDrop("Banana", "Potato");
+		var newY = App.WaitForElement("Banana").GetRect().Y;
+		Assert.That(newY, Is.EqualTo(initialY), "The Y position of 'Banana' should be Same Value after the drag-and-drop operation.");
 		// VerifyScreenshot();
 	}
 #endif
