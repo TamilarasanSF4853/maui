@@ -6,4 +6,20 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	public void OnLightThemeButtonClicked(object sender, EventArgs e)
+	{
+		if (Application.Current is not null)
+		{
+			Application.Current.UserAppTheme = AppTheme.Light;
+		}
+	}
+
+	public void OnDarkThemeButtonClicked(object sender, EventArgs e)
+	{
+		if (Application.Current is not null)
+		{
+			Application.Current.UserAppTheme = AppTheme.Dark;
+		}
+	}
 }

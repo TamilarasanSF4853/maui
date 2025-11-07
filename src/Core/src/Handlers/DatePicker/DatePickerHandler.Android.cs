@@ -151,35 +151,28 @@ namespace Microsoft.Maui.Handlers
 				return;
 			}
 
+			var date = VirtualView.Date;
+			ShowPickerDialog(date);
+		}
+
+		void ShowPickerDialog(DateTime? date)
+		{
 			if (_dialog is not null && _dialog.IsShowing)
 			{
 				return;
 			}
 
-			var date = VirtualView.Date;
-			ShowPickerDialog(date);
-			VirtualView.IsOpen = true;
-		}
-
-		void ShowPickerDialog(DateTime? date)
-		{
 			var year = date?.Year ?? DateTime.Today.Year;
 			var month = (date?.Month ?? DateTime.Today.Month) - 1;
 			var day = date?.Day ?? DateTime.Today.Day;
 
-			if (_dialog is null)
-			{
-				_dialog = CreateDatePickerDialog(year, month, day);
-			}
-			else
-			{
-				EventHandler? setDateLater = null;
-				setDateLater = (sender, e) => { _dialog!.UpdateDate(year, month, day); _dialog.ShowEvent -= setDateLater; };
-				_dialog.ShowEvent += setDateLater;
-				_dialog.DismissEvent += OnDialogDismiss;
-			}
-
+			_dialog = CreateDatePickerDialog(year, month, day);
 			_dialog.Show();
+
+			if (VirtualView is not null)
+			{
+				VirtualView.IsOpen = true;
+			}
 		}
 
 		void HidePickerDialog()

@@ -2,4 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.Controls.Sample.MainPage"
              xmlns:local="clr-namespace:Maui.Controls.Sample">
+    <VerticalStackLayout>
+        <HorizontalStackLayout>
+            <DatePicker/>
+            <Picker Title="Picker"/>
+            <TimePicker/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10"
+                               HorizontalOptions="Center">
+            <Button AutomationId="LightThemeButton"
+                    Text="Light Theme"
+                    Clicked="OnLightThemeButtonClicked"
+                    HorizontalOptions="Center"/>
+            <Button AutomationId="DarkThemeButton"
+                    Text="Dark Theme"
+                    Clicked="OnDarkThemeButtonClicked"
+                    HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>
