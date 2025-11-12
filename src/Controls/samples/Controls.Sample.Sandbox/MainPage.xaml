@@ -4,9 +4,10 @@
              xmlns:local="clr-namespace:Maui.Controls.Sample">
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <DatePicker/>
-            <Picker Title="Picker"/>
-            <TimePicker/>
+            <DatePicker TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            <Picker Title="Picker"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+            <TimePicker TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
         </HorizontalStackLayout>
         <HorizontalStackLayout Spacing="10"
                                HorizontalOptions="Center">
