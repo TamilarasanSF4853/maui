@@ -16,8 +16,9 @@ public class Issue28524 : _IssuesUITest
 	public void CurrentItemShouldWork()
 	{
 		App.WaitForElement("CarouselView");
-		App.ScrollRight("CarouselView", ScrollStrategy.Gesture, 0.8, 500);
-		App.ScrollRight("CarouselView", ScrollStrategy.Gesture, 0.8, 500);
+		App.ScrollRight("CarouselView", ScrollStrategy.Gesture, 0.99, 500);
+		Thread.Sleep(2000);
+		App.ScrollRight("CarouselView", ScrollStrategy.Gesture, 0.99, 500);
 		App.WaitForElement("Blue Monkey");
 	}
 }

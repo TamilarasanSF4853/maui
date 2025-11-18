@@ -3,11 +3,19 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 namespace Maui.Controls.Sample;
 
-public partial class CarouselViewControlPage : ContentPage
+public class CarouselViewControlPage : NavigationPage
+{
+	public CarouselViewControlPage()
+	{
+		PushAsync(new CarouselViewControlMainPage());
+	}
+}
+
+public partial class CarouselViewControlMainPage : ContentPage
 {
 	private CarouselViewViewModel _viewModel;
 
-	public CarouselViewControlPage()
+	public CarouselViewControlMainPage()
 	{
 		InitializeComponent();
 		_viewModel = new CarouselViewViewModel();

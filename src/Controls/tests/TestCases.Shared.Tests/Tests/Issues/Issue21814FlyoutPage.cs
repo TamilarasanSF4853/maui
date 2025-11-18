@@ -115,6 +115,9 @@ public class Issue21814FlyoutPage : _IssuesUITest
 		App.TapBackArrow("Item 1");
 #endif
 
+		App.WaitForElement(FlyoutContent1);
+		App.WaitForElement(FlyoutItem1OnNavigatedFromLabel);
+
 		// Verifying navigation events for pop from Item 2 to Item 1
 		// Popping to Item 1 does not trigger OnNavigatedFrom for Item 1
 		// Item 1's OnNavigatedFrom remains from the earlier navigation to Item 2
