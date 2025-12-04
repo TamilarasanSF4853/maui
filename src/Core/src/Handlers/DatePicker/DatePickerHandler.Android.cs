@@ -173,6 +173,7 @@ namespace Microsoft.Maui.Handlers
 			}
 			else
 			{
+				_dialog.DismissEvent -= OnDialogDismiss;
 				EventHandler? setDateLater = null;
 				setDateLater = (sender, e) => { _dialog!.UpdateDate(year, month, day); _dialog.ShowEvent -= setDateLater; };
 				_dialog.ShowEvent += setDateLater;
@@ -204,6 +205,7 @@ namespace Microsoft.Maui.Handlers
 
 			if (currentDialog is not null && currentDialog.IsShowing)
 			{
+				currentDialog.DismissEvent -= OnDialogDismiss;
 				currentDialog.Dismiss();
 
 				ShowPickerDialog(currentDialog.DatePicker.DateTime);
