@@ -163,6 +163,12 @@ namespace Microsoft.Maui.Handlers
 
 		void ShowPickerDialog(DateTime? date)
 		{
+			// Prevent duplicate event subscriptions and prevent showing the dialog again when it is already showing
+			if (_dialog is not null && _dialog.IsShowing)
+			{
+				return;
+			}
+
 			var year = date?.Year ?? DateTime.Today.Year;
 			var month = (date?.Month ?? DateTime.Today.Month) - 1;
 			var day = date?.Day ?? DateTime.Today.Day;
@@ -204,6 +210,7 @@ namespace Microsoft.Maui.Handlers
 
 			if (currentDialog is not null && currentDialog.IsShowing)
 			{
+				currentDialog.DismissEvent -= OnDialogDismiss;
 				currentDialog.Dismiss();
 
 				ShowPickerDialog(currentDialog.DatePicker.DateTime);
