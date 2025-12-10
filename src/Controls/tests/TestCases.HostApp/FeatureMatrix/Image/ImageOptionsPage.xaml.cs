@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace Maui.Controls.Sample;
 
@@ -68,6 +69,10 @@ public partial class ImageOptionsPage : ContentPage
 			string type = rb.Content?.ToString() ?? "";
 			switch (type)
 			{
+				case "ClipImage":
+					_viewModel.Source = ImageSource.FromFile("blue.png");
+					break;
+
 				case "File":
 					_viewModel.Source = new FileImageSource
 					{
@@ -141,6 +146,38 @@ public partial class ImageOptionsPage : ContentPage
 	private void OnFlowDirectionChanged(object sender, EventArgs e)
 	{
 		_viewModel.FlowDirection = FlowDirectionLTR.IsChecked ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+	}
+
+	private void ClipRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		// _containerWidth = 350;
+		// _containerHeight = 550;
+		if (e.Value && BindingContext is ImageViewModel vm && sender is RadioButton rb)
+		{
+			vm.Clip = rb.Content?.ToString() switch
+			{
+				"None" => null,
+				"Rectangle" => new RectangleGeometry(new Rect(0, 275, 150, 100)),
+				"Ellipse" => new EllipseGeometry(new Point(175, 275), 100, 65),
+				"RoundRectangle" => new RoundRectangleGeometry(new CornerRadius(50), new Rect(0, 275, 150, 100)),
+				"Path" => new PathGeometry(
+							new PathFigureCollection
+							{
+								new PathFigure
+								{
+									StartPoint = new Point(75, 275),
+									IsClosed = true,
+									Segments = new PathSegmentCollection
+									{
+										new LineSegment(new Point(150, 375)),
+										new LineSegment(new Point(0, 375)),
+									}
+								}
+							}
+						),
+				_ => null
+			};
+		}
 	}
 
 }

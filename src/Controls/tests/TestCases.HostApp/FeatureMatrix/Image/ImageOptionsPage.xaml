@@ -33,21 +33,24 @@
                                      CheckedChanged="AspectRadio_CheckedChanged"
                                      AutomationId="ImageCenter"/>
                 </HorizontalStackLayout>
-                <Label Text="IsAnimationPlaying"
+                <HorizontalStackLayout>
+                     <Label Text="IsAnimationPlaying"
                        FontAttributes="Bold"
                        FontSize="14"/>
-                <HorizontalStackLayout>
-                        <RadioButton Content="False"
-                                     IsChecked="True"
-                                     GroupName="AnimGroup"
-                                     CheckedChanged="AnimRadio_CheckedChanged"
-                                     AutomationId="IsAnimationFalse"/>
-                        <RadioButton Content="True"
-                                     GroupName="AnimGroup"
-                                     CheckedChanged="AnimRadio_CheckedChanged"
-                                     AutomationId="IsAnimationTrue"/>
+                     <HorizontalStackLayout>
+                            <RadioButton Content="False"
+                                          IsChecked="True"
+                                          GroupName="AnimGroup"
+                                          CheckedChanged="AnimRadio_CheckedChanged"
+                                          AutomationId="IsAnimationFalse"/>
+                            <RadioButton Content="True"
+                                          GroupName="AnimGroup"
+                                          CheckedChanged="AnimRadio_CheckedChanged"
+                                          AutomationId="IsAnimationTrue"/>
+                     </HorizontalStackLayout>
                 </HorizontalStackLayout>
-                <Label Text="Is Opaque"
+                <HorizontalStackLayout>
+                     <Label Text="Is Opaque"
                        FontAttributes="Bold"
                        FontSize="14"/>
                 <HorizontalStackLayout>
@@ -61,6 +64,7 @@
                                      CheckedChanged="OpaqueRadio_CheckedChanged"
                                      AutomationId="IsOpaqueTrue"/>
                 </HorizontalStackLayout>
+                </HorizontalStackLayout>    
                 <Label Text="Source Type"
                        FontAttributes="Bold"
                        FontSize="14"/>
@@ -82,6 +86,11 @@
                                      CheckedChanged="SourceTypeRadio_CheckedChanged"
                                      AutomationId="SourceTypeFontImage"/>
                 </HorizontalStackLayout>
+                        <RadioButton Content="ClipImage"
+                                     GroupName="SourceTypeGroup"
+                                     CheckedChanged="SourceTypeRadio_CheckedChanged"
+                                     AutomationId="SourceTypeClipImage"/>
+
                 <!-- FontImageSource Color Options -->
                 <Label Text="FontImageSource TextColor:"
                        FontAttributes="Bold"
@@ -106,40 +115,44 @@
                        TextChanged="FontSizeEntry_TextChanged"
                        AutomationId="EntryFontSize"/>
 
-                <Label Text="Flow Direction:"
-                                FontSize="15"/>
                 <HorizontalStackLayout>
-                        <RadioButton x:Name="FlowDirectionLTR"
-                                        AutomationId="FlowDirectionLTR"
-                                        GroupName="FlowDirection"
-                                        Content="LTR"
-                                        IsChecked="True"
-                                        FontSize="14"
-                                        CheckedChanged="OnFlowDirectionChanged"/>
-                        <RadioButton x:Name="FlowDirectionRTL"
-                                        AutomationId="FlowDirectionRTL"
-                                        GroupName="FlowDirection"
-                                        Content="RTL"
-                                        FontSize="14"
-                                        CheckedChanged="OnFlowDirectionChanged"/>
+                     <Label Text="Flow Direction:"
+                                FontSize="15"/>
+                     <HorizontalStackLayout>
+                            <RadioButton x:Name="FlowDirectionLTR"
+                                          AutomationId="FlowDirectionLTR"
+                                          GroupName="FlowDirection"
+                                          Content="LTR"
+                                          IsChecked="True"
+                                          FontSize="14"
+                                          CheckedChanged="OnFlowDirectionChanged"/>
+                            <RadioButton x:Name="FlowDirectionRTL"
+                                          AutomationId="FlowDirectionRTL"
+                                          GroupName="FlowDirection"
+                                          Content="RTL"
+                                          FontSize="14"
+                                          CheckedChanged="OnFlowDirectionChanged"/>
+                     </HorizontalStackLayout>
                 </HorizontalStackLayout>
 
-                <Label Text="Is Visible:"
-                                FontSize="15"/>
                 <HorizontalStackLayout>
-                        <RadioButton x:Name="IsVisibleTrueRadio"
-                                        AutomationId="IsVisibleTrueRadio"
-                                        GroupName="IsVisible"
-                                        Content="True"
-                                        IsChecked="True"
-                                        FontSize="14"
-                                        CheckedChanged="OnIsVisibleCheckedChanged"/>
-                        <RadioButton x:Name="IsVisibleFalseRadio"
-                                        AutomationId="IsVisibleFalseRadio"
-                                        GroupName="IsVisible"
-                                        Content="False"
-                                        FontSize="14"
-                                        CheckedChanged="OnIsVisibleCheckedChanged"/>
+                     <Label Text="Is Visible:"
+                                FontSize="15"/>
+                     <HorizontalStackLayout>
+                            <RadioButton x:Name="IsVisibleTrueRadio"
+                                          AutomationId="IsVisibleTrueRadio"
+                                          GroupName="IsVisible"
+                                          Content="True"
+                                          IsChecked="True"
+                                          FontSize="14"
+                                          CheckedChanged="OnIsVisibleCheckedChanged"/>
+                            <RadioButton x:Name="IsVisibleFalseRadio"
+                                          AutomationId="IsVisibleFalseRadio"
+                                          GroupName="IsVisible"
+                                          Content="False"
+                                          FontSize="14"
+                                          CheckedChanged="OnIsVisibleCheckedChanged"/>
+                     </HorizontalStackLayout>
                 </HorizontalStackLayout>
                  <HorizontalStackLayout Spacing="20">
                         <Label Text="Shadow"
@@ -148,6 +161,33 @@
                                         AutomationId="ShadowCheckBox"
                                         VerticalOptions="Center"/>
                 </HorizontalStackLayout>
+
+                <Label Text="Clip Geometry"
+                       FontAttributes="Bold"
+                       FontSize="14"/>
+                <HorizontalStackLayout>
+                        <RadioButton Content="None"
+                                     IsChecked="True"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="ClipNone"/>
+                        <RadioButton Content="Rectangle"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="ClipRectangle"/>
+                        <RadioButton Content="Ellipse"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="ClipEllipse"/>
+                        <RadioButton Content="RoundRectangle"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="ClipRoundRectangle"/>
+                </HorizontalStackLayout>
+                <RadioButton Content="Path"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="ClipPath"/>
 
         </VerticalStackLayout>
 </ContentPage>

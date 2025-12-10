@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 namespace Maui.Controls.Sample;
 
@@ -15,6 +16,7 @@ public class ImageViewModel : INotifyPropertyChanged
 	private bool _hasShadow;
 	private Shadow _imageShadow;
 	private FlowDirection _flowDirection = FlowDirection.LeftToRight;
+	private Geometry _clip = null;
 	private ImageSource _source = ImageSource.FromFile("animated_heart.gif");
 
 	public Aspect Aspect
@@ -148,6 +150,19 @@ public class ImageViewModel : INotifyPropertyChanged
 			{
 				_imageShadow = value;
 				OnPropertyChanged(nameof(ImageShadow));
+			}
+		}
+	}
+
+	public Geometry Clip
+	{
+		get => _clip;
+		set
+		{
+			if (_clip != value)
+			{
+				_clip = value;
+				OnPropertyChanged();
 			}
 		}
 	}

@@ -27,6 +27,7 @@
                IsVisible="{Binding IsVisible}"
                FlowDirection="{Binding FlowDirection}"
                Shadow="{Binding ImageShadow}"
+               Clip="{Binding Clip}"
                AutomationId="ImageControl"/>
     </Border>
     </VerticalStackLayout>
