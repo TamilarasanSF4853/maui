@@ -107,13 +107,15 @@
                                      AutomationId="FontColorBlue"/>
                 </HorizontalStackLayout>
 
-                <Label Text="FontImageSource Size:"
+                <HorizontalStackLayout>
+                     <Label Text="FontImageSource Size:"
                        FontAttributes="Bold"
                        FontSize="14"/>
-                <Entry Placeholder="Enter font size"
+                     <Entry Placeholder="Enter font size" WidthRequest="150"
                        Focused="FontSizeEntry_Focused"
                        TextChanged="FontSizeEntry_TextChanged"
                        AutomationId="EntryFontSize"/>
+                </HorizontalStackLayout>
 
                 <HorizontalStackLayout>
                      <Label Text="Flow Direction:"
@@ -153,13 +155,14 @@
                                           FontSize="14"
                                           CheckedChanged="OnIsVisibleCheckedChanged"/>
                      </HorizontalStackLayout>
-                </HorizontalStackLayout>
-                 <HorizontalStackLayout Spacing="20">
+                     <HorizontalStackLayout Spacing="20">
                         <Label Text="Shadow"
                                         VerticalOptions="Center"/>
                         <CheckBox IsChecked="{Binding HasShadow}"
                                         AutomationId="ShadowCheckBox"
                                         VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
                 </HorizontalStackLayout>
 
                 <Label Text="Clip Geometry"
@@ -184,10 +187,44 @@
                                      CheckedChanged="ClipRadio_CheckedChanged"
                                      AutomationId="ClipRoundRectangle"/>
                 </HorizontalStackLayout>
-                <RadioButton Content="Path"
-                                     GroupName="ClipGroup"
-                                     CheckedChanged="ClipRadio_CheckedChanged"
-                                     AutomationId="ClipPath"/>
+
+              <Label Text="Path Type"
+                       FontAttributes="Bold"
+                       FontSize="14"/>
+                <HorizontalStackLayout>
+                        <RadioButton Content="LineSegment"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathLineSegment"/>
+                        <RadioButton Content="ArcSegment"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathArcSegment"/>
+                        <RadioButton Content="BezierSegment"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathBezierSegment"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <RadioButton Content="QuadraticBezier"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathQuadraticBezier"/>
+                        <RadioButton Content="PolyLine"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathPolyLine"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <RadioButton Content="PolyBezier"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathPolyBezier"/>
+                        <RadioButton Content="PolyQuadraticBezier"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PathPolyQuadraticBezier"/>
+                </HorizontalStackLayout>
 
         </VerticalStackLayout>
 </ContentPage>
