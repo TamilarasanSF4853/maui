@@ -137,10 +137,10 @@
                      </HorizontalStackLayout>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout>
-                     <Label Text="Is Visible:"
-                                FontSize="15"/>
+                <HorizontalStackLayout Spacing="20">
                      <HorizontalStackLayout>
+                            <Label Text="Is Visible:"
+                                FontSize="15"/>
                             <RadioButton x:Name="IsVisibleTrueRadio"
                                           AutomationId="IsVisibleTrueRadio"
                                           GroupName="IsVisible"
@@ -155,7 +155,7 @@
                                           FontSize="14"
                                           CheckedChanged="OnIsVisibleCheckedChanged"/>
                      </HorizontalStackLayout>
-                     <HorizontalStackLayout Spacing="20">
+                     <HorizontalStackLayout>
                         <Label Text="Shadow"
                                         VerticalOptions="Center"/>
                         <CheckBox IsChecked="{Binding HasShadow}"
@@ -177,54 +177,61 @@
                         <RadioButton Content="Rectangle"
                                      GroupName="ClipGroup"
                                      CheckedChanged="ClipRadio_CheckedChanged"
-                                     AutomationId="ClipRectangle"/>
+                                     AutomationId="RectangleGeometry"/>
                         <RadioButton Content="Ellipse"
                                      GroupName="ClipGroup"
                                      CheckedChanged="ClipRadio_CheckedChanged"
-                                     AutomationId="ClipEllipse"/>
+                                     AutomationId="EllipseGeometry"/>
                         <RadioButton Content="RoundRectangle"
                                      GroupName="ClipGroup"
                                      CheckedChanged="ClipRadio_CheckedChanged"
-                                     AutomationId="ClipRoundRectangle"/>
+                                     AutomationId="RoundRectangleGeometry"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                        <RadioButton Content="LineGeometry"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="LineGeometry"/>
+                        <RadioButton Content="GeometryGroup"
+                                     GroupName="ClipGroup"
+                                     CheckedChanged="ClipRadio_CheckedChanged"
+                                     AutomationId="GeometryGroup"/>
                 </HorizontalStackLayout>
 
-              <Label Text="Path Type"
+              <Label Text="PathGeometry Segment: "
                        FontAttributes="Bold"
                        FontSize="14"/>
                 <HorizontalStackLayout>
-                        <RadioButton Content="LineSegment"
+                        <RadioButton Content="Line"
                                      GroupName="PathTypeGroup"
                                      CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathLineSegment"/>
-                        <RadioButton Content="ArcSegment"
+                                     AutomationId="LineSegment"/>
+                        <RadioButton Content="Arc"
                                      GroupName="PathTypeGroup"
                                      CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathArcSegment"/>
-                        <RadioButton Content="BezierSegment"
+                                     AutomationId="ArcSegment"/>
+                        <RadioButton Content="Bezier"
                                      GroupName="PathTypeGroup"
                                      CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathBezierSegment"/>
+                                     AutomationId="BezierSegment"/>
+                         <RadioButton Content="PolyQuadraticBezier"
+                                     GroupName="PathTypeGroup"
+                                     CheckedChanged="PathTypeRadio_CheckedChanged"
+                                     AutomationId="PolyQuadraticBezierSegment"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                         <RadioButton Content="QuadraticBezier"
                                      GroupName="PathTypeGroup"
                                      CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathQuadraticBezier"/>
+                                     AutomationId="QuadraticBezierSegment"/>
                         <RadioButton Content="PolyLine"
                                      GroupName="PathTypeGroup"
                                      CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathPolyLine"/>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
+                                     AutomationId="PolyLineSegment"/>
                         <RadioButton Content="PolyBezier"
                                      GroupName="PathTypeGroup"
                                      CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathPolyBezier"/>
-                        <RadioButton Content="PolyQuadraticBezier"
-                                     GroupName="PathTypeGroup"
-                                     CheckedChanged="PathTypeRadio_CheckedChanged"
-                                     AutomationId="PathPolyQuadraticBezier"/>
+                                     AutomationId="PolyBezierSegment"/>
                 </HorizontalStackLayout>
-
         </VerticalStackLayout>
 </ContentPage>

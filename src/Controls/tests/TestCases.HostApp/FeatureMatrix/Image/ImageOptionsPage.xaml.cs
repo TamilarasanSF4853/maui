@@ -158,6 +158,19 @@ public partial class ImageOptionsPage : ContentPage
 				"Rectangle" => new RectangleGeometry(new Rect(0, 275, 150, 100)),
 				"Ellipse" => new EllipseGeometry(new Point(175, 275), 100, 65),
 				"RoundRectangle" => new RoundRectangleGeometry(new CornerRadius(50), new Rect(0, 275, 150, 100)),
+				"LineGeometry" => new LineGeometry
+				{
+					StartPoint = new Point(10, 20),
+					EndPoint = new Point(100, 130)
+				},
+				"GeometryGroup" => new GeometryGroup
+				{
+					Children = new GeometryCollection
+					{
+						new EllipseGeometry(new Point(100, 300), 80, 50),
+						new RectangleGeometry(new Rect(200, 250, 100, 150))
+					}
+				},
 				_ => null
 			};
 		}
@@ -177,7 +190,7 @@ public partial class ImageOptionsPage : ContentPage
 		return pathType switch
 		{
 			// LineSegment: Draws straight lines between points
-			"LineSegment" => new PathGeometry
+			"Line" => new PathGeometry
 			{
 				Figures = new PathFigureCollection
 				{
@@ -194,7 +207,7 @@ public partial class ImageOptionsPage : ContentPage
 				}
 			},
 			// ArcSegment: Draws an elliptical arc between two points
-			"ArcSegment" => new PathGeometry
+			"Arc" => new PathGeometry
 			{
 				Figures = new PathFigureCollection
 				{
@@ -217,7 +230,7 @@ public partial class ImageOptionsPage : ContentPage
 				}
 			},
 			// BezierSegment: Draws a cubic Bezier curve (2 control points)
-			"BezierSegment" => new PathGeometry
+			"Bezier" => new PathGeometry
 			{
 				Figures = new PathFigureCollection
 				{
