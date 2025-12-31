@@ -181,6 +181,7 @@ namespace Microsoft.Maui.Handlers
 			{
 				_dialog.DismissEvent -= OnDialogDismiss;
 				_dialog.Hide();
+				_dialog = null;
 			}
 
 			VirtualView.IsOpen = false;
