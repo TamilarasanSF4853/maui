@@ -167,6 +167,10 @@ namespace Microsoft.Maui.Handlers
 			var day = date?.Day ?? DateTime.Today.Day;
 
 			_dialog = CreateDatePickerDialog(year, month, day);
+
+			PlatformView?.UpdateMinimumDate(VirtualView, _dialog);
+			PlatformView?.UpdateMaximumDate(VirtualView, _dialog);
+
 			_dialog.Show();
 
 			if (VirtualView is not null)
