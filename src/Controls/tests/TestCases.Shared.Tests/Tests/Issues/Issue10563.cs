@@ -27,21 +27,25 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			Exception? exception = null;
 			App.WaitForElement(OpenLeftId);
 			App.Tap(OpenLeftId);
+			App.WaitForElement(CloseId);
 			VerifyScreenshotOrSetException(ref exception, "Left_SwipeItems");
 			App.Tap(CloseId);
 
 			App.WaitForElement(OpenRightId);
 			App.Tap(OpenRightId);
+			App.WaitForElement(CloseId);
 			VerifyScreenshotOrSetException(ref exception, "Right_SwipeItems");
 			App.Tap(CloseId);
 
 			App.WaitForElement(OpenTopId);
 			App.Tap(OpenTopId);
+			App.WaitForElement(CloseId);
 			VerifyScreenshotOrSetException(ref exception, "Top_SwipeItems");
 			App.Tap(CloseId);
 
 			App.WaitForElement(OpenBottomId);
 			App.Tap(OpenBottomId);
+			App.WaitForElement(CloseId);
 			VerifyScreenshotOrSetException(ref exception, "Bottom_SwipeItems");
 			App.Tap(CloseId);
 

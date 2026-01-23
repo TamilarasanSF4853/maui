@@ -19,6 +19,7 @@ public class Issue32394 : _IssuesUITest
 	{
 		App.WaitForElement("Issue32394SetPositionButton");
 		App.Tap("Issue32394SetPositionButton");
+		Thread.Sleep(2000);
 		App.SetOrientationLandscape();
 		VerifyScreenshot();
 	}
