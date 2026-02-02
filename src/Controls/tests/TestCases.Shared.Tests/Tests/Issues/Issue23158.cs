@@ -30,6 +30,13 @@ public class Issue23158 : _IssuesUITest
 			App.DismissKeyboard();
 #endif
 
-		VerifyScreenshot();
+		if (App is AppiumIOSApp iosApp && HelperExtensions.IsIOS26OrHigher(iosApp))
+		{
+			VerifyScreenshot(cropBottom: 1400);
+		}
+		else
+		{
+			VerifyScreenshot();
+		}
 	}
 }

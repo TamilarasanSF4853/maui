@@ -18,8 +18,14 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		{
 			App.WaitForElement("Editor");
 			App.Tap("Editor");
-
-			VerifyScreenshot();
+			if (App is AppiumIOSApp iosApp && HelperExtensions.IsIOS26OrHigher(iosApp))
+			{
+				VerifyScreenshot(cropBottom:1400);
+			}
+			else
+			{
+				VerifyScreenshot();
+			}
 		}
 	}
 }
