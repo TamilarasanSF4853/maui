@@ -107,13 +107,13 @@
                                     BackgroundColor="Blue"
                                     Clicked="OnStrokeColorClicked"
                                     AutomationId="BlueColorButton"/>
-                            <Button x:Name="GreenColorButton"
+                            <Button x:Name="BorderGreenColorButton"
                                     FontSize="12"
                                     Text="Green"
                                     TextColor="White"
                                     BackgroundColor="Green"
                                     Clicked="OnStrokeColorClicked"
-                                    AutomationId="GreenColorButton"/>
+                                    AutomationId="BorderGreenColorButton"/>
                      </HorizontalStackLayout>
 
                      <!-- StrokeThickness -->
@@ -160,7 +160,7 @@
                                     TextColor="White"
                                     BackgroundColor="Green"
                                     Clicked="OnBoxViewColorClicked"
-                                    AutomationId="GreenColorButton"/>
+                                    AutomationId="BoxViewGreenColorButton"/>
                      </HorizontalStackLayout>
 
                      <!-- BoxView CornerRadius -->
@@ -200,7 +200,8 @@
                                    Text="ImageSource:"
                                    VerticalOptions="Center"/>
                             <Button Text="ImageSource"
-                                    Clicked="OnImageSourceClicked"/>
+                                    Clicked="OnImageSourceClicked"
+                                    AutomationId="ImageSource"/>
                      </HorizontalStackLayout>
               </HorizontalStackLayout>
 
@@ -240,7 +241,7 @@
                             FontAttributes="Bold"
                             Text="Shadow:"
                             VerticalOptions="Center"/>
-                     <RadioButton x:Name="ShadowFalseRadio"
+                     <RadioButton x:Name="ShadowTrueRadio"
                                   FontSize="12"
                                   VerticalOptions="Center"
                                   AutomationId="ShadowTrueRadioButton"

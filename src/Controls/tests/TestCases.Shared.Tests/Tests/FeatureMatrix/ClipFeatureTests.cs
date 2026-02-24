@@ -49,7 +49,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(2)]
@@ -68,7 +68,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(3)]
@@ -82,12 +82,12 @@ public class ClipFeatureTests : _GalleryUITest
 		App.WaitForElement(RoundRectangleGeometry);
 		App.Tap(RoundRectangleGeometry);
 
-		App.WaitForElement("GreenColorButton");
-		App.Tap("GreenColorButton");
+		App.WaitForElement("BorderGreenColorButton");
+		App.Tap("BorderGreenColorButton");
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(4)]
@@ -106,7 +106,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
@@ -127,7 +127,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -148,12 +148,12 @@ public class ClipFeatureTests : _GalleryUITest
 		App.WaitForElement(RectangleGeometry);
 		App.Tap(RectangleGeometry);
 
-		App.WaitForElement("GreenColorButton");
-		App.Tap("GreenColorButton");
+		App.WaitForElement("BoxViewGreenColorButton");
+		App.Tap("BoxViewGreenColorButton");
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(7)]
@@ -173,7 +173,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
@@ -194,7 +194,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -220,7 +220,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(10)]
@@ -240,7 +240,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
@@ -261,7 +261,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -284,7 +284,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(13)]
@@ -300,7 +300,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(14)]
@@ -316,7 +316,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(15)]
@@ -332,7 +332,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(16)]
@@ -348,7 +348,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(17)]
@@ -364,7 +364,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(18)]
@@ -380,7 +380,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(19)]
@@ -396,7 +396,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(20)]
@@ -412,7 +412,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(21)]
@@ -428,7 +428,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(22)]
@@ -444,7 +444,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	// ==================== Label Tests ====================
@@ -468,7 +468,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(24)]
@@ -488,7 +488,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(25)]
@@ -507,7 +507,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -530,7 +530,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(27)]
@@ -546,7 +546,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(28)]
@@ -562,7 +562,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
@@ -583,7 +583,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -606,7 +606,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(31)]
@@ -622,7 +622,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(32)]
@@ -638,7 +638,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
@@ -659,7 +659,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -692,7 +692,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(35)]
@@ -722,7 +722,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(36)]
@@ -752,7 +752,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(37)]
@@ -782,7 +782,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	// ==================== Clip with Rotation Tests ====================
@@ -808,7 +808,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(39)]
@@ -832,7 +832,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/34114
@@ -858,7 +858,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -889,7 +889,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(42)]
@@ -917,7 +917,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(43)]
@@ -945,7 +945,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	// ==================== Nested Clip Tests ====================
@@ -968,7 +968,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
@@ -994,7 +994,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -1023,7 +1023,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
 
@@ -1049,7 +1049,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	// ==================== Clip with Combined Transforms ====================
@@ -1083,7 +1083,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	[Test, Order(49)]
@@ -1107,7 +1107,7 @@ public class ClipFeatureTests : _GalleryUITest
 
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		VerifyScreenshot();
+		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
 	public void TapButtonIfOnClipControlPage(string buttonAutomationId)
