@@ -31,7 +31,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Border Tests ====================
 
 	[Test, Order(1)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithStrokeThickness()
 	{
 		App.WaitForElement("BorderButton");
@@ -53,7 +53,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(2)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithStrokeColorBlue()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -72,7 +72,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(3)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithStrokeColorGreen()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -91,7 +91,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(4)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithStrokeShapeRoundRectangle()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -112,7 +112,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(5)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithShadow()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -134,7 +134,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== BoxView Tests ====================
 
 	[Test, Order(6)]
-	[Category(UITestCategories.BoxView)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void BoxView_ClipWithColorGreen()
 	{
 		TapButtonIfOnClipControlPage("BoxViewButton");
@@ -157,7 +157,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(7)]
-	[Category(UITestCategories.BoxView)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void BoxView_ClipWithCornerRadius()
 	{
 		TapButtonIfOnClipControlPage("BoxViewButton");
@@ -179,7 +179,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(8)]
-	[Category(UITestCategories.BoxView)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void BoxView_ClipWithShadow()
 	{
 		TapButtonIfOnClipControlPage("BoxViewButton");
@@ -201,7 +201,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Button Tests ====================
 
 	[Test, Order(9)]
-	[Category(UITestCategories.Button)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Button_ClipWithImageSource()
 	{
 		TapButtonIfOnClipControlPage("ButtonId");
@@ -224,7 +224,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(10)]
-	[Category(UITestCategories.Button)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Button_ClipWithText()
 	{
 		TapButtonIfOnClipControlPage("ButtonId");
@@ -246,7 +246,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(11)]
-	[Category(UITestCategories.Button)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Button_ClipWithShadow()
 	{
 		TapButtonIfOnClipControlPage("ButtonId");
@@ -268,7 +268,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Image Tests (Geometry Variations) ====================
 
 	[Test, Order(12)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithRectangleGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -288,7 +288,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(13)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithEllipseGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -304,7 +304,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(14)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithRoundRectangleGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -320,7 +320,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(15)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithGeometryGroup()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -336,7 +336,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(16)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithLineSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -352,7 +352,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(17)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithArcSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -368,7 +368,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(18)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithBezierSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -384,7 +384,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(19)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithPolyLineSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -400,7 +400,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(20)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithPolyBezierSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -416,7 +416,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(21)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithQuadraticBezierSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -432,7 +432,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(22)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithPolyQuadraticBezierSegmentPath()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -452,7 +452,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/34114
 
 	[Test, Order(23)]
-	[Category(UITestCategories.Label)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Label_ClipWithLongText()
 	{
 		TapButtonIfOnClipControlPage("LabelButton");
@@ -472,7 +472,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(24)]
-	[Category(UITestCategories.Label)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Label_ClipWithDifferentFontSize()
 	{
 		TapButtonIfOnClipControlPage("LabelButton");
@@ -492,7 +492,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(25)]
-	[Category(UITestCategories.Label)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Label_ClipWithFormattedText()
 	{
 		TapButtonIfOnClipControlPage("LabelButton");
@@ -514,7 +514,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== ContentView Tests ====================
 
 	[Test, Order(26)]
-	[Category(UITestCategories.Layout)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ContentView_ClipWithRectangleGeometry()
 	{
 		TapButtonIfOnClipControlPage("ContentViewButton");
@@ -534,7 +534,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(27)]
-	[Category(UITestCategories.Layout)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ContentView_ClipWithEllipseGeometry()
 	{
 		TapButtonIfOnClipControlPage("ContentViewButton");
@@ -550,7 +550,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(28)]
-	[Category(UITestCategories.Layout)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ContentView_ClipWithRoundRectangleGeometry()
 	{
 		TapButtonIfOnClipControlPage("ContentViewButton");
@@ -568,7 +568,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(29)]
-	[Category(UITestCategories.Layout)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ContentView_ClipWithShadow()
 	{
 		TapButtonIfOnClipControlPage("ContentViewButton");
@@ -590,7 +590,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== ImageButton Tests ====================
 
 	[Test, Order(30)]
-	[Category(UITestCategories.ImageButton)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ImageButton_ClipWithRectangleGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButtonButton");
@@ -610,7 +610,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(31)]
-	[Category(UITestCategories.ImageButton)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ImageButton_ClipWithEllipseGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButtonButton");
@@ -626,7 +626,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(32)]
-	[Category(UITestCategories.ImageButton)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ImageButton_ClipWithRoundRectangleGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButtonButton");
@@ -644,7 +644,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(33)]
-	[Category(UITestCategories.ImageButton)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ImageButton_ClipWithShadow()
 	{
 		TapButtonIfOnClipControlPage("ImageButtonButton");
@@ -666,7 +666,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Negative Tests ====================
 
 	[Test, Order(34)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipNull_NoCrash()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -696,7 +696,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(35)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipNull_NoCrash()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -726,7 +726,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(36)]
-	[Category(UITestCategories.Button)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Button_ClipNull_NoCrash()
 	{
 		TapButtonIfOnClipControlPage("ButtonId");
@@ -756,7 +756,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(37)]
-	[Category(UITestCategories.Layout)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ContentView_ClipNull_NoCrash()
 	{
 		TapButtonIfOnClipControlPage("ContentViewButton");
@@ -788,7 +788,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Clip with Rotation Tests ====================
 
 	[Test, Order(38)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithRotation()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -812,7 +812,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(39)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithRotation()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -838,7 +838,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/34114
 
 	[Test, Order(40)]
-	[Category(UITestCategories.Label)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Label_ClipWithRotation()
 	{
 		TapButtonIfOnClipControlPage("LabelButton");
@@ -865,7 +865,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Clip with Scale Tests ====================
 
 	[Test, Order(41)]
-	[Category(UITestCategories.Button)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Button_ClipWithScale()
 	{
 		TapButtonIfOnClipControlPage("ButtonId");
@@ -893,7 +893,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(42)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithScale()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -921,7 +921,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(43)]
-	[Category(UITestCategories.ImageButton)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ImageButton_ClipWithScale()
 	{
 		TapButtonIfOnClipControlPage("ImageButtonButton");
@@ -951,7 +951,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Nested Clip Tests ====================
 
 	[Test, Order(44)]
-	[Category(UITestCategories.Layout)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void ContentView_ClipWithNestedClippedContent()
 	{
 		TapButtonIfOnClipControlPage("ContentViewButton");
@@ -974,7 +974,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(45)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithNestedContent()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -1003,7 +1003,7 @@ public class ClipFeatureTests : _GalleryUITest
 #if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/30778
 
 	[Test, Order(46)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithComplexPolyLineGeometry()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -1028,7 +1028,7 @@ public class ClipFeatureTests : _GalleryUITest
 #endif
 
 	[Test, Order(47)]
-	[Category(UITestCategories.Image)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Image_ClipWithComplexPolyBezierAndRotation()
 	{
 		TapButtonIfOnClipControlPage("ImageButton");
@@ -1055,7 +1055,7 @@ public class ClipFeatureTests : _GalleryUITest
 	// ==================== Clip with Combined Transforms ====================
 
 	[Test, Order(48)]
-	[Category(UITestCategories.Border)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void Border_ClipWithRotationAndScale()
 	{
 		TapButtonIfOnClipControlPage("BorderButton");
@@ -1087,7 +1087,7 @@ public class ClipFeatureTests : _GalleryUITest
 	}
 
 	[Test, Order(49)]
-	[Category(UITestCategories.BoxView)]
+	[Category(UITestCategories.ViewBaseTests)]
 	public void BoxView_ClipWithRotation()
 	{
 		TapButtonIfOnClipControlPage("BoxViewButton");
@@ -1110,13 +1110,13 @@ public class ClipFeatureTests : _GalleryUITest
 		VerifyScreenshot();
 	}
 
-	public void TapButtonIfOnClipControlPage(string pageName)
+	public void TapButtonIfOnClipControlPage(string buttonAutomationId)
 	{
-		var controlPageGrid = App.FindElement("ControlPageGrid");
-		if (controlPageGrid != null)
+		var button = App.FindElement(buttonAutomationId);
+		if (button != null)
 		{
-			App.WaitForElement(pageName);
-			App.Tap(pageName);
+			App.WaitForElement(buttonAutomationId);
+			App.Tap(buttonAutomationId);
 		}
 	}
 }
