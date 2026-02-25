@@ -19,6 +19,8 @@ public class Issue32394 : _IssuesUITest
 	{
 		App.WaitForElement("Issue32394SetPositionButton");
 		App.Tap("Issue32394SetPositionButton");
+		// Wait for the CarouselView to update the CurrentItem after the button tap before changing orientation
+		Thread.Sleep(2000);
 		App.SetOrientationLandscape();
 		// Use retryTimeout to allow orientation change to complete
 		// Higher tolerance needed for CarouselView orientation changes due to rendering variance

@@ -19,6 +19,10 @@ public class Issue33038 : _IssuesUITest
 		App.WaitForElement("StartPageLabel");
 		App.Tap("GoToSignInButton");
 		App.WaitForElement("SignInLabel");
+
+		// Allow safe area insets to fully propagate after Shell navigation
+		Thread.Sleep(1000);
+
 		VerifyScreenshot();
 	}
 }
