@@ -95,15 +95,6 @@
                                                   Clicked="OnSafeAreaDefaultClicked"/>
                                    </HorizontalStackLayout>
 
-                                   <Label Text="Content below is for testing keyboard interaction:"
-                                          FontSize="12"
-                                          TextColor="Gray"/>
-
-                                   <Entry x:Name="SafeAreaTestEntry"
-                                          AutomationId="SafeAreaTestEntry"
-                                          Placeholder="Tap to raise keyboard"
-                                          HorizontalOptions="Start"/>
-
                                    <!-- Scrollable content items -->
                                    <Label Text="--- SCROLLABLE CONTENT BELOW ---"
                                           FontSize="16"
@@ -111,18 +102,24 @@
                                           HorizontalOptions="Center"
                                           TextColor="Red" />
 
+                                   <Button Text="Scroll to Bottom" Clicked="OnScrollToBottomClicked"/>
                                    <Label Text="Test Item 1" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 2" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 3" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 4" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 5" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 6" FontSize="18" BackgroundColor="LightGray" Padding="10" />
+                                   <Button Text="Scroll to Top" Clicked="OnScrollToTopClicked"/>
                                    <Label Text="Test Item 7" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 8" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 9" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 10" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 11" FontSize="18" BackgroundColor="LightGray" Padding="10" />
-                                   <Label Text="Test Item 12 - BOTTOM" FontSize="18" BackgroundColor="Red" Padding="10" />
+                                   <Entry x:Name="SafeAreaTestEntry"
+                                          AutomationId="SafeAreaTestEntry"
+                                          Placeholder="Tap to raise keyboard"
+                                          HorizontalOptions="Start"/>
+                                   <Label Text="Test Item 12" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                             </VerticalStackLayout>
 
                             <!-- Right Edge Indicator -->
