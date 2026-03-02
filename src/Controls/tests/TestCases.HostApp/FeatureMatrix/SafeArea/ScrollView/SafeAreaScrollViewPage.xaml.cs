@@ -65,6 +65,15 @@ public partial class SafeAreaScrollViewPage : ContentPage
 	private void OnSafeAreaContainerClicked(object sender, EventArgs e) => SetAllEdges(SafeAreaRegions.Container);
 	private void OnSafeAreaSoftInputClicked(object sender, EventArgs e) => SetAllEdges(SafeAreaRegions.SoftInput);
 	private void OnSafeAreaDefaultClicked(object sender, EventArgs e) => SetAllEdges(SafeAreaRegions.Default);
+
+	public void OnScrollToTopClicked(object sender, EventArgs e)
+	{
+		TestScrollView.ScrollToAsync(0, 0, false);
+	}
+	public void OnScrollToBottomClicked(object sender, EventArgs e)
+	{
+		TestScrollView.ScrollToAsync(0, TestScrollView.ContentSize.Height, false);
+	}
 }
 
 #if ANDROID
