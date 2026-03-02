@@ -25,4 +25,9 @@ public partial class SafeAreaFeatureMainPage : ContentPage
 	{
 		Application.Current.Windows[0].Page = new SafeAreaContentPage(_viewModel);
 	}
+
+	private void OnScrollViewSafeAreaButtonClicked(object sender, EventArgs e)
+	{
+		Application.Current.Windows[0].Page = new SafeAreaScrollViewPage(_viewModel);
+	}
 }
