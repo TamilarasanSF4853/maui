@@ -10,6 +10,8 @@
               <!-- ScrollView with its own SafeAreaEdges -->
               <ScrollView x:Name="TestScrollView"
                           SafeAreaEdges="{Binding EffectiveSafeAreaEdges}"
+                          Padding="{Binding Padding}"
+                          Background="{Binding Background}"
                           AutomationId="TestScrollView"
                           BackgroundColor="White">
                      <Grid RowDefinitions="Auto,*,Auto"
