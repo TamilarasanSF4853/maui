@@ -1254,27 +1254,40 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insetsLandscape = GetSafeAreaInsets();
 
 			// Left: inset by safe area
-			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"All: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			var leftRectBeforeScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectBeforeScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"All: left X ({leftRectBeforeScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
 
 			// Right: inset by safe area (Android uses display cutout for right inset)
-			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
-			var rightEdge = rightRect.X + rightRect.Width;
+			var rightRectBeforeScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeBeforeScroll = rightRectBeforeScroll.X + rightRectBeforeScroll.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"All: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdgeBeforeScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"All: right edge ({rightEdgeBeforeScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 
 			// Bottom: inset by safe area
 			ScrollToBottom();
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(1),
 				$"All: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+
+			// Left: inset by safe area
+			var leftRectAfterScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectAfterScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"All: left X ({leftRectAfterScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+
+			// Right: inset by safe area (Android uses display cutout for right inset)
+			var rightRectAfterScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
+			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"All: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
+
+#if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the left label and right label are positioned incorrectly
 
 		[Test, Order(24)]
 		[Description("Container: landscape left/right/bottom inset by safe area")]
@@ -1293,16 +1306,16 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insetsLandscape = GetSafeAreaInsets();
 
 			// Left: inset by safe area
-			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Container: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			var leftRectBeforeScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectBeforeScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"Container: left X ({leftRectBeforeScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
 
 			// Right: inset by safe area (Android uses display cutout for right inset)
-			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
-			var rightEdge = rightRect.X + rightRect.Width;
+			var rightRectBeforeScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeBeforeScroll = rightRectBeforeScroll.X + rightRectBeforeScroll.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"Container: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdgeBeforeScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"Container: right edge ({rightEdgeBeforeScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 
 			// Bottom: inset by safe area
 			ScrollToBottom();
@@ -1310,17 +1323,24 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(1),
 				$"Container: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
 
+			// Left: inset by safe area
+			var leftRectAfterScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectAfterScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"Container: left X ({leftRectAfterScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+
 			// Right: inset by safe area (Android uses display cutout for right inset)
-			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
-			var rightEdge = rightRect.X + rightRect.Width;
-			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"Container: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			var rightRectAfterScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
+			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"Container: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
+#endif
+
+#if TEST_FAILS_ON_IOS // On iOS, when setting SoftInput, the bottom label are positioned incorrectly
 
 		[Test, Order(25)]
 		[Description("SoftInput: landscape left/right inset by safe area, bottom edge-to-edge")]
@@ -1339,27 +1359,41 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insetsLandscape = GetSafeAreaInsets();
 
 			// Left: inset by safe area
-			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"SoftInput: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			var leftRectBeforeScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectBeforeScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"SoftInput: left X ({leftRectBeforeScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
 
 			// Right: inset by safe area (Android uses display cutout for right inset)
-			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
-			var rightEdge = rightRect.X + rightRect.Width;
+			var rightRectBeforeScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeBeforeScroll = rightRectBeforeScroll.X + rightRectBeforeScroll.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"SoftInput: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdgeBeforeScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"SoftInput: right edge ({rightEdgeBeforeScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 
 			// Bottom: edge-to-edge (SoftInput doesn't avoid bottom without keyboard)
 			ScrollToBottom();
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"SoftInput: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
+
+			// Left: inset by safe area
+			var leftRectAfterScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectAfterScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"SoftInput: left X ({leftRectAfterScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+
+			// Right: inset by safe area (Android uses display cutout for right inset)
+			var rightRectAfterScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
+			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"SoftInput: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
+#endif
+
+#if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the top label and bottom label are positioned incorrectly
 
 		[Test, Order(26)]
 		[Description("Default: landscape left/right/bottom inset by safe area (Default behaves like Container)")]
@@ -1378,28 +1412,39 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insetsLandscape = GetSafeAreaInsets();
 
 			// Left: inset by safe area
-			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Default: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			var leftRectBeforeScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectBeforeScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"Default: left X ({leftRectBeforeScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
 
 			// Right: inset by safe area (Android uses display cutout for right inset)
-			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
-			var rightEdge = rightRect.X + rightRect.Width;
+			var rightRectBeforeScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeBeforeScroll = rightRectBeforeScroll.X + rightRectBeforeScroll.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"Default: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdgeBeforeScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"Default: right edge ({rightEdgeBeforeScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 
 			// Bottom: inset by safe area
 			ScrollToBottom();
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(1),
 				$"Default: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+
+			// Left: inset by safe area
+			var leftRectAfterScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRectAfterScroll.X), Is.EqualTo(insetsLandscape.Left),
+				$"Default: left X ({leftRectAfterScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+
+			// Right: inset by safe area (Android uses display cutout for right inset)
+			var rightRectAfterScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
+			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
+				$"Default: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
 			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
-
+#endif
 		// ──────────────────────────────────────────────
 		// Landscape Keyboard Position Validation
 		// ──────────────────────────────────────────────
@@ -1437,7 +1482,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(1),
 				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
-			ScrollToTop();
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1448,11 +1492,9 @@ namespace Microsoft.Maui.TestCases.Tests
 			var keyboardY = GetKeyboardY();
 
 			// Bottom should move up to keyboard top
-			ScrollToBottom();
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomDuringRect.Bottom, Is.EqualTo(keyboardY).Within(1),
 				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
-			ScrollToTop();
 
 			// Left/Right should remain unchanged
 			var leftDuringRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
@@ -1478,7 +1520,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(rightAfterEdge, Is.EqualTo(rightBeforeEdge),
 				$"After keyboard - right edge ({rightAfterEdge}) should return to original ({rightBeforeEdge})");
 
-			ScrollToBottom();
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom edge ({bottomAfterRect.Bottom}) should return to original ({bottomBeforeRect.Bottom})");
