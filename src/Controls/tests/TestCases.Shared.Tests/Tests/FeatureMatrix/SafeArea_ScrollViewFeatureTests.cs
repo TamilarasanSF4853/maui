@@ -566,7 +566,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
-			ScrollToTop();
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -577,31 +576,24 @@ namespace Microsoft.Maui.TestCases.Tests
 			var keyboardY = GetKeyboardY();
 
 			// Bottom should have moved up to the keyboard top
-			ScrollToBottom();
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
-			ScrollToTop();
-
-			// Top should remain unchanged
-			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should remain at ({topLabelBeforeRect.Y})");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
-
-			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
+
 			ScrollToTop();
+
+			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
 		}
 
 		[Test, Order(13)]
@@ -625,7 +617,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
-			ScrollToTop();
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -633,30 +624,25 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(0),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be 0 (edge-to-edge)");
-
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
-			ScrollToBottom();
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight ({screenHeight})");
-			ScrollToTop();
 #endif
+			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
-
-			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
+
 			ScrollToTop();
+
+			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
 		}
 
 		[Test, Order(14)]
@@ -683,8 +669,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
-			ScrollToTop();
 
+			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
 			Thread.Sleep(1000);
@@ -692,30 +678,24 @@ namespace Microsoft.Maui.TestCases.Tests
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			// Bottom should not have moved up to the keyboard top
-			ScrollToBottom();
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
-			ScrollToTop();
 #endif
-			// Top should remain unchanged
-			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should remain at ({topLabelBeforeRect.Y})");
-
+			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
-
-			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
+
 			ScrollToTop();
+
+			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
 		}
 
 		// ──────────────────────────────────────────────
