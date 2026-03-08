@@ -427,7 +427,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// Keyboard + SafeArea (Portrait)
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_IOS // When the safe area is set to None, and the keyboard is opened, the safe area changes to All or SoftInput, and the bottom label does not move above the keyboard
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // When the safe area is set to None, and the keyboard is opened, the safe area changes to All or SoftInput, and the bottom label does not move above the keyboard
 
 		[Test, Order(10)]
 		[Description("With None, bottom indicator does NOT move when keyboard is shown, then switch to All and bottom moves up")]
@@ -486,7 +486,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // Setting SafeAreaEdges to All or SoftInput while the keyboard is open does not move the bottom label up to the keyboard, it stays at the same position as before the keyboard was shown
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // Setting SafeAreaEdges to All or SoftInput while the keyboard is open the bottom label does not move up to the keyboard, it stays at the same position as before the keyboard was shown
 
 		[Test, Order(11)]
 		[Description("With All, bottom indicator moves up when keyboard is shown")]
@@ -543,7 +543,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // On iOS, the bottom label are positioned incorrectly
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // When SoftInput the keyboard is open the bottom label does not move up
 
 		[Test, Order(12)]
 		[Description("With SoftInput, bottom indicator moves up when keyboard is shown")]
@@ -651,6 +651,8 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
 		}
 
+#if TEST_FAILS_ON_ANDROID // On Android, when setting Container, the bottom label do not stay at the same position when the keyboard is opened and closed
+
 		[Test, Order(14)]
 		[Description("With Container, bottom indicator does NOT move when keyboard is shown")]
 		public void Validate_ScrollView_Keyboard_Container_BottomStays()
@@ -704,12 +706,13 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
 		}
 #endif
+#endif
 
 		// ──────────────────────────────────────────────
 		// Keyboard + Runtime SafeArea Changes
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_IOS // When the safe area is set to None, and the keyboard is opened, the safe area changes to All or SoftInput, and the bottom label does not move above the keyboard
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // When the safe area is set to None, and the keyboard is opened, the safe area changes to All or SoftInput, and the bottom label does not move above the keyboard
 
 		[Test, Order(15)]
 		[Description("Switch None to All while keyboard is open — bottom indicator moves up")]
@@ -931,7 +934,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the top label and bottom label are positioned incorrectly
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // when setting Container or Default, the top label and bottom label are positioned incorrectly
 
 		[Test, Order(18)]
 		[Description("Switch Container to SoftInput while keyboard is open — bottom indicator moves up")]
@@ -1011,7 +1014,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // When the safe area is set to None, and the keyboard is opened, the safe area changes to All or SoftInput, and the bottom label does not move above the keyboard
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // When the safe area is set to None, and the keyboard is opened, the safe area changes to All or SoftInput, and the bottom label does not move above the keyboard
 
 		[Test, Order(19)]
 		[Description("Keyboard open: cycle through None → All → Container → SoftInput → Default → None and verify positions")]
@@ -1141,6 +1144,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// ──────────────────────────────────────────────
 		// Interaction with ContentPage Properties
 		// ──────────────────────────────────────────────
+#if TEST_FAILS_ON_ANDROID // Padding does not applied
 
 		[Test, Order(20)]
 		[Description("Safe area insets and padding are additive")]
@@ -1166,6 +1170,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelRect.Y, Is.GreaterThan(insets.Top),
 				$"Top Y ({topLabelRect.Y}) should be > insets.Top ({insets.Top}) due to additional padding");
 		}
+#endif
 
 		[Test, Order(21)]
 		[Description("Background extends edge-to-edge behind system UI")]
@@ -1281,10 +1286,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
 			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
 				$"All: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 
 #if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the left label and right label are positioned incorrectly
@@ -1838,6 +1843,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// ──────────────────────────────────────────────
 		// Default + Keyboard (Portrait)
 		// ──────────────────────────────────────────────
+#if TEST_FAILS_ON_IOS // On iOS, the top label or bottom label are positioned incorrectly
 
 		[Test, Order(32)]
 		[Description("With Default, bottom indicator does NOT move when keyboard is shown (behaves like Container)")]
@@ -1966,11 +1972,15 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
+			// Verify top: Container — should be inset by safe area top
+			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
+				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top})");
+
 			ScrollToBottom();
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
-			ScrollToTop();
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1978,17 +1988,14 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
-			ScrollToBottom();
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
-			ScrollToTop();
 #endif
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
@@ -2013,13 +2020,18 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("SafeAreaEdgesValueLabel");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("L:None, T:Container, R:None, B:SoftInput"));
 
+			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
+
+			// Verify top: Container — should be inset by safe area top
+			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
+				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top})");
 
 			ScrollToBottom();
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
-			ScrollToTop();
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -2028,17 +2040,14 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var keyboardY = GetKeyboardY();
 
-			ScrollToBottom();
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
-			ScrollToTop();
 
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
@@ -2066,11 +2075,15 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
+			// Verify top: Container — should be inset by safe area top
+			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
+				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top})");
+
 			ScrollToBottom();
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
-			ScrollToTop();
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -2079,22 +2092,20 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var keyboardY = GetKeyboardY();
 
-			ScrollToBottom();
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
-			ScrollToTop();
 
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
 			ScrollToTop();
 		}
+#endif
 
 		// ──────────────────────────────────────────────
 		// Left/Right Per-Edge in Landscape

@@ -43,6 +43,7 @@ public partial class SafeAreaScrollViewPage : ContentPage
 	public void UpdateSafeAreaInsets()
 	{
 		SafeAreaInsetsLabel.Text = SafeAreaExtensions.GetSafeAreaInfo(this);
+		SafeAreaInsetsLabel2.Text = SafeAreaExtensions.GetSafeAreaInfo(this);
 	}
 
 	private async void NavigateToOptionsPage_Clicked(object sender, EventArgs e)

@@ -103,8 +103,11 @@
                                    <Label Text="Test Item 3" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 4" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 5" FontSize="18" BackgroundColor="LightGray" Padding="10" />
-                                   <Label Text="Test Item 6" FontSize="18" BackgroundColor="LightGray" Padding="10" />
-                                   <Label Text="Test Item 7" FontSize="18" BackgroundColor="LightGray" Padding="10" />
+                                   <Button AutomationId="ScrollToBottom" Text="Scroll to Bottom" Clicked="OnScrollToBottomClicked"/>
+                                   <Label x:Name="SafeAreaInsetsLabel2"
+                                          AutomationId="SafeAreaInsetsLabel"
+                                          Text="Insets: Loading..."
+                                          FontSize="12"/>
                                    <Button AutomationId="ScrollToTop" Text="Scroll to Top" Clicked="OnScrollToTopClicked"/>
                                    <Label Text="Test Item 8" FontSize="18" BackgroundColor="LightGray" Padding="10" />
                                    <Label Text="Test Item 9" FontSize="18" BackgroundColor="LightGray" Padding="10" />
