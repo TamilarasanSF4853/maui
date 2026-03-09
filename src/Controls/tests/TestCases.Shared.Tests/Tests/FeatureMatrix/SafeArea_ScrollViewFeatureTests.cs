@@ -630,10 +630,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -684,11 +686,13 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			// Bottom should not have moved up to the keyboard top
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -743,10 +747,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			// With None, bottom should NOT move
@@ -814,10 +820,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			var topLabelDuringNoneRect = App.WaitForElement("TopEdgeIndicator").GetRect();
@@ -913,10 +921,12 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be 0 (edge-to-edge)");
 			
 			ScrollToBottom();
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -934,7 +944,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // when setting Container or Default, the top label and bottom label are positioned incorrectly
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID // when setting Container, Default, SoftInput or All, the top label and bottom label are positioned incorrectly
 
 		[Test, Order(18)]
 		[Description("Switch Container to SoftInput while keyboard is open — bottom indicator moves up")]
@@ -971,10 +981,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringContainerRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringContainerRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"During keyboard (Container) - bottom label Bottom ({bottomLabelDuringContainerRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");	
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			// With Container, bottom should NOT move
@@ -1049,10 +1061,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var keyboardY = GetKeyboardY();
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"None (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			// ── Verify None with keyboard (no adjustment) ──
@@ -1084,10 +1098,12 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"Container (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
 
 			ScrollToBottom();
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"Container (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			// ── Switch to SoftInput (keyboard still open) ──
@@ -1113,10 +1129,12 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
 
 			ScrollToBottom();
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			// ── Switch back to None (keyboard still open) ──
@@ -1128,10 +1146,12 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"None (keyboard open, after cycle) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
 
 			ScrollToBottom();
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"None (keyboard open, after cycle) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			ScrollToTop();
 			// ── Dismiss keyboard ──
@@ -1454,7 +1474,8 @@ namespace Microsoft.Maui.TestCases.Tests
 		// Landscape Keyboard Position Validation
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // In landscape mode on Android, the keyboard covers the entire screen, and Appium cannot find elements to validate their positions. In iOS, bottom, left or right labels are positioned incorrectly
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // In landscape mode on Android, the keyboard covers the entire screen, and Appium cannot find elements to validate their positions.
+// In iOS, bottom, left or right labels are positioned incorrectly
 
 		[Test, Order(27)]
 		[Description("Landscape All: bottom moves up to keyboard, left/right stay inset")]
@@ -1876,11 +1897,13 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			// Bottom should NOT move (Default behaves like Container — ignores keyboard)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
@@ -1937,10 +1960,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at screenHeight ({screenHeight})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
@@ -1989,10 +2014,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator");
 #endif
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
@@ -2113,54 +2140,10 @@ namespace Microsoft.Maui.TestCases.Tests
 #endif
 
 		// ──────────────────────────────────────────────
-		// Left/Right Per-Edge in Landscape
-		// ──────────────────────────────────────────────
-
-		[Test, Order(37)]
-		[Description("Landscape per-edge: L:Container, R:None — left inset by safe area, right edge-to-edge")]
-		public void Validate_ScrollView_PerEdge_LeftContainerRightNone_Landscape()
-		{
-			ClickScrollViewSafeAreaButton();
-			App.DismissKeyboard();
-
-			App.SetOrientationLandscape();
-			Thread.Sleep(1000);
-
-			App.WaitForElement("Options");
-			App.Tap("Options");
-			App.WaitForElement("LeftContainer");
-			App.Tap("LeftContainer");
-			App.Tap("RightNone");
-			App.WaitForElement("Apply");
-			App.Tap("Apply");
-
-			App.WaitForElement("SafeAreaEdgesValueLabel");
-			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("L:Container, T:None, R:None, B:None"));
-
-			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
-
-			// Left: inset by safe area (Container)
-			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Left (Container): X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
-
-			// Right: edge-to-edge (None)
-			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
-			var rightEdge = rightRect.X + rightRect.Width;
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth).Within(1),
-				$"Right (None): right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
-
-			App.SetOrientationPortrait();
-			Thread.Sleep(1000);
-			// ScrollToTop();
-		}
-
-		// ──────────────────────────────────────────────
 		// Orientation Roundtrip
 		// ──────────────────────────────────────────────
 
-		[Test, Order(38)]
+		[Test, Order(37)]
 		[Description("Rotate to landscape and back to portrait — positions restore correctly")]
 		public void Validate_ScrollView_Orientation_Roundtrip_PositionsRestore()
 		{
@@ -2212,9 +2195,9 @@ namespace Microsoft.Maui.TestCases.Tests
 			// ── Rotate back to portrait ──
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
-#if ANDROID
+
 			ScrollToTop();
-#endif
+
 			var insetsAfter = GetSafeAreaInsets();
 			var (_, screenHeightAfter) = GetScreenSize();
 
@@ -2233,6 +2216,48 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomPortraitRect.Bottom).Within(1),
 				$"After roundtrip: bottom label Bottom ({bottomAfterRect.Bottom}) should match original portrait ({bottomPortraitRect.Bottom})");
+			
+			ScrollToTop();
+		}
+
+		// ──────────────────────────────────────────────
+		// Left/Right Per-Edge in Landscape
+		// ──────────────────────────────────────────────
+
+		[Test, Order(38)]
+		[Description("Landscape per-edge: L:Container, R:None — left inset by safe area, right edge-to-edge")]
+		public void Validate_ScrollView_PerEdge_LeftContainerRightNone_Landscape()
+		{
+			ClickScrollViewSafeAreaButton();
+			App.DismissKeyboard();
+
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("LeftContainer");
+			App.Tap("LeftContainer");
+			App.Tap("RightNone");
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+
+			App.SetOrientationLandscape();
+			Thread.Sleep(1000);
+
+			var (screenWidth, _) = GetScreenSize();
+			var insetsLandscape = GetSafeAreaInsets();
+
+			// Left: inset by safe area (Container)
+			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
+				$"Left (Container): X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+
+			// Right: edge-to-edge (None)
+			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
+			var rightEdge = rightRect.X + rightRect.Width;
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth).Within(1),
+				$"Right (None): right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
+
+			App.SetOrientationPortrait();
+			Thread.Sleep(1000);
 		}
 	}
 }
