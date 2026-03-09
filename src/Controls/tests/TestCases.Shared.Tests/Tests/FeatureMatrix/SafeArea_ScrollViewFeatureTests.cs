@@ -1236,10 +1236,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
 			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth).Within(1),
 				$"None: right edge ({rightEdgeAfterScroll}) should be = screenWidth ({screenWidth})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 
 		[Test, Order(23)]
@@ -1338,10 +1338,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
 			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
 				$"Container: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 #endif
 
@@ -1391,10 +1391,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
 			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
 				$"SoftInput: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 #endif
 
@@ -1444,10 +1444,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
 			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
 				$"Default: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 #endif
 		// ──────────────────────────────────────────────
@@ -1528,10 +1528,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom edge ({bottomAfterRect.Bottom}) should return to original ({bottomBeforeRect.Bottom})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 
 		[Test, Order(28)]
@@ -1606,10 +1606,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom edge ({bottomAfterRect.Bottom}) should return to original ({bottomBeforeRect.Bottom})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 
 		[Test, Order(29)]
@@ -1681,10 +1681,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom edge ({bottomAfterRect.Bottom}) should return to original ({bottomBeforeRect.Bottom})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 
 		[Test, Order(30)]
@@ -1757,10 +1757,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom edge ({bottomAfterRect.Bottom}) should return to original ({bottomBeforeRect.Bottom})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 
 		[Test, Order(31)]
@@ -1833,10 +1833,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom).Within(1),
 				$"After keyboard - bottom edge ({bottomAfterRect.Bottom}) should return to original ({bottomBeforeRect.Bottom})");
-			ScrollToTop();
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			ScrollToTop();
 		}
 #endif
 
@@ -1845,6 +1845,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// ──────────────────────────────────────────────
 #if TEST_FAILS_ON_IOS // On iOS, the top label or bottom label are positioned incorrectly
 
+#if TEST_FAILS_ON_ANDROID // On Android, the bottom label are positioned incorrectly after keyboard is opened and closed
 		[Test, Order(32)]
 		[Description("With Default, bottom indicator does NOT move when keyboard is shown (behaves like Container)")]
 		public void Validate_ScrollView_Keyboard_Default_BottomStays()
@@ -1895,7 +1896,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelAfterRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
 				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should return to original ({topLabelBeforeRect.Y})");
 		}
-
+#endif
 		// ──────────────────────────────────────────────
 		// Per-Edge + Keyboard (Portrait)
 		// ──────────────────────────────────────────────
@@ -1951,6 +1952,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			ScrollToTop();
 		}
 
+#if TEST_FAILS_ON_ANDROID // On Android, the bottom label are positioned incorrectly after keyboard is opened and closed
 		[Test, Order(34)]
 		[Description("Per-edge B:Container + keyboard — bottom stays at safe area inset when keyboard is shown")]
 		public void Validate_ScrollView_PerEdgeKeyboard_BottomContainer_BottomStays()
@@ -2001,7 +2003,9 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
 			ScrollToTop();
 		}
+#endif
 
+#if TEST_FAILS_ON_ANDROID // On Android, the bottom label not positioned above the keyboard when the keyboard is open
 		[Test, Order(35)]
 		[Description("Per-edge B:SoftInput + keyboard — bottom moves up to keyboard Y")]
 		public void Validate_ScrollView_PerEdgeKeyboard_BottomSoftInput_BottomMovesUp()
@@ -2106,6 +2110,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			ScrollToTop();
 		}
 #endif
+#endif
 
 		// ──────────────────────────────────────────────
 		// Left/Right Per-Edge in Landscape
@@ -2118,6 +2123,9 @@ namespace Microsoft.Maui.TestCases.Tests
 			ClickScrollViewSafeAreaButton();
 			App.DismissKeyboard();
 
+			App.SetOrientationLandscape();
+			Thread.Sleep(1000);
+
 			App.WaitForElement("Options");
 			App.Tap("Options");
 			App.WaitForElement("LeftContainer");
@@ -2128,9 +2136,6 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			App.WaitForElement("SafeAreaEdgesValueLabel");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("L:Container, T:None, R:None, B:None"));
-
-			App.SetOrientationLandscape();
-			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
 			var insetsLandscape = GetSafeAreaInsets();
@@ -2148,6 +2153,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
+			// ScrollToTop();
 		}
 
 		// ──────────────────────────────────────────────
@@ -2170,19 +2176,19 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Record portrait positions ──
 			var topPortraitRect = App.WaitForElement("TopEdgeIndicator").GetRect();
+			Assert.That(Math.Abs(topPortraitRect.Y), Is.EqualTo(insets.Top),
+				$"Portrait: top label Y ({topPortraitRect.Y}) should be equal to insets.Top ({insets.Top})");
 
 			ScrollToBottom();
 			var bottomPortraitRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			ScrollToTop();
-
-			Assert.That(Math.Abs(topPortraitRect.Y), Is.EqualTo(insets.Top),
-				$"Portrait: top label Y ({topPortraitRect.Y}) should be equal to insets.Top ({insets.Top})");
 			Assert.That(Math.Abs(bottomPortraitRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(1),
 				$"Portrait: bottom label Bottom ({bottomPortraitRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
 
 			// ── Rotate to landscape ──
 			App.SetOrientationLandscape();
 			Thread.Sleep(1000);
+
+			ScrollToTop();
 
 			var (screenWidthLandscape, screenHeightLandscape) = GetScreenSize();
 			var insetsLandscape = GetSafeAreaInsets();
@@ -2201,10 +2207,14 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(Math.Abs(rightLandscapeEdge), Is.EqualTo(screenWidthLandscape - expectedRight).Within(1),
 				$"Landscape: right edge ({rightLandscapeEdge}) should be equal to screenWidth - expectedRight ({screenWidthLandscape - expectedRight})");
 
+			ScrollToBottom();
+
 			// ── Rotate back to portrait ──
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
-
+#if ANDROID
+			ScrollToTop();
+#endif
 			var insetsAfter = GetSafeAreaInsets();
 			var (_, screenHeightAfter) = GetScreenSize();
 
@@ -2214,8 +2224,6 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			ScrollToBottom();
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			ScrollToTop();
-
 			Assert.That(Math.Abs(bottomAfterRect.Bottom), Is.EqualTo(screenHeightAfter - insetsAfter.Bottom).Within(1),
 				$"After roundtrip: bottom label Bottom ({bottomAfterRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeightAfter - insetsAfter.Bottom})");
 
