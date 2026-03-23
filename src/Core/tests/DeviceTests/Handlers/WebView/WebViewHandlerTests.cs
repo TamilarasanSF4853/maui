@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
@@ -119,34 +121,81 @@ namespace Microsoft.Maui.DeviceTests
 			, Skip = "Skipping this test on Windows due to WebView's OnNavigated event returning WebNavigationResult.Failure for URLs with non-Western characters. More information: https://github.com/dotnet/maui/issues/27425"
 #endif
 		)]
-		[InlineData("https://example.com/test-Ağ-Sistem%20Bilgi%20Güvenliği%20Md/Guide.pdf")] // Non-ASCII character + space (%20) (Outside IRI range)
-		[InlineData("https://google.com/[]")] // Reserved set (`;/?:@&=+$,#[]!'()*%`)
-		[InlineData("https://example.com/test/%3Cvalue%3E")] // Escaped character from " <>`^{|} set (e.g., < >)
-		[InlineData("https://example.com/path/%09text")] // Escaped character from [0, 1F] range (e.g., tab %09)
-		[InlineData("https://example.com/test?query=%26value")] // Another escaped character from reserved set (e.g., & as %26)
-		public async Task WebViewShouldLoadEncodedUrl(string encodedUrl)
+		[InlineData("/test-Ağ-Sistem%20Bilgi%20Güvenliği%20Md/Guide.pdf")] // Non-ASCII character + space (%20) (Outside IRI range)
+		[InlineData("/test/%5B%5D")] // Reserved set brackets ([ and ] encoded as %5B and %5D)
+		[InlineData("/test/%3Cvalue%3E")] // Escaped character from " <>`^{|} set (e.g., < >)
+		[InlineData("/path/%09text")] // Escaped character from [0, 1F] range (e.g., tab %09)
+		[InlineData("/test?query=%26value")] // Another escaped character from reserved set (e.g., & as %26)
+		public async Task WebViewShouldLoadEncodedUrl(string encodedPath)
 		{
-			if (await AssertionExtensions.SkipTestIfNoInternetConnection())
-			{
-				return;
-			}
-			var webView = new WebView();
-			var tcs = new TaskCompletionSource<WebNavigationResult>();
+			// Use a local HTTP server to eliminate external network dependency and CI flakiness.
+			// Previously the test used external URLs (example.com, google.com) with a 5-second timeout,
+			// which caused intermittent TimeoutExceptions on slow Helix queues (e.g., osx.26.arm64.open).
+			var (listener, port) = StartLocalHttpServer();
 
-			webView.Navigated += (sender, args) =>
+			// Serve a simple 200 OK response for any incoming request in the background.
+			var serverTask = Task.Run(async () =>
 			{
-				tcs.TrySetResult(args.Result);
-			};
-
-			await InvokeOnMainThreadAsync(() =>
-			{
-				var handler = CreateHandler<WebViewHandler>(webView);
-				(handler.PlatformView as IWebViewDelegate)?.LoadUrl(encodedUrl);
+				try
+				{
+					var context = await listener.GetContextAsync().ConfigureAwait(false);
+					context.Response.StatusCode = 200;
+					context.Response.ContentType = "text/html";
+					var responseBytes = Encoding.UTF8.GetBytes("<html><body>OK</body></html>");
+					context.Response.ContentLength64 = responseBytes.Length;
+					await context.Response.OutputStream.WriteAsync(responseBytes).ConfigureAwait(false);
+					context.Response.Close();
+				}
+				catch { }
 			});
 
-			var navigationResult = await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
+			try
+			{
+				var encodedUrl = $"http://localhost:{port}{encodedPath}";
+				var webView = new WebView();
+				var tcs = new TaskCompletionSource<WebNavigationResult>();
 
-			Assert.Equal(WebNavigationResult.Success, navigationResult);
+				webView.Navigated += (sender, args) =>
+				{
+					tcs.TrySetResult(args.Result);
+				};
+
+				await InvokeOnMainThreadAsync(() =>
+				{
+					var handler = CreateHandler<WebViewHandler>(webView);
+					(handler.PlatformView as IWebViewDelegate)?.LoadUrl(encodedUrl);
+				});
+
+				var navigationResult = await tcs.Task.WaitAsync(TimeSpan.FromSeconds(30));
+
+				Assert.Equal(WebNavigationResult.Success, navigationResult);
+			}
+			finally
+			{
+				listener.Stop();
+				listener.Close();
+			}
+		}
+
+		static (HttpListener Listener, int Port) StartLocalHttpServer()
+		{
+			var rng = new Random();
+			for (int attempt = 0; attempt < 20; attempt++)
+			{
+				int port = rng.Next(49152, 65534);
+				var listener = new HttpListener();
+				listener.Prefixes.Add($"http://localhost:{port}/");
+				try
+				{
+					listener.Start();
+					return (listener, port);
+				}
+				catch (HttpListenerException)
+				{
+					listener.Close();
+				}
+			}
+			throw new InvalidOperationException("Could not find a free port for the local test HTTP server.");
 		}
 	}
 }
