@@ -40,15 +40,23 @@ namespace Microsoft.Maui.TestCases.Tests
 		private int GetKeyboardY()
 		{
 #if IOS
-			var rect = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeApplication[@name=\"Controls.TestCases.HostApp\"]/XCUIElementTypeWindow[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")).GetRect();
-			var orientation = ((AppiumApp)App).Driver.Orientation;
-			bool isLandscape = orientation == OpenQA.Selenium.ScreenOrientation.Landscape;
-			if (isLandscape)
+			if (App is AppiumIOSApp iosApp && HelperExtensions.IsIOS26OrHigher(iosApp))
 			{
-				return rect.X;
+				var rect = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeApplication[@name=\"Controls.TestCases.HostApp\"]/XCUIElementTypeWindow[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")).GetRect();
+				var orientation = ((AppiumApp)App).Driver.Orientation;
+				bool isLandscape = orientation == OpenQA.Selenium.ScreenOrientation.Landscape;
+				if (isLandscape)
+				{
+					return rect.X;
+				}
+				else
+				{
+					return rect.Y;
+				}
 			}
 			else
 			{
+				var rect = App.WaitForElement("Done").GetRect();
 				return rect.Y;
 			}
 #elif ANDROID
@@ -1245,7 +1253,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"None: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
-			
+
 			// Left: edge-to-edge
 			var leftRectAfterScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
 			Assert.That(leftRectAfterScroll.X, Is.EqualTo(0),
@@ -2216,7 +2224,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(bottomAfterRect.Bottom, Is.EqualTo(bottomPortraitRect.Bottom).Within(1),
 				$"After roundtrip: bottom label Bottom ({bottomAfterRect.Bottom}) should match original portrait ({bottomPortraitRect.Bottom})");
-			
+
 			ScrollToTop();
 		}
 
