@@ -192,7 +192,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(5)]
-		[Description("Default applies safe area insets on all edges (behaves like Container)")]
+		[Description("Default on ContentView resolves to None — content extends edge-to-edge")]
 		public void Validate_ContentView_SafeAreaEdges_Default()
 		{
 			ClickContentViewSafeAreaButton();
@@ -202,18 +202,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (safe area applied)
+			// Portrait: top label Y should be ≈ 0 (edge-to-edge, Default on ContentView = None)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Default: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelRect.Y, Is.EqualTo(0),
+				$"Default: top label Y ({topLabelRect.Y}) should be = 0 (edge-to-edge), Default on ContentView resolves to None");
 
-			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom
+			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Default: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
+				$"Default: bottom label Y ({bottomLabelRect.Bottom}) should be = screenHeight ({screenHeight}), Default on ContentView resolves to None");
 		}
 
 		// ──────────────────────────────────────────────
@@ -1038,17 +1037,18 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"SoftInput (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboard Y ({keyboardY})");
 
 			// ── Switch to Default (keyboard still open) ──
+			// Default on ContentView resolves to None — edge-to-edge, no safe area padding
 			App.Tap("SafeAreaDefaultButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelRect.Y, Is.EqualTo(0),
+				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge, Default on ContentView = None)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
+				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
 #endif
 			// ── Switch back to None (keyboard still open) ──
 			App.Tap("SafeAreaNoneButton");
@@ -1268,7 +1268,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(26)]
-		[Description("Default: landscape left/right/bottom inset by safe area (Default behaves like Container)")]
+		[Description("Default: landscape all edges edge-to-edge (Default on ContentView resolves to None)")]
 		public void Validate_ContentView_Orientation_Default_Landscape()
 		{
 			ClickContentViewSafeAreaButton();
@@ -1281,24 +1281,22 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area
+			// Left: edge-to-edge
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Default: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftRect.X, Is.EqualTo(0),
+				$"Default: left X ({leftRect.X}) should be = 0 (edge-to-edge)");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: edge-to-edge
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight),
-				$"Default: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth),
+				$"Default: right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
 
-			// Bottom: inset by safe area
+			// Bottom: edge-to-edge
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom),
-				$"Default: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight),
+				$"Default: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1612,7 +1610,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(31)]
-		[Description("Landscape Default: bottom stays at safe area inset with keyboard (behaves like Container)")]
+		[Description("Landscape Default: all edges edge-to-edge with keyboard (Default on ContentView resolves to None)")]
 		public void Validate_ContentView_Keyboard_Default_Landscape()
 		{
 			ClickContentViewSafeAreaButton();
@@ -1626,21 +1624,20 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftBeforeRect.X, Is.EqualTo(0),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be = 0 (edge-to-edge)");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth ({screenWidth})");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight ({screenHeight})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1648,7 +1645,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-			// Bottom should NOT move (Default behaves like Container)
+			// Bottom should NOT move (Default on ContentView = None, ignores keyboard)
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomDuringRect.Bottom, Is.EqualTo(bottomBeforeRect.Bottom),
 				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at ({bottomBeforeRect.Bottom})");
@@ -1682,7 +1679,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// ──────────────────────────────────────────────
 
 		[Test, Order(32)]
-		[Description("With Default, bottom indicator does NOT move when keyboard is shown (behaves like Container)")]
+		[Description("With Default, bottom indicator does NOT move when keyboard is shown (Default on ContentView = None)")]
 		public void Validate_ContentView_Keyboard_Default_BottomStays()
 		{
 			ClickContentViewSafeAreaButton();
@@ -1693,17 +1690,16 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge, Default on ContentView = None)");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1711,15 +1707,15 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
-			// Bottom should NOT move (Default behaves like Container — ignores keyboard)
+			// Bottom should NOT move (Default on ContentView = None — ignores keyboard)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal screenHeight ({screenHeight})");
 #endif
 			// Top should remain unchanged
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(topLabelBeforeRect.Y),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should remain at ({topLabelBeforeRect.Y})");
+			Assert.That(topLabelDuringRect.Y, Is.EqualTo(0),
+				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should remain at 0 (edge-to-edge)");
 
 			App.DismissKeyboard();
 			Thread.Sleep(1000);
