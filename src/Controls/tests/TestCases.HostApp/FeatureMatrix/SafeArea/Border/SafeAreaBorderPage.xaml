@@ -12,7 +12,8 @@
     <Border SafeAreaEdges="{Binding EffectiveSafeAreaEdges}"
             Padding="{Binding Padding}"
             Background="{Binding Background}"
-            StrokeThickness="0">
+            Stroke="Black"
+            StrokeThickness="5">
 
         <Grid RowDefinitions="Auto,*,Auto"
               SafeAreaEdges="None"

@@ -1,9 +1,7 @@
 #if ANDROID || IOS
 using NUnit.Framework;
-using UITest.Appium.NUnit;
 using UITest.Appium;
 using UITest.Core;
-using System.ComponentModel;
 
 namespace Microsoft.Maui.TestCases.Tests
 {
