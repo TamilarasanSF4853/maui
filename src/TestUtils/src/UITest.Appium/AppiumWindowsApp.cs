@@ -52,8 +52,16 @@ namespace UITest.Appium
 
 		private static AppiumOptions GetOptions(IConfig config)
 		{
+			// CI WebView lane sets CATEGORYGROUP=WebView via the test matrix.
+			// Use NovaWindows driver only on that lane (it supports WebView2 context switching).
+			var categoryGroup = Environment.GetEnvironmentVariable("CATEGORYGROUP");
+			var useNovaWindows = string.Equals(categoryGroup, "WebView", StringComparison.OrdinalIgnoreCase);
+			var automationName = useNovaWindows ? "NovaWindows" : "Windows";
+
+			Console.WriteLine($">>>>> [AppiumWindowsApp] CATEGORYGROUP='{categoryGroup}' -> AutomationName='{automationName}'");
+
 			config.SetProperty("PlatformName", "Windows");
-			config.SetProperty("AutomationName", "Windows");
+			config.SetProperty("AutomationName", automationName);
 			config.SetProperty("DeviceName", "WindowsPC");
 
 			var options = new AppiumOptions();

@@ -176,6 +176,7 @@
     <!-- Appium -->
     <AppiumVersion>2.17.1</AppiumVersion>
     <AppiumWindowsDriverVersion>3.1.1</AppiumWindowsDriverVersion>
+    <AppiumNovaWindowsDriverVersion>1.4.0</AppiumNovaWindowsDriverVersion>
     <AppiumXCUITestDriverVersion>7.32.0</AppiumXCUITestDriverVersion>
     <AppiumMac2DriverVersion>1.20.3</AppiumMac2DriverVersion>
     <AppiumUIAutomator2DriverVersion>4.2.1</AppiumUIAutomator2DriverVersion>

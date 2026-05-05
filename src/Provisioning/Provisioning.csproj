@@ -18,6 +18,7 @@
 	<ItemGroup>
 		<AppiumDrivers Include="uiautomator2" Version="$(AppiumUIAutomator2DriverVersion)" Condition=" '$(AppiumUIAutomator2DriverVersion)' != '' " />
 		<AppiumDrivers Include="windows" Version="$(AppiumWindowsDriverVersion)" Condition=" '$(IsWindows)' == 'True' AND '$(AppiumWindowsDriverVersion)' != '' " />
+		<AppiumDrivers Include="novawindows" NpmPackage="appium-novawindows-driver" Version="$(AppiumNovaWindowsDriverVersion)" Condition=" '$(IsWindows)' == 'True' AND '$(AppiumNovaWindowsDriverVersion)' != '' " />
 		<AppiumDrivers Include="mac2" Version="$(AppiumMac2DriverVersion)" Condition=" '$(IsMacOS)' == 'True' AND '$(AppiumMac2DriverVersion)' != '' " />
 		<AppiumDrivers Include="xcuitest" Version="$(AppiumXCUITestDriverVersion)" Condition=" '$(IsMacOS)' == 'True' AND '$(AppiumXCUITestDriverVersion)' != '' " />
 	</ItemGroup>
@@ -184,12 +185,23 @@
        <!-- Install any drivers not yet installed (if any) with timeout -->  
        <Exec  
            Command="appium driver install %(AppiumDriversToInstall.Identity)@%(AppiumDriversToInstall.Version)"  
-           Condition="'@(AppiumDriversToInstall)' != ''"  
+           Condition="'@(AppiumDriversToInstall)' != '' AND '%(AppiumDriversToInstall.NpmPackage)' == ''"  
            Timeout="300000"  
            StandardOutputImportance="normal"  
            StandardErrorImportance="high">  
            <Output TaskParameter="ExitCode" PropertyName="_InstallExitCode_%(AppiumDriversToInstall.Identity)" />  
        </Exec>  
+
+       <!-- Install drivers that must be sourced from npm (e.g. novawindows). -->
+       <Exec
+           Command="appium driver install --source=npm %(AppiumDriversToInstall.NpmPackage)@%(AppiumDriversToInstall.Version)"
+           Condition="'@(AppiumDriversToInstall)' != '' AND '%(AppiumDriversToInstall.NpmPackage)' != ''"
+           Timeout="300000"
+           ContinueOnError="true"
+           StandardOutputImportance="normal"
+           StandardErrorImportance="high">
+           <Output TaskParameter="ExitCode" PropertyName="_InstallExitCode_%(AppiumDriversToInstall.Identity)" />
+       </Exec>
 
        <!-- Run doctor command just as a batch for all drivers rather than one by one -->  
        <PropertyGroup>  
