@@ -77,6 +77,11 @@ namespace Microsoft.Maui.TestCases.Tests
 			return (size.Width, size.Height);
 		}
 
+		// Matches StrokeThickness="5" in SafeAreaBorderPage.xaml.
+		// The Border stroke is rendered on the inside, so all child content is
+		// displaced inward by this amount from every edge of the Border.
+		private const int BorderStrokeThickness = 5;
+
 		private int GetLandscapeRightInset(int right, int cutoutR)
 		{
 #if ANDROID
@@ -100,17 +105,17 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("SafeAreaNoneButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("None"));
 
-			// Portrait: top label Y should be ≈ 0 (edge-to-edge, Border applies no safe area padding)
+			// Portrait: top label Y should be ≈ BorderStrokeThickness (edge-to-edge + stroke, Border applies no safe area padding)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"None: top label Y ({topLabelRect.Y}) should be = 0 (edge-to-edge), safe area top inset is ignored");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"None: top label Y ({topLabelRect.Y}) should be = BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge, no safe area applied)
+			// Portrait: bottom label bottom edge should be ≈ screenHeight - BorderStrokeThickness (edge-to-edge + stroke, no safe area applied)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"None: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
 
 		[Test, Order(2)]
@@ -125,15 +130,15 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (Border padding absorbs safe area top)
+			// Portrait: top label Y should be ≈ insets.Top + BorderStrokeThickness (safe area + stroke)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"All: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"All: top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom
+			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom - BorderStrokeThickness
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"All: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"All: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 		}
 
 		[Test, Order(3)]
@@ -148,15 +153,15 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (Border padding absorbs safe area top)
+			// Portrait: top label Y should be ≈ insets.Top + BorderStrokeThickness (safe area + stroke)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Container: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Container: top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom
+			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom - BorderStrokeThickness
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Container: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Container: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 		}
 
 		[Test, Order(4)]
@@ -173,18 +178,18 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (SoftInput respects notch/safe area)
+			// Portrait: top label Y should be ≈ insets.Top + BorderStrokeThickness (safe area + stroke)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"SoftInput: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"SoftInput: top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge, no safe area applied)
+			// Portrait: bottom label bottom edge should be ≈ screenHeight - BorderStrokeThickness (edge-to-edge + stroke, no safe area applied)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"SoftInput: bottom label Y ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"SoftInput: bottom label Y ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
+// #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
 		[Test, Order(5)]
 		[Description("Default on Border behaves as None — content extends edge-to-edge")]
 		public void ValidateSafeAreaEdges_Default_Border()
@@ -198,17 +203,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be 0 (edge-to-edge, Default on Border = None)
+			// Portrait: top label Y should be BorderStrokeThickness (edge-to-edge + stroke, Default on Border = None)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"Default: top label Y ({topLabelRect.Y}) should be = 0 (edge-to-edge, Default on Border = None)");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"Default: top label Y ({topLabelRect.Y}) should be = BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke, Default on Border = None)");
 
-			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge)
+			// Portrait: bottom label bottom edge should be ≈ screenHeight - BorderStrokeThickness (edge-to-edge + stroke)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"Default: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Default: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
-#endif
+// #endif
 
 		// ──────────────────────────────────────────────
 		// Per-Edge Configuration (via Options)
@@ -236,13 +241,13 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// Portrait: Container — Border top padding absorbs safe area
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge, no safe area applied)
+			// Portrait: bottom label bottom edge should be ≈ screenHeight - BorderStrokeThickness (edge-to-edge + stroke, no safe area applied)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"None: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
 
 		[Test, Order(7)]
@@ -268,13 +273,13 @@ namespace Microsoft.Maui.TestCases.Tests
 			// Portrait: only validate top and bottom — no left/right safe area insets in portrait
 			// Top: Container — Border top padding absorbs safe area
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Top (Container): label Y ({topLabelRect.Y}) should be ≈ insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge, SoftInput without keyboard)
+			// Portrait: bottom label bottom edge should be ≈ screenHeight - BorderStrokeThickness (edge-to-edge + stroke, SoftInput without keyboard)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"SoftInput: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"SoftInput: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
 
 		[Test, Order(8)]
@@ -297,15 +302,15 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (All applies safe area on top)
+			// Portrait: top label Y should be ≈ insets.Top + BorderStrokeThickness (safe area + stroke)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"All: top label Y ({topLabelRect.Y}) should be = insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"All: top label Y ({topLabelRect.Y}) should be = insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom
+			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom - BorderStrokeThickness
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"All: bottom label Y ({bottomLabelRect.Bottom}) should be = (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"All: bottom label Y ({bottomLabelRect.Bottom}) should be = (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 		}
 
 		[Test, Order(9)]
@@ -328,22 +333,22 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (safe area applied)
+			// Portrait: top label Y should be ≈ insets.Top + BorderStrokeThickness (safe area + stroke)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Container: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Container: top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom
+			// Portrait: bottom label bottom edge should be ≈ screenBottom - insets.Bottom - BorderStrokeThickness
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"All: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"All: bottom label Y ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 		}
 
 		// ──────────────────────────────────────────────
 		// Keyboard Interaction (SoftInput)
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34846
+// #if TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34846
 
 		[Test, Order(10)]
 		[Description("None → All → keyboard open → Container → dismiss → All: positions correct at each step")]
@@ -361,24 +366,24 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("None"));
 
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"None: top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"None: top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"None: bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None: bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Step 2: Click All and verify ──
 			App.Tap("SafeAreaAllButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("All"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"All: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"All: top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"All: bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"All: bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			// ── Step 3: Open keyboard and verify (All adjusts for keyboard) ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -389,25 +394,25 @@ namespace Microsoft.Maui.TestCases.Tests
 			var keyboardY = GetKeyboardY();
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"All (keyboard open): top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"All (keyboard open): top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY),
-				$"All (keyboard open): bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"All (keyboard open): bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Step 4: Switch to Container while keyboard is open ──
 			App.Tap("SafeAreaContainerButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Container"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Container (keyboard open): top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Container (keyboard open): top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Container (keyboard open): bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Container (keyboard open): bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 #endif
 			// ── Step 5: Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -419,14 +424,14 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("All"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"All (after dismiss): top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"All (after dismiss): top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"All (after dismiss): bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"All (after dismiss): bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 		}
-#endif
+// #endif
 
 		// ──────────────────────────────────────────────
 		// Keyboard Position Validation
@@ -451,12 +456,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -466,10 +471,10 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var keyboardY = GetKeyboardY();
 
-			// Bottom should have moved up to the keyboard top
+			// Bottom should have moved up to the keyboard top (minus stroke)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// Top should remain unchanged
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
@@ -509,12 +514,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -524,10 +529,10 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var keyboardY = GetKeyboardY();
 
-			// Bottom should have moved up to the keyboard top
+			// Bottom should have moved up to the keyboard top (minus stroke)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// Top should remain unchanged
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
@@ -564,12 +569,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -578,13 +583,13 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(0),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelDuringRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -616,12 +621,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -631,8 +636,8 @@ namespace Microsoft.Maui.TestCases.Tests
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			// Bottom should not have moved up to the keyboard top
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 #endif
 			// Top should remain unchanged
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
@@ -658,7 +663,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// Keyboard + Runtime SafeArea Changes
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34847
+// #if TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34847
 
 		[Test, Order(15)]
 		[Description("Switch None to All while keyboard is open — bottom indicator moves up")]
@@ -675,12 +680,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard (None) ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard (None) ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -690,13 +695,13 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With None, bottom should NOT move
 			var topLabelDuringNoneRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(0),
-				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			// ── Switch to All while keyboard is open ──
 			App.Tap("SafeAreaAllButton");
@@ -706,26 +711,26 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With All, bottom should move up to keyboard top
 			var topLabelDuringAllRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringAllRect.Y), Is.EqualTo(insets.Top),
-				$"During keyboard (All) - top label Y ({topLabelDuringAllRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelDuringAllRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"During keyboard (All) - top label Y ({topLabelDuringAllRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelDuringAllRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringAllRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard (All) - bottom label Bottom ({bottomLabelDuringAllRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringAllRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard (All) - bottom label Bottom ({bottomLabelDuringAllRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			// After keyboard (All): top at insets.Top, bottom at (screenHeight - insets.Bottom)
+			// After keyboard (All): top at insets.Top + stroke, bottom at (screenHeight - insets.Bottom - stroke)
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 		}
 
 		[Test, Order(16)]
@@ -743,12 +748,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard (None) ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard (None) ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -758,13 +763,13 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With None, bottom should NOT move
 			var topLabelDuringNoneRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(0),
-				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			// ── Switch to SoftInput while keyboard is open ──
 			App.Tap("SafeAreaSoftInputButton");
@@ -774,28 +779,28 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With SoftInput, bottom should move up to keyboard top
 			var topLabelDuringSoftInputRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top),
-				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelDuringSoftInputRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard (SoftInput) - bottom label Bottom ({bottomLabelDuringSoftInputRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard (SoftInput) - bottom label Bottom ({bottomLabelDuringSoftInputRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			// After keyboard (SoftInput): top at insets.Top, bottom at screenHeight (edge-to-edge without keyboard)
+			// After keyboard (SoftInput): top at insets.Top + stroke, bottom at screenHeight - stroke (edge-to-edge without keyboard)
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight),
-				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
-#endif
+// #endif
 
 		[Test, Order(17)]
 		[Description("Switch All to None while keyboard is open — bottom indicator drops back")]
@@ -819,12 +824,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard (All) ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			// ── Show keyboard (All) ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -840,8 +845,8 @@ namespace Microsoft.Maui.TestCases.Tests
 				$"During keyboard (All) - top label Y ({topLabelDuringAllRect.Y}) should remain at ({topLabelBeforeRect.Y})");
 
 			var bottomLabelDuringAllRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringAllRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard (All) - bottom label Bottom ({bottomLabelDuringAllRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringAllRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard (All) - bottom label Bottom ({bottomLabelDuringAllRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Switch to None while keyboard is open ──
 			App.Tap("SafeAreaNoneButton");
@@ -849,27 +854,27 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With None, top goes edge-to-edge; bottom does NOT adjust for keyboard
 			var topLabelDuringNoneRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(0),
-				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			// After keyboard (None): top at 0, bottom at screenHeight
+			// After keyboard (None): top at stroke, bottom at screenHeight - stroke
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelAfterRect.Y, Is.EqualTo(0),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight),
-				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
 
 		[Test, Order(18)]
@@ -893,12 +898,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard (Container) ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			// ── Show keyboard (Container) ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -913,8 +918,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringContainerRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringContainerRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom),
-				$"During keyboard (Container) - bottom label Bottom ({bottomLabelDuringContainerRect.Bottom}) should equal (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(bottomLabelDuringContainerRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"During keyboard (Container) - bottom label Bottom ({bottomLabelDuringContainerRect.Bottom}) should equal (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 #endif
 			// ── Switch to SoftInput while keyboard is open ──
 			App.Tap("SafeAreaSoftInputButton");
@@ -924,29 +929,29 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With SoftInput, bottom should move up to keyboard top
 			var topLabelDuringSoftInputRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top),
-				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelDuringSoftInputRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard (SoftInput) - bottom label Bottom ({bottomLabelDuringSoftInputRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard (SoftInput) - bottom label Bottom ({bottomLabelDuringSoftInputRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			// After keyboard (SoftInput): top at insets.Top, bottom at screenHeight (edge-to-edge without keyboard)
+			// After keyboard (SoftInput): top at insets.Top + stroke, bottom at screenHeight - stroke (edge-to-edge without keyboard)
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight),
-				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 		}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34847
+// #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34847
 
 		[Test, Order(19)]
 		[Description("Keyboard open: cycle through None → All → Container → SoftInput → Default → None and verify positions")]
@@ -965,12 +970,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Verify None positions before keyboard ──
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"None (before keyboard) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"None (before keyboard) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"None (before keyboard) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None (before keyboard) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Open keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -982,13 +987,13 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Verify None with keyboard (no adjustment) ──
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"None (keyboard open) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"None (keyboard open) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"None (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			// ── Switch to All (keyboard still open) ──
 			App.Tap("SafeAreaAllButton");
@@ -997,70 +1002,70 @@ namespace Microsoft.Maui.TestCases.Tests
 			keyboardY = GetKeyboardY();
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"All (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"All (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY),
-				$"All (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"All (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Switch to Container (keyboard still open) ──
 			App.Tap("SafeAreaContainerButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Container"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"Container (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Container (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Container (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Container (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 #endif
 			// ── Switch to SoftInput (keyboard still open) ──
 			App.Tap("SafeAreaSoftInputButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"SoftInput (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"SoftInput (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY),
-				$"SoftInput (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"SoftInput (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// ── Switch to Default (keyboard still open) ── (Default on Border = None = edge-to-edge)
 			App.Tap("SafeAreaDefaultButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge, Default on Border = None)");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke, Default on Border = None)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			// ── Switch back to None (keyboard still open) ──
 			App.Tap("SafeAreaNoneButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("None"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0),
-				$"None (keyboard open, after cycle) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"None (keyboard open, after cycle) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight),
-				$"None (keyboard open, after cycle) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None (keyboard open, after cycle) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 		}
-#endif
+// #endif
 
 		// ──────────────────────────────────────────────
 		// Interaction with Border Properties
@@ -1128,21 +1133,21 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var (screenWidth, screenHeight) = GetScreenSize();
 
-			// Left: edge-to-edge
+			// Left: edge-to-edge + stroke
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftRect.X, Is.EqualTo(0),
-				$"None: left X ({leftRect.X}) should be = 0 (edge-to-edge)");
+			Assert.That(leftRect.X, Is.EqualTo(BorderStrokeThickness),
+				$"None: left X ({leftRect.X}) should be = BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-			// Right: edge-to-edge
+			// Right: edge-to-edge + stroke
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth),
-				$"None: right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"None: right edge ({rightEdge}) should be = screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
-			// Bottom: edge-to-edge
+			// Bottom: edge-to-edge + stroke
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight),
-				$"None: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"None: bottom edge ({bottomRect.Bottom}) should be = screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1164,22 +1169,22 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (screenWidth, screenHeight) = GetScreenSize();
 			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area
+			// Left: inset by safe area + stroke
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"All: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"All: left X ({leftRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: inset by safe area + stroke (Android uses display cutout for right inset)
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight),
-				$"All: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight - BorderStrokeThickness),
+				$"All: right edge ({rightEdge}) should be = screenWidth - expectedRight - BorderStrokeThickness ({screenWidth - expectedRight - BorderStrokeThickness})");
 
-			// Bottom: inset by safe area
+			// Bottom: inset by safe area + stroke
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom),
-				$"All: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom - BorderStrokeThickness),
+				$"All: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom - BorderStrokeThickness ({screenHeight - insetsLandscape.Bottom - BorderStrokeThickness})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1201,22 +1206,22 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (screenWidth, screenHeight) = GetScreenSize();
 			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area
+			// Left: inset by safe area + stroke
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Container: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"Container: left X ({leftRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: inset by safe area + stroke (Android uses display cutout for right inset)
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight),
-				$"Container: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight - BorderStrokeThickness),
+				$"Container: right edge ({rightEdge}) should be = screenWidth - expectedRight - BorderStrokeThickness ({screenWidth - expectedRight - BorderStrokeThickness})");
 
-			// Bottom: inset by safe area
+			// Bottom: inset by safe area + stroke
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom),
-				$"Container: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom - BorderStrokeThickness),
+				$"Container: bottom edge ({bottomRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom - BorderStrokeThickness ({screenHeight - insetsLandscape.Bottom - BorderStrokeThickness})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1238,28 +1243,28 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (screenWidth, screenHeight) = GetScreenSize();
 			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area
+			// Left: inset by safe area + stroke
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"SoftInput: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"SoftInput: left X ({leftRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: inset by safe area + stroke (Android uses display cutout for right inset)
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight),
-				$"SoftInput: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight - BorderStrokeThickness),
+				$"SoftInput: right edge ({rightEdge}) should be = screenWidth - expectedRight - BorderStrokeThickness ({screenWidth - expectedRight - BorderStrokeThickness})");
 
-			// Bottom: edge-to-edge (SoftInput doesn't avoid bottom without keyboard)
+			// Bottom: edge-to-edge + stroke (SoftInput doesn't avoid bottom without keyboard)
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight),
-				$"SoftInput: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"SoftInput: bottom edge ({bottomRect.Bottom}) should be = screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
+// #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
 		[Test, Order(26)]
 		[Description("Default: landscape left/right/bottom all edge-to-edge (Default on Border = None)")]
 		public void ValidateOrientation_Default_Landscape_Border()
@@ -1275,32 +1280,32 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var (screenWidth, screenHeight) = GetScreenSize();
 
-			// Left: edge-to-edge (Default on Border = None)
+			// Left: edge-to-edge + stroke (Default on Border = None)
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftRect.X, Is.EqualTo(0),
-				$"Default: left X ({leftRect.X}) should be = 0 (edge-to-edge)");
+			Assert.That(leftRect.X, Is.EqualTo(BorderStrokeThickness),
+				$"Default: left X ({leftRect.X}) should be = BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-			// Right: edge-to-edge
+			// Right: edge-to-edge + stroke
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth),
-				$"Default: right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"Default: right edge ({rightEdge}) should be = screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
-			// Bottom: edge-to-edge
+			// Bottom: edge-to-edge + stroke
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight),
-				$"Default: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Default: bottom edge ({bottomRect.Bottom}) should be = screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
-#endif
+// #endif
 
 		// ──────────────────────────────────────────────
 		// Landscape Keyboard Position Validation
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_ANDROID // In landscape mode on Android, the keyboard covers the entire screen, and Appium cannot find elements to validate their positions
+// #if TEST_FAILS_ON_ANDROID // In landscape mode on Android, the keyboard covers the entire screen, and Appium cannot find elements to validate their positions
 
 		[Test, Order(27)]
 		[Description("Landscape All: bottom moves up to keyboard, left/right stay inset")]
@@ -1321,17 +1326,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right - BorderStrokeThickness),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right - BorderStrokeThickness ({screenWidth - insetsLandscape.Right - BorderStrokeThickness})");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom - BorderStrokeThickness ({screenHeight - insetsLandscape.Bottom - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1343,8 +1348,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// Bottom should move up to keyboard top
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomDuringRect.Bottom, Is.EqualTo(keyboardY).Within(1),
-				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomDuringRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness).Within(1),
+				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// Left/Right should remain unchanged
 			var leftDuringRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
@@ -1398,17 +1403,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right - BorderStrokeThickness),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right - BorderStrokeThickness ({screenWidth - insetsLandscape.Right - BorderStrokeThickness})");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1420,8 +1425,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// Bottom should move up to keyboard top
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomDuringRect.Bottom, Is.EqualTo(keyboardY).Within(1),
-				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomDuringRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness).Within(1),
+				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			// Left/Right should remain unchanged
 			var leftDuringRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
@@ -1474,17 +1479,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftBeforeRect.X, Is.EqualTo(0),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = 0 (edge-to-edge)");
+			Assert.That(leftBeforeRect.X, Is.EqualTo(BorderStrokeThickness),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be = BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1494,18 +1499,18 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// Bottom should NOT move (None ignores keyboard)
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomDuringRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// Left/Right should remain unchanged
 			var leftDuringRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftDuringRect.X, Is.EqualTo(0),
-				$"During keyboard - left X ({leftDuringRect.X}) should remain at 0 (edge-to-edge)");
+			Assert.That(leftDuringRect.X, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard - left X ({leftDuringRect.X}) should remain at BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var rightDuringRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightDuringEdge = rightDuringRect.X + rightDuringRect.Width;
-			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth),
-				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -1548,17 +1553,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right - BorderStrokeThickness),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right - BorderStrokeThickness ({screenWidth - insetsLandscape.Right - BorderStrokeThickness})");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - insetsLandscape.Bottom - BorderStrokeThickness ({screenHeight - insetsLandscape.Bottom - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1603,7 +1608,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 		}
 
-#if TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
+// #if TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
 		[Test, Order(31)]
 		[Description("Landscape Default: all edges edge-to-edge with keyboard (Default on Border = None)")]
 		public void ValidateKeyboard_Default_Landscape_Border()
@@ -1620,19 +1625,19 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var (screenWidth, screenHeight) = GetScreenSize();
 
-			// ── Before keyboard (Default on Border = None = edge-to-edge) ──
+			// ── Before keyboard (Default on Border = None = edge-to-edge + stroke) ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftBeforeRect.X, Is.EqualTo(0),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = 0 (edge-to-edge)");
+			Assert.That(leftBeforeRect.X, Is.EqualTo(BorderStrokeThickness),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be = BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1642,18 +1647,18 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// Bottom should NOT move (Default = None ignores keyboard)
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomDuringRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
-			// Left/Right should remain unchanged (edge-to-edge)
+			// Left/Right should remain unchanged (edge-to-edge + stroke)
 			var leftDuringRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftDuringRect.X, Is.EqualTo(0),
-				$"During keyboard - left X ({leftDuringRect.X}) should remain at 0 (edge-to-edge)");
+			Assert.That(leftDuringRect.X, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard - left X ({leftDuringRect.X}) should remain at BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var rightDuringRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightDuringEdge = rightDuringRect.X + rightDuringRect.Width;
-			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth),
-				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -1667,14 +1672,14 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
 		}
-#endif
-#endif
+// #endif
+// #endif
 
 		// ──────────────────────────────────────────────
 		// Default + Keyboard (Portrait)
 		// ──────────────────────────────────────────────
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
+// #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/34872
 		[Test, Order(32)]
 		[Description("With Default (None on Border), bottom indicator does NOT move when keyboard is shown")]
 		public void ValidateKeyboard_Default_BottomStays_Border()
@@ -1689,14 +1694,14 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var (_, screenHeight) = GetScreenSize();
 
-			// ── Before keyboard (Default on Border = None = edge-to-edge) ──
+			// ── Before keyboard (Default on Border = None = edge-to-edge + stroke) ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1706,13 +1711,13 @@ namespace Microsoft.Maui.TestCases.Tests
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			// Bottom should NOT move (Default = None on Border — ignores keyboard)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
-			// Top should remain unchanged (edge-to-edge)
+			// Top should remain unchanged (edge-to-edge + stroke)
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(0),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(topLabelDuringRect.Y, Is.EqualTo(BorderStrokeThickness),
+				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -1726,7 +1731,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(bottomLabelAfterRect.Bottom, Is.EqualTo(bottomLabelBeforeRect.Bottom),
 				$"After keyboard - bottom label Bottom ({bottomLabelAfterRect.Bottom}) should return to original ({bottomLabelBeforeRect.Bottom})");
 		}
-#endif
+// #endif
 
 		// ──────────────────────────────────────────────
 		// Per-Edge + Keyboard (Portrait)
@@ -1753,8 +1758,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (_, screenHeight) = GetScreenSize();
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1763,8 +1768,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 #endif
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -1797,8 +1802,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (_, screenHeight) = GetScreenSize();
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1807,8 +1812,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 #if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 #endif
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -1840,8 +1845,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (_, screenHeight) = GetScreenSize();
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1851,8 +1856,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var keyboardY = GetKeyboardY();
 
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -1885,8 +1890,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (_, screenHeight) = GetScreenSize();
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1896,8 +1901,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			var keyboardY = GetKeyboardY();
 
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboard Y ({keyboardY})");
+			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(keyboardY - BorderStrokeThickness),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal keyboardY - BorderStrokeThickness ({keyboardY - BorderStrokeThickness})");
 
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -1936,16 +1941,16 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (screenWidth, screenHeight) = GetScreenSize();
 			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area (Container)
+			// Left: inset by safe area + stroke (Container)
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Left (Container): X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"Left (Container): X ({leftRect.X}) should be = insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
-			// Right: edge-to-edge (None)
+			// Right: edge-to-edge + stroke (None)
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth),
-				$"Right (None): right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - BorderStrokeThickness),
+				$"Right (None): right edge ({rightEdge}) should be = screenWidth - BorderStrokeThickness ({screenWidth - BorderStrokeThickness})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1973,10 +1978,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			var topPortraitRect = App.WaitForElement("TopEdgeIndicator").GetRect();
 			var bottomPortraitRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 
-			Assert.That(Math.Abs(topPortraitRect.Y), Is.EqualTo(insets.Top),
-				$"Portrait: top label Y ({topPortraitRect.Y}) should be equal to insets.Top ({insets.Top})");
-			Assert.That(Math.Abs(bottomPortraitRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom),
-				$"Portrait: bottom label Bottom ({bottomPortraitRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeight - insets.Bottom})");
+			Assert.That(Math.Abs(topPortraitRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness),
+				$"Portrait: top label Y ({topPortraitRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
+			Assert.That(Math.Abs(bottomPortraitRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness),
+				$"Portrait: bottom label Bottom ({bottomPortraitRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
 
 			// ── Rotate to landscape ──
 			App.SetOrientationLandscape();
@@ -1986,18 +1991,18 @@ namespace Microsoft.Maui.TestCases.Tests
 			var insetsLandscape = GetSafeAreaInsets();
 
 			var topLandscapeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLandscapeRect.Y), Is.EqualTo(insetsLandscape.Top),
-				$"Landscape: top label Y ({topLandscapeRect.Y}) should be equal to insetsLandscape.Top ({insetsLandscape.Top})");
+			Assert.That(Math.Abs(topLandscapeRect.Y), Is.EqualTo(insetsLandscape.Top + BorderStrokeThickness),
+				$"Landscape: top label Y ({topLandscapeRect.Y}) should be equal to insetsLandscape.Top + BorderStrokeThickness ({insetsLandscape.Top + BorderStrokeThickness})");
 
 			var leftLandscapeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftLandscapeRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Landscape: left X ({leftLandscapeRect.X}) should be equal to insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(Math.Abs(leftLandscapeRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokeThickness),
+				$"Landscape: left X ({leftLandscapeRect.X}) should be equal to insetsLandscape.Left + BorderStrokeThickness ({insetsLandscape.Left + BorderStrokeThickness})");
 
 			var rightLandscapeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightLandscapeEdge = rightLandscapeRect.X + rightLandscapeRect.Width;
 			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightLandscapeEdge), Is.EqualTo(screenWidthLandscape - expectedRight),
-				$"Landscape: right edge ({rightLandscapeEdge}) should be equal to screenWidth - expectedRight ({screenWidthLandscape - expectedRight})");
+			Assert.That(Math.Abs(rightLandscapeEdge), Is.EqualTo(screenWidthLandscape - expectedRight - BorderStrokeThickness),
+				$"Landscape: right edge ({rightLandscapeEdge}) should be equal to screenWidth - expectedRight - BorderStrokeThickness ({screenWidthLandscape - expectedRight - BorderStrokeThickness})");
 
 			// ── Rotate back to portrait ──
 			App.SetOrientationPortrait();
@@ -2007,12 +2012,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			var (_, screenHeightAfter) = GetScreenSize();
 
 			var topAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topAfterRect.Y), Is.EqualTo(insetsAfter.Top),
-				$"After roundtrip: top label Y ({topAfterRect.Y}) should be equal to insets.Top ({insetsAfter.Top})");
+			Assert.That(Math.Abs(topAfterRect.Y), Is.EqualTo(insetsAfter.Top + BorderStrokeThickness),
+				$"After roundtrip: top label Y ({topAfterRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insetsAfter.Top + BorderStrokeThickness})");
 
 			var bottomAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomAfterRect.Bottom), Is.EqualTo(screenHeightAfter - insetsAfter.Bottom),
-				$"After roundtrip: bottom label Bottom ({bottomAfterRect.Bottom}) should be equal to (screenHeight - insets.Bottom) ({screenHeightAfter - insetsAfter.Bottom})");
+			Assert.That(Math.Abs(bottomAfterRect.Bottom), Is.EqualTo(screenHeightAfter - insetsAfter.Bottom - BorderStrokeThickness),
+				$"After roundtrip: bottom label Bottom ({bottomAfterRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeightAfter - insetsAfter.Bottom - BorderStrokeThickness})");
 
 			// Verify positions match the original portrait positions
 			Assert.That(topAfterRect.Y, Is.EqualTo(topPortraitRect.Y),
