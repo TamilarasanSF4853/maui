@@ -98,6 +98,14 @@ namespace Microsoft.Maui.TestCases.Tests
 			return (size.Width, size.Height);
 		}
 
+		/// <summary>
+		/// Returns the effective right inset to use in landscape orientation.
+		/// On Android, the standard safe area <paramref name="right"/> inset is not updated correctly
+		/// when rotating to landscape. The display cutout value (<paramref name="cutoutR"/>) is correctly
+		/// updated and reflects the actual physical notch/cutout position in landscape,
+		/// so it is used instead.
+		/// On iOS, the regular <paramref name="right"/> safe area inset is accurate in all orientations.
+		/// </summary>
 		private int GetLandscapeRightInset(int right, int cutoutR)
 		{
 #if ANDROID
@@ -423,10 +431,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness).Within(PixelTolerance),
 				$"Container (keyboard open): top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness).Within(PixelTolerance),
 				$"Container (keyboard open): bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Step 5: Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -600,10 +610,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelDuringRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -647,11 +659,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToShow();
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
-			// Bottom should not have moved up to the keyboard top
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should equal (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// Top should remain unchanged
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
@@ -712,10 +725,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Switch to All while keyboard is open ──
 			App.Tap("SafeAreaAllButton");
@@ -780,10 +795,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Switch to SoftInput while keyboard is open ──
 			App.Tap("SafeAreaSoftInputButton");
@@ -871,10 +888,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelDuringNoneRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (None) - top label Y ({topLabelDuringNoneRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringNoneRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringNoneRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (None) - bottom label Bottom ({bottomLabelDuringNoneRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -930,10 +949,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelDuringContainerRect.Y, Is.EqualTo(topLabelBeforeRect.Y).Within(PixelTolerance),
 				$"During keyboard (Container) - top label Y ({topLabelDuringContainerRect.Y}) should remain at ({topLabelBeforeRect.Y})");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringContainerRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringContainerRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard (Container) - bottom label Bottom ({bottomLabelDuringContainerRect.Bottom}) should equal (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Switch to SoftInput while keyboard is open ──
 			App.Tap("SafeAreaSoftInputButton");
@@ -1004,10 +1025,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"None (keyboard open) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"None (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Switch to All (keyboard still open) ──
 			App.Tap("SafeAreaAllButton");
@@ -1031,10 +1054,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokeThickness).Within(PixelTolerance),
 				$"Container (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top + BorderStrokeThickness ({insets.Top + BorderStrokeThickness})");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness).Within(PixelTolerance),
 				$"Container (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Switch to SoftInput (keyboard still open) ──
 			App.Tap("SafeAreaSoftInputButton");
@@ -1056,10 +1081,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke, Default on Border = None)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Switch back to None (keyboard still open) ──
 			App.Tap("SafeAreaNoneButton");
@@ -1069,10 +1096,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokeThickness).Within(PixelTolerance),
 				$"None (keyboard open, after cycle) - top label Y ({topLabelRect.Y}) should be BorderStrokeThickness ({BorderStrokeThickness}) (edge-to-edge + stroke)");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"None (keyboard open, after cycle) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -1717,11 +1746,13 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToShow();
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			// Bottom should NOT move (Default = None on Border — ignores keyboard)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			// Top should remain unchanged (edge-to-edge + stroke)
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
@@ -1774,10 +1805,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToShow();
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at screenHeight - BorderStrokeThickness ({screenHeight - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
@@ -1818,10 +1851,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToShow();
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-#if !ANDROID // On Android, Appium does not find the bottom label when the keyboard is open
+#if IOS
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringRect.Bottom, Is.EqualTo(screenHeight - insets.Bottom - BorderStrokeThickness).Within(PixelTolerance),
 				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should stay at (screenHeight - insets.Bottom - BorderStrokeThickness) ({screenHeight - insets.Bottom - BorderStrokeThickness})");
+#else
+			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
