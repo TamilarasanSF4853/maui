@@ -10,6 +10,27 @@ namespace Microsoft.Maui.TestCases.Tests
 	{
 		public const string SafeAreaFeatureMatrix = "SafeArea Feature Matrix";
 		public override string GalleryPageName => SafeAreaFeatureMatrix;
+		private const int BorderStrokeThicknessDefault = 5;
+		private const int PixelTolerance = 1;
+
+		private static int? _borderStrokeThickness;
+		private int BorderStrokeThickness
+		{
+			get
+			{
+				if (_borderStrokeThickness == null)
+				{
+#if ANDROID
+					var rawDensity = ((AppiumApp)App).Driver.Capabilities.GetCapability("deviceScreenDensity");
+					var density = Convert.ToInt64(rawDensity) / 160.0;
+					_borderStrokeThickness = (int)Math.Ceiling(BorderStrokeThicknessDefault * density);
+#else
+					_borderStrokeThickness = BorderStrokeThicknessDefault;
+#endif
+				}
+				return _borderStrokeThickness.Value;
+			}
+		}
 
 		public SafeArea_BorderFeatureTests(TestDevice device)
 			: base(device)
@@ -76,11 +97,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			var size = ((AppiumApp)App).Driver.Manage().Window.Size;
 			return (size.Width, size.Height);
 		}
-
-		// Matches StrokeThickness="5" in SafeAreaBorderPage.xaml.
-		// The Border stroke is rendered on the inside, so all child content is
-		// displaced inward by this amount from every edge of the Border.
-		private const int BorderStrokeThickness = 5;
 
 		private int GetLandscapeRightInset(int right, int cutoutR)
 		{
