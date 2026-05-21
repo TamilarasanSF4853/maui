@@ -1309,11 +1309,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left).Within(PixelTolerance),
 				$"Default: left X ({leftRect.X}) should be ≈ insetsLandscape.Left ({insetsLandscape.Left}) (Default on Grid = Container)");
 
-			// Right: inset from system UI
+			// Right: inset from system UI (Android uses display cutout for right inset in landscape)
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(PixelTolerance),
-				$"Default: right edge ({rightEdge}) should be ≈ screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right}) (Default on Grid = Container)");
+			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight).Within(PixelTolerance),
+				$"Default: right edge ({rightEdge}) should be ≈ screenWidth - expectedRight ({screenWidth - expectedRight}) (Default on Grid = Container)");
 
 			// Bottom: inset from system UI
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -1655,8 +1656,9 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(PixelTolerance),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be ≈ screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right}) (Default on Grid = Container)");
+			var expectedRightDefault = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - expectedRightDefault).Within(PixelTolerance),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be ≈ screenWidth - expectedRight ({screenWidth - expectedRightDefault}) (Default on Grid = Container)");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(PixelTolerance),
@@ -1680,8 +1682,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			var rightDuringRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightDuringEdge = rightDuringRect.X + rightDuringRect.Width;
-			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(PixelTolerance),
-				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right}) (Default on Grid = Container)");
+			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth - expectedRightDefault).Within(PixelTolerance),
+				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth - expectedRight ({screenWidth - expectedRightDefault}) (Default on Grid = Container)");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
