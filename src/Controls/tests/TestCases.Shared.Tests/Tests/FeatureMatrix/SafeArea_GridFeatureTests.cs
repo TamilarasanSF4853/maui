@@ -194,7 +194,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(5)]
-		[Description("Default on Grid behaves as None — content extends edge-to-edge")]
+		[Description("Default on Grid behaves as Container — content inset from system UI (status bar, notch, home indicator)")]
 		public void ValidateSafeAreaEdges_Default_Grid()
 		{
 			ClickGridSafeAreaButton();
@@ -204,17 +204,18 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
+			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be 0 (edge-to-edge, Default on Grid = None)
+			// Portrait: top label Y should be ≈ insets.Top (Default on Grid = Container)
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0).Within(PixelTolerance),
-				$"Default: top label Y ({topLabelRect.Y}) should be = 0 (edge-to-edge, Default on Grid = None)");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top).Within(PixelTolerance),
+				$"Default: top label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top}) (Default on Grid = Container)");
 
-			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge)
+			// Portrait: bottom label bottom edge should be ≈ screenHeight - insets.Bottom (Default on Grid = Container)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"Default: bottom label Y ({bottomLabelRect.Bottom}) should be ≈ screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(PixelTolerance),
+				$"Default: bottom label Bottom ({bottomLabelRect.Bottom}) should be ≈ screenHeight - insets.Bottom ({screenHeight - insets.Bottom}) (Default on Grid = Container)");
 		}
 
 		// ──────────────────────────────────────────────
@@ -1053,18 +1054,18 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY).Within(PixelTolerance),
 				$"SoftInput (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should equal keyboardY ({keyboardY})");
 
-			// ── Switch to Default (keyboard still open) ── (Default on Grid = None = edge-to-edge)
+			// ── Switch to Default (keyboard still open) ── (Default on Grid = Container — inset from system UI, ignores keyboard)
 			App.Tap("SafeAreaDefaultButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelRect.Y, Is.EqualTo(0).Within(PixelTolerance),
-				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge, Default on Grid = None)");
+			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top).Within(PixelTolerance),
+				$"Default (keyboard open) - top label Y ({topLabelRect.Y}) should be ≈ insets.Top ({insets.Top}) (Default on Grid = Container)");
 
 #if IOS
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(PixelTolerance),
+				$"Default (keyboard open) - bottom label Bottom ({bottomLabelRect.Bottom}) should be ≈ screenHeight - insets.Bottom ({screenHeight - insets.Bottom}) (Default on Grid = Container, ignores keyboard)");
 #else
 			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
@@ -1288,7 +1289,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(26)]
-		[Description("Default: landscape left/right/bottom all edge-to-edge (Default on Grid = None)")]
+		[Description("Default: landscape left/right/bottom all inset from system UI (Default on Grid = Container)")]
 		public void ValidateOrientation_Default_Landscape_Grid()
 		{
 			ClickGridSafeAreaButton();
@@ -1301,22 +1302,23 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
+			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: edge-to-edge (Default on Grid = None)
+			// Left: inset from system UI (Default on Grid = Container)
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftRect.X, Is.EqualTo(0).Within(PixelTolerance),
-				$"Default: left X ({leftRect.X}) should be = 0 (edge-to-edge)");
+			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left).Within(PixelTolerance),
+				$"Default: left X ({leftRect.X}) should be ≈ insetsLandscape.Left ({insetsLandscape.Left}) (Default on Grid = Container)");
 
-			// Right: edge-to-edge
+			// Right: inset from system UI
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth).Within(PixelTolerance),
-				$"Default: right edge ({rightEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(PixelTolerance),
+				$"Default: right edge ({rightEdge}) should be ≈ screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right}) (Default on Grid = Container)");
 
-			// Bottom: edge-to-edge
+			// Bottom: inset from system UI
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"Default: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(PixelTolerance),
+				$"Default: bottom edge ({bottomRect.Bottom}) should be ≈ screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom}) (Default on Grid = Container)");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1630,7 +1632,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(31)]
-		[Description("Landscape Default: all edges edge-to-edge with keyboard (Default on Grid = None)")]
+		[Description("Landscape Default: all edges inset from system UI; keyboard does not move bottom (Default on Grid = Container)")]
 		public void ValidateKeyboard_Default_Landscape_Grid()
 		{
 			ClickGridSafeAreaButton();
@@ -1644,20 +1646,21 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
+			var insetsLandscape = GetSafeAreaInsets();
 
-			// ── Before keyboard (Default on Grid = None = edge-to-edge) ──
+			// ── Before keyboard (Default on Grid = Container — inset from system UI) ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftBeforeRect.X, Is.EqualTo(0).Within(PixelTolerance),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = 0 (edge-to-edge)");
+			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left).Within(PixelTolerance),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be ≈ insetsLandscape.Left ({insetsLandscape.Left}) (Default on Grid = Container)");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth).Within(PixelTolerance),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(PixelTolerance),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be ≈ screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right}) (Default on Grid = Container)");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be = screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(PixelTolerance),
+				$"Before keyboard - bottom edge ({bottomBeforeRect.Bottom}) should be ≈ screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom}) (Default on Grid = Container)");
 
 			// ── Show keyboard ──
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
@@ -1665,20 +1668,20 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToShow();
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
-			// Bottom should NOT move (Default = None ignores keyboard)
+			// Bottom should NOT move (Default = Container ignores keyboard)
 			var bottomDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomDuringRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomDuringRect.Bottom), Is.EqualTo(screenHeight - insetsLandscape.Bottom).Within(PixelTolerance),
+				$"During keyboard - bottom edge ({bottomDuringRect.Bottom}) should remain at screenHeight - insetsLandscape.Bottom ({screenHeight - insetsLandscape.Bottom}) (Container ignores keyboard)");
 
-			// Left/Right should remain unchanged (edge-to-edge)
+			// Left/Right should remain unchanged (Container — inset from system UI)
 			var leftDuringRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(leftDuringRect.X, Is.EqualTo(0).Within(PixelTolerance),
-				$"During keyboard - left X ({leftDuringRect.X}) should remain at 0 (edge-to-edge)");
+			Assert.That(Math.Abs(leftDuringRect.X), Is.EqualTo(insetsLandscape.Left).Within(PixelTolerance),
+				$"During keyboard - left X ({leftDuringRect.X}) should remain at insetsLandscape.Left ({insetsLandscape.Left}) (Default on Grid = Container)");
 
 			var rightDuringRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightDuringEdge = rightDuringRect.X + rightDuringRect.Width;
-			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth).Within(PixelTolerance),
-				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth ({screenWidth})");
+			Assert.That(Math.Abs(rightDuringEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(PixelTolerance),
+				$"During keyboard - right edge ({rightDuringEdge}) should remain at screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right}) (Default on Grid = Container)");
 
 			// ── Dismiss keyboard ──
 			App.DismissKeyboard();
@@ -1699,7 +1702,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		// ──────────────────────────────────────────────
 
 		[Test, Order(32)]
-		[Description("With Default (None on Grid), bottom indicator does NOT move when keyboard is shown")]
+		[Description("With Default (Container on Grid), top/bottom are inset from system UI and do NOT move when keyboard is shown")]
 		public void ValidateKeyboard_Default_BottomStays_Grid()
 		{
 			ClickGridSafeAreaButton();
@@ -1710,16 +1713,17 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("Default"));
 
+			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// ── Before keyboard (Default on Grid = None = edge-to-edge) ──
+			// ── Before keyboard (Default on Grid = Container — inset from system UI) ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0).Within(PixelTolerance),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top).Within(PixelTolerance),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be ≈ insets.Top ({insets.Top}) (Default on Grid = Container)");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(PixelTolerance),
+				$"Before keyboard - bottom label Bottom ({bottomLabelBeforeRect.Bottom}) should be ≈ screenHeight - insets.Bottom ({screenHeight - insets.Bottom}) (Default on Grid = Container)");
 
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should not be visible before tapping entry");
 			App.Tap("SafeAreaTestEntry");
@@ -1727,17 +1731,17 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.IsKeyboardShown(), Is.True, "Keyboard should be visible after tapping entry");
 
 #if IOS
-			// Bottom should NOT move (Default = None on Grid — ignores keyboard)
+			// Bottom should NOT move (Default = Container on Grid — ignores keyboard)
 			var bottomLabelDuringRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight).Within(PixelTolerance),
-				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should be equal to screenHeight ({screenHeight})");
+			Assert.That(Math.Abs(bottomLabelDuringRect.Bottom), Is.EqualTo(screenHeight - insets.Bottom).Within(PixelTolerance),
+				$"During keyboard - bottom label Bottom ({bottomLabelDuringRect.Bottom}) should remain at screenHeight - insets.Bottom ({screenHeight - insets.Bottom}) (Container ignores keyboard)");
 #else
 			App.WaitForNoElement("BottomEdgeIndicator"); // On Android, Appium does not find the bottom label when the keyboard is open
 #endif
-			// Top should remain unchanged (edge-to-edge)
+			// Top should remain unchanged (Container — inset from system UI)
 			var topLabelDuringRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(topLabelDuringRect.Y, Is.EqualTo(0).Within(PixelTolerance),
-				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should be 0 (edge-to-edge)");
+			Assert.That(Math.Abs(topLabelDuringRect.Y), Is.EqualTo(insets.Top).Within(PixelTolerance),
+				$"During keyboard - top label Y ({topLabelDuringRect.Y}) should remain at insets.Top ({insets.Top}) (Default on Grid = Container)");
 
 			App.DismissKeyboard();
 			App.WaitForKeyboardToHide();
