@@ -30,4 +30,9 @@ public partial class SafeAreaFeatureMainPage : ContentPage
 	{
 		Application.Current.Windows[0].Page = new SafeAreaBorderPage(_viewModel);
 	}
+
+	private void OnGridSafeAreaButtonClicked(object sender, EventArgs e)
+	{
+		Application.Current.Windows[0].Page = new SafeAreaGridPage(_viewModel);
+	}
 }
