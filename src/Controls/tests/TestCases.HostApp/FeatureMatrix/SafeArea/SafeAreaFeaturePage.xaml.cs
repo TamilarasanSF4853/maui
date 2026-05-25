@@ -35,4 +35,14 @@ public partial class SafeAreaFeatureMainPage : ContentPage
 	{
 		Application.Current.Windows[0].Page = new SafeAreaGridPage(_viewModel);
 	}
+
+	private void OnStackLayoutVerticalSafeAreaButtonClicked(object sender, EventArgs e)
+	{
+		Application.Current.Windows[0].Page = new SafeAreaStackLayoutVerticalPage(_viewModel);
+	}
+
+	private void OnStackLayoutHorizontalSafeAreaButtonClicked(object sender, EventArgs e)
+	{
+		Application.Current.Windows[0].Page = new SafeAreaStackLayoutHorizontalPage(_viewModel);
+	}
 }
