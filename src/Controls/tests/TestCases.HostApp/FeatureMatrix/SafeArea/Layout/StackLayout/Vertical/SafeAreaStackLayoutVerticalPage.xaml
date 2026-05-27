@@ -29,7 +29,8 @@
 
         <!-- Middle area: hosts left/right indicators and the main content -->
         <Grid VerticalOptions="FillAndExpand"
-              ColumnDefinitions="Auto,*,Auto">
+              ColumnDefinitions="Auto,*,Auto"
+              SafeAreaEdges="None">
 
             <!-- Left Edge Indicator -->
             <Label x:Name="LeftEdgeIndicator"
