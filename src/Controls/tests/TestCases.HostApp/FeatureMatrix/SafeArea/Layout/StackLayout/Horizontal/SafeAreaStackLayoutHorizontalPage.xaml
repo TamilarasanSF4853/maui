@@ -28,7 +28,8 @@
 
         <!-- Middle area: hosts top/bottom indicators and the main content -->
         <Grid HorizontalOptions="FillAndExpand"
-              RowDefinitions="Auto,*,Auto">
+              RowDefinitions="Auto,*,Auto"
+              SafeAreaEdges="None">
 
             <!-- Top Edge Indicator -->
             <Label x:Name="TopEdgeIndicator"
@@ -36,7 +37,7 @@
                    Text="TOP TEST AREA: This should move in/out of notch/status bar area when safe area is toggled"
                    BackgroundColor="Red"
                    TextColor="Black"
-                   FontSize="14"
+                   FontSize="12"
                    FontAttributes="Bold"
                    HorizontalOptions="Fill"
                    HorizontalTextAlignment="Center"
@@ -109,7 +110,7 @@
                    Text="BOTTOM TEST AREA: This should move in/out of home indicator/toolbar area when safe area is toggled"
                    BackgroundColor="Red"
                    TextColor="Black"
-                   FontSize="14"
+                   FontSize="12"
                    FontAttributes="Bold"
                    HorizontalOptions="Fill"
                    HorizontalTextAlignment="Center"
