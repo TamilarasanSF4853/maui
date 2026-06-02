@@ -22,5 +22,10 @@
                 HorizontalOptions="Center"
                 AutomationId="GridSafeAreaButton"
                 WidthRequest="400"/>
+        <Button Text="FlexLayout SafeArea"
+                Clicked="OnFlexLayoutSafeAreaButtonClicked"
+                HorizontalOptions="Center"
+                AutomationId="FlexLayoutSafeAreaButton"
+                WidthRequest="400"/>
     </VerticalStackLayout>
 </ContentPage>
