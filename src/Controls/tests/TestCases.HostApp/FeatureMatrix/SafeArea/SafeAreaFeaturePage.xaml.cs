@@ -35,4 +35,9 @@ public partial class SafeAreaFeatureMainPage : ContentPage
 	{
 		Application.Current.Windows[0].Page = new SafeAreaGridPage(_viewModel);
 	}
+
+	private void OnAbsoluteLayoutSafeAreaButtonClicked(object sender, EventArgs e)
+	{
+		Application.Current.Windows[0].Page = new SafeAreaAbsoluteLayoutPage(_viewModel);
+	}
 }
