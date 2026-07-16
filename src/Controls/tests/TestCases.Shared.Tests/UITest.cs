@@ -423,12 +423,30 @@ namespace Microsoft.Maui.TestCases.Tests
 
 				var actualImage = new ImageSnapshot(screenshotPngBytes, ImageSnapshotFormat.PNG);
 
+				// Read the Android status bar height dynamically (Android-only API).
+				// GetSystemBars() returns { "statusBar": { "height": ..., "visible": ..., ... }, "navigationBar": {...} }.
+				int androidStatusBarHeight = 0;
+				if (_testDevice == TestDevice.Android)
+				{
+					var systemBars = HelperExtensions.GetSystemBars(App);
+					if (systemBars.TryGetValue("statusBar", out var statusBarObj) &&
+						statusBarObj is IDictionary<string, object> statusBar &&
+						statusBar.TryGetValue("height", out var heightObj))
+					{
+						androidStatusBarHeight = Convert.ToInt32(heightObj);
+					}
+					else
+					{
+						throw new InvalidOperationException("Unable to read Android statusBar.height from GetSystemBars(). Screenshot cropping requires this value.");
+					}
+				}
+
 				// For Android and iOS, crop off the OS status bar at the top since it's not part of the
 				// app itself and contains the time, which always changes. For WinUI, crop off the title
 				// bar at the top as it varies slightly based on OS theme and is also not part of the app.
 				int cropFromTop = _testDevice switch
 				{
-					TestDevice.Android => environmentName == "android-notch-36" ? 112 : 60,
+					TestDevice.Android => androidStatusBarHeight,
 					TestDevice.iOS => environmentName == "ios-iphonex" ? 90 : 110,
 					TestDevice.Windows => 32,
 					TestDevice.Mac => 29,
