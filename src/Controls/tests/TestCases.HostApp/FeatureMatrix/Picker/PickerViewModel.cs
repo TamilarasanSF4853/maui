@@ -22,7 +22,6 @@ public class PickerViewModel : INotifyPropertyChanged
 	private object _selectedItem = null;
 	private Shadow _shadow = null;
 	private Color _textColor = Colors.Black;
-	private TextTransform _textTransform = TextTransform.None;
 	private string _title = "Picker Title";
 	private Color _titleColor = Colors.Black;
 	private TextAlignment _verticalTextAlignment = TextAlignment.Center;
@@ -261,19 +260,6 @@ public class PickerViewModel : INotifyPropertyChanged
 		}
 	}
 
-	public TextTransform TextTransform
-	{
-		get => _textTransform;
-		set
-		{
-			if (_textTransform != value)
-			{
-				_textTransform = value;
-				OnPropertyChanged();
-			}
-		}
-	}
-
 	public string Title
 	{
 		get => _title;
@@ -335,7 +321,6 @@ public class PickerViewModel : INotifyPropertyChanged
 		_selectedItem = null;
 		_shadow = null;
 		_textColor = Colors.Black;
-		_textTransform = TextTransform.None;
 		_title = "Picker Title";
 		_titleColor = Colors.Black;
 		_verticalTextAlignment = TextAlignment.Center;
@@ -355,7 +340,6 @@ public class PickerViewModel : INotifyPropertyChanged
 		OnPropertyChanged(nameof(SelectedItem));
 		OnPropertyChanged(nameof(Shadow));
 		OnPropertyChanged(nameof(TextColor));
-		OnPropertyChanged(nameof(TextTransform));
 		OnPropertyChanged(nameof(Title));
 		OnPropertyChanged(nameof(TitleColor));
 		OnPropertyChanged(nameof(VerticalTextAlignment));
