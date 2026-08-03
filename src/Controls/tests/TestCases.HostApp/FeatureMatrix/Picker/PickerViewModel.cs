@@ -15,7 +15,9 @@ public class PickerViewModel : INotifyPropertyChanged
 	private TextAlignment _horizontalTextAlignment = TextAlignment.Start;
 	private bool _isEnabled = true;
 	private BindingBase _itemDisplayBinding = null;
+	private bool _isOpen = false;
 	private bool _isVisible = true;
+	private ObservableCollection<object> _itemsSource;
 	private int _selectedIndex = -1;
 	private object _selectedItem = null;
 	private Shadow _shadow = null;
@@ -41,7 +43,7 @@ public class PickerViewModel : INotifyPropertyChanged
 
 	private void InitializeItemsSource()
 	{
-		ItemsSource = new ObservableCollection<object>
+		_itemsSource = new ObservableCollection<object>
 			{
 				new PickerDataItem { Name = "Option 1", Description = "First option" },
 				new PickerDataItem { Name = "Option 2", Description = "Second option" },
@@ -51,7 +53,18 @@ public class PickerViewModel : INotifyPropertyChanged
 			};
 	}
 
-	public ObservableCollection<object> ItemsSource { get; private set; }
+	public ObservableCollection<object> ItemsSource
+	{
+		get => _itemsSource;
+		set
+		{
+			if (_itemsSource != value)
+			{
+				_itemsSource = value;
+				OnPropertyChanged();
+			}
+		}
+	}
 
 	public double CharacterSpacing
 	{
@@ -165,6 +178,19 @@ public class PickerViewModel : INotifyPropertyChanged
 			if (_itemDisplayBinding != value)
 			{
 				_itemDisplayBinding = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public bool IsOpen
+	{
+		get => _isOpen;
+		set
+		{
+			if (_isOpen != value)
+			{
+				_isOpen = value;
 				OnPropertyChanged();
 			}
 		}
@@ -303,6 +329,7 @@ public class PickerViewModel : INotifyPropertyChanged
 		_horizontalTextAlignment = TextAlignment.Start;
 		_isEnabled = true;
 		// _itemDisplayBinding = null;
+		_isOpen = false;
 		_isVisible = true;
 		_selectedIndex = -1;
 		_selectedItem = null;
@@ -322,6 +349,7 @@ public class PickerViewModel : INotifyPropertyChanged
 		OnPropertyChanged(nameof(HorizontalTextAlignment));
 		OnPropertyChanged(nameof(IsEnabled));
 		// OnPropertyChanged(nameof(ItemDisplayBinding));
+		OnPropertyChanged(nameof(IsOpen));
 		OnPropertyChanged(nameof(IsVisible));
 		OnPropertyChanged(nameof(SelectedIndex));
 		OnPropertyChanged(nameof(SelectedItem));
@@ -331,5 +359,14 @@ public class PickerViewModel : INotifyPropertyChanged
 		OnPropertyChanged(nameof(Title));
 		OnPropertyChanged(nameof(TitleColor));
 		OnPropertyChanged(nameof(VerticalTextAlignment));
+	}
+
+	// Clears ItemsSource before setting SelectedIndex so the value is stored as pending, then restores items to trigger pending-apply.
+	public void TestPendingSelectedIndex(int pendingIndex)
+	{
+		var savedItems = ItemsSource;
+		ItemsSource = null;
+		SelectedIndex = pendingIndex;
+		ItemsSource = savedItems;
 	}
 }

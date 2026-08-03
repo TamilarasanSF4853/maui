@@ -25,9 +25,11 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		[Test, Order(1)]
 		[Category(UITestCategories.Picker)]
-		public void Picker_Validate_VerifyLabels()
+		public void Picker_InitialState_VerifyDefaults()
 		{
 			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("-1"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.Empty);
 			VerifyPickerScreenshot();
 		}
 
@@ -64,6 +66,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("Picker");
 			App.WaitForElement("Option 3 - Third option");
 			App.Tap("Option 3 - Third option");
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("2"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 3 - Third option"));
 			VerifyPickerScreenshot();
 		}
 #endif
@@ -82,6 +86,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
 			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("1"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 2 - Second option"));
 			VerifyPickerScreenshot();
 		}
 
@@ -99,6 +104,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
 			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 4 - Fourth option"));
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("3"));
 			VerifyPickerScreenshot();
 		}
 
@@ -288,6 +294,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 2 - Second option"));
 			VerifyPickerScreenshot();
 		}
 
@@ -326,6 +333,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 3 - Third option"));
 			VerifyPickerScreenshot();
 		}
 
@@ -381,6 +389,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("2"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 3 - Third option"));
 			VerifyPickerScreenshot();
 		}
 
@@ -503,6 +513,54 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
 			Assert.That(App.FindElement("SelectedIndexChangedStatusLabel").GetText(), Is.EqualTo("Triggered"));
+		}
+
+		[Test, Order(28)]
+		[Category(UITestCategories.Picker)]
+		public void Picker_ToggleIsOpen_VerifyOpenedAndClosedEvents()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("ToggleIsOpenButton");
+			App.Tap("ToggleIsOpenButton");
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("OpenedEventStatusLabel").GetText(), Is.EqualTo("Opened"));
+			Assert.That(App.FindElement("ClosedEventStatusLabel").GetText(), Is.EqualTo("Closed"));
+		}
+
+		[Test, Order(29)]
+		[Category(UITestCategories.Picker)]
+		public void Picker_SetSelectedIndexOutOfRange_VerifyClampedToLastItem()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("SelectedIndexEntry");
+			App.ClearText("SelectedIndexEntry");
+			App.EnterText("SelectedIndexEntry", "99");
+			App.PressEnter();
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElement("Picker");
+			// SelectedIndexLabel binds to the ViewModel and reflects the input (99) because two-way binding does not sync coerced values back to the source;
+			// clamping is verified via SelectedItem, which is updated from the picker's internal clamped index (4) as an independent target change.
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 5 - Fifth option"));
+		}
+
+		[Test, Order(30)]
+		[Category(UITestCategories.Picker)]
+		public void Picker_SetSelectedIndexBeforeItemsSourcePopulated_VerifyPendingSelectionApplied()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("TestPendingSelectedIndexButton");
+			App.Tap("TestPendingSelectedIndexButton");
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("2"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 3 - Third option"));
 		}
 	}
 }

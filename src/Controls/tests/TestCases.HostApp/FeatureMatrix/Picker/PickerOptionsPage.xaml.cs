@@ -204,4 +204,16 @@ public partial class PickerOptionsPage : ContentPage
 			}
 		}
 	}
+
+	// Fires Opened then Closed synchronously so the platform dialog doesn't linger while Options page is on top.
+	private void ToggleIsOpenButton_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.IsOpen = true;
+		_viewModel.IsOpen = false;
+	}
+
+	private void TestPendingSelectedIndexButton_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.TestPendingSelectedIndex(2);
+	}
 }

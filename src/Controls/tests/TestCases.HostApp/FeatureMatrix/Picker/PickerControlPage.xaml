@@ -32,6 +32,7 @@
                              FontSize="{Binding FontSize}"
                              HorizontalTextAlignment="{Binding HorizontalTextAlignment}"
                              IsEnabled="{Binding IsEnabled}"
+                             IsOpen="{Binding IsOpen}"
                              IsVisible="{Binding IsVisible}"
                              Shadow="{Binding Shadow}"
                              TextColor="{Binding TextColor}"
@@ -39,6 +40,8 @@
                              TitleColor="{Binding TitleColor}"
                              VerticalTextAlignment="{Binding VerticalTextAlignment}"
                              SelectedIndexChanged="Picker_SelectedIndexChanged"
+                             Opened="Picker_Opened"
+                             Closed="Picker_Closed"
                              HeightRequest="100"
                              AutomationId="Picker"/>
               </Grid>
@@ -82,5 +85,31 @@
                      FontSize="16"
                      HorizontalTextAlignment="Center"
                      AutomationId="SelectedIndexChangedStatusLabel"/>
+
+              <!-- Opened Event -->
+              <Label Grid.Row="4"
+                     Grid.Column="0"
+                     FontSize="16"
+                     Text="Opened Event:"
+                     HorizontalTextAlignment="Center"/>
+              <Label Grid.Row="4"
+                     Grid.Column="1"
+                     x:Name="OpenedEventStatusLabel"
+                     FontSize="16"
+                     HorizontalTextAlignment="Center"
+                     AutomationId="OpenedEventStatusLabel"/>
+
+              <!-- Closed Event -->
+              <Label Grid.Row="5"
+                     Grid.Column="0"
+                     FontSize="16"
+                     Text="Closed Event:"
+                     HorizontalTextAlignment="Center"/>
+              <Label Grid.Row="5"
+                     Grid.Column="1"
+                     x:Name="ClosedEventStatusLabel"
+                     FontSize="16"
+                     HorizontalTextAlignment="Center"
+                     AutomationId="ClosedEventStatusLabel"/>
        </Grid>
 </ContentPage>

@@ -271,6 +271,20 @@
                                          FontSize="14"
                                          CheckedChanged="OnIsVisibleCheckedChanged"/>
                      </StackLayout>
+
+                     <!-- IsOpen Events -->
+                     <Label Text="IsOpen Events:"
+                            FontSize="15"/>
+                     <Button Text="Toggle IsOpen"
+                             Clicked="ToggleIsOpenButton_Clicked"
+                             AutomationId="ToggleIsOpenButton"/>
+
+                     <!-- Pending SelectedIndex -->
+                     <Label Text="Pending Selection:"
+                            FontSize="15"/>
+                     <Button Text="Test Pending SelectedIndex"
+                             Clicked="TestPendingSelectedIndexButton_Clicked"
+                             AutomationId="TestPendingSelectedIndexButton"/>
               </StackLayout>
        </Grid>
 </ContentPage>
