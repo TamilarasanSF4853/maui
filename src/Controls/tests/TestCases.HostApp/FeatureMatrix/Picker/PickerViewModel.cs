@@ -353,4 +353,14 @@ public class PickerViewModel : INotifyPropertyChanged
 		SelectedIndex = pendingIndex;
 		ItemsSource = savedItems;
 	}
+
+	public void ClearSelectedItem() => SelectedItem = null;
+
+	// Sets SelectedIndex, then bypasses the equality guard and re-notifies so the Binding re-pushes the same value to the Picker.
+	public void TestSelectedIndexIdempotency(int index)
+	{
+		SelectedIndex = index;
+		_selectedIndex = index;
+		OnPropertyChanged(nameof(SelectedIndex));
+	}
 }

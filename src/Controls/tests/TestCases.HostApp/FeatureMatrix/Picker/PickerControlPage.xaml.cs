@@ -14,6 +14,7 @@ public class PickerControlPage : NavigationPage
 public partial class PickerControlMainPage : ContentPage
 {
 	private PickerViewModel _viewModel;
+	private int _selectedIndexChangedCount;
 
 	public PickerControlMainPage(PickerViewModel viewModel)
 	{
@@ -26,7 +27,10 @@ public partial class PickerControlMainPage : ContentPage
 	{
 		_viewModel.ResetToDefaults();
 		await Navigation.PushAsync(new PickerOptionsPage(_viewModel));
+		// Reset counter after the reset-driven event fires but before the user interacts with the Options page.
+		_selectedIndexChangedCount = 0;
 		SelectedIndexChangedStatusLabel.Text = string.Empty;
+		SelectedIndexChangedCountLabel.Text = string.Empty;
 		OpenedEventStatusLabel.Text = string.Empty;
 		ClosedEventStatusLabel.Text = string.Empty;
 	}
@@ -34,6 +38,8 @@ public partial class PickerControlMainPage : ContentPage
 	private void Picker_SelectedIndexChanged(object sender, EventArgs e)
 	{
 		SelectedIndexChangedStatusLabel.Text = "Triggered";
+		_selectedIndexChangedCount++;
+		SelectedIndexChangedCountLabel.Text = _selectedIndexChangedCount.ToString();
 	}
 
 	private void Picker_Opened(object sender, PickerOpenedEventArgs e)

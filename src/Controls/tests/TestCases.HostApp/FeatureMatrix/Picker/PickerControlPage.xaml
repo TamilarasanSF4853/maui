@@ -86,6 +86,19 @@
                      HorizontalTextAlignment="Center"
                      AutomationId="SelectedIndexChangedStatusLabel"/>
 
+              <!-- Event Count -->
+              <Label Grid.Row="6"
+                     Grid.Column="0"
+                     FontSize="16"
+                     Text="SelectedIndexChanged Count:"
+                     HorizontalTextAlignment="Center"/>
+              <Label Grid.Row="6"
+                     Grid.Column="1"
+                     x:Name="SelectedIndexChangedCountLabel"
+                     FontSize="16"
+                     HorizontalTextAlignment="Center"
+                     AutomationId="SelectedIndexChangedCountLabel"/>
+
               <!-- Opened Event -->
               <Label Grid.Row="4"
                      Grid.Column="0"

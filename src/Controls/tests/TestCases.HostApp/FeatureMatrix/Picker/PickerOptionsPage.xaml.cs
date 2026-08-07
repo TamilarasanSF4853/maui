@@ -216,4 +216,14 @@ public partial class PickerOptionsPage : ContentPage
 	{
 		_viewModel.TestPendingSelectedIndex(2);
 	}
+
+	private void ClearSelectedItemButton_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.ClearSelectedItem();
+	}
+
+	private void TestSelectedIndexIdempotencyButton_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.TestSelectedIndexIdempotency(2);
+	}
 }

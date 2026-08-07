@@ -263,6 +263,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("Apply");
 			App.WaitForElement("Picker");
 			App.Tap("Picker");
+			// A disabled Picker must not open in response to a tap; the Opened event proves this.
+			Assert.That(App.FindElement("OpenedEventStatusLabel").GetText(), Is.Empty);
 			VerifyPickerScreenshot();
 		}
 
@@ -561,6 +563,60 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("2"));
 			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.EqualTo("Option 3 - Third option"));
+		}
+
+		[Test, Order(31)]
+		[Category(UITestCategories.Picker)]
+		public void Picker_SetSelectedItemNull_VerifySelectionCleared()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("SelectedIndexEntry");
+			App.ClearText("SelectedIndexEntry");
+			App.EnterText("SelectedIndexEntry", "2");
+			App.PressEnter();
+			App.WaitForElement("ClearSelectedItemButton");
+			App.Tap("ClearSelectedItemButton");
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("-1"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.Empty);
+		}
+
+		[Test, Order(32)]
+		[Category(UITestCategories.Picker)]
+		public void Picker_SetSelectedIndexMinusOne_VerifySelectionCleared()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("SelectedIndexEntry");
+			App.ClearText("SelectedIndexEntry");
+			App.EnterText("SelectedIndexEntry", "2");
+			App.PressEnter();
+			App.ClearText("SelectedIndexEntry");
+			App.EnterText("SelectedIndexEntry", "-1");
+			App.PressEnter();
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElement("Picker");
+			Assert.That(App.FindElement("SelectedIndexLabel").GetText(), Is.EqualTo("-1"));
+			Assert.That(App.FindElement("SelectedItemLabel").GetText(), Is.Empty);
+		}
+
+		[Test, Order(33)]
+		[Category(UITestCategories.Picker)]
+		public void Picker_SelectedIndexChanged_VerifyIdempotency()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("TestSelectedIndexIdempotencyButton");
+			App.Tap("TestSelectedIndexIdempotencyButton");
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElement("Picker");
+			// Assigning the same SelectedIndex value twice must fire SelectedIndexChanged only once.
+			Assert.That(App.FindElement("SelectedIndexChangedCountLabel").GetText(), Is.EqualTo("1"));
 		}
 	}
 }

@@ -230,10 +230,10 @@
                      </StackLayout>
 
                      <!-- Font Family -->
-                     <Label Text="Font Family:"
-                            FontSize="15"/>
                      <StackLayout Orientation="Horizontal"
                                   Spacing="5">
+                            <Label Text="Font Family:"
+                                   FontSize="15"/>
                             <RadioButton GroupName="FontFamily"
                                          AutomationId="FontFamilyDokdoButton"
                                          CheckedChanged="OnFontFamilyRadioButtonCheckedChanged"
@@ -254,9 +254,9 @@
                      </StackLayout>
 
                      <!-- Is Visible -->
-                     <Label Text="Is Visible:"
-                            FontSize="15"/>
                      <StackLayout Orientation="Horizontal">
+                            <Label Text="Is Visible:"
+                                   FontSize="15"/>
                             <RadioButton x:Name="IsVisibleTrueRadio"
                                          AutomationId="IsVisibleTrueRadio"
                                          GroupName="IsVisible"
@@ -273,18 +273,23 @@
                      </StackLayout>
 
                      <!-- IsOpen Events -->
-                     <Label Text="IsOpen Events:"
-                            FontSize="15"/>
                      <Button Text="Toggle IsOpen"
                              Clicked="ToggleIsOpenButton_Clicked"
                              AutomationId="ToggleIsOpenButton"/>
 
                      <!-- Pending SelectedIndex -->
-                     <Label Text="Pending Selection:"
-                            FontSize="15"/>
                      <Button Text="Test Pending SelectedIndex"
                              Clicked="TestPendingSelectedIndexButton_Clicked"
                              AutomationId="TestPendingSelectedIndexButton"/>
+                     <!-- Clear SelectedItem -->
+                     <Button Text="Clear SelectedItem"
+                             Clicked="ClearSelectedItemButton_Clicked"
+                             AutomationId="ClearSelectedItemButton"/>
+
+                     <!-- SelectedIndex Idempotency -->
+                     <Button Text="Test SelectedIndex Idempotency"
+                             Clicked="TestSelectedIndexIdempotencyButton_Clicked"
+                             AutomationId="TestSelectedIndexIdempotencyButton"/>
               </StackLayout>
        </Grid>
 </ContentPage>
