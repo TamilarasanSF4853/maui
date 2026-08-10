@@ -44,8 +44,9 @@ namespace Microsoft.Maui.TestCases.Tests
 			VerifyPickerScreenshot();
 
 #if IOS
-			App.WaitForElement("Done");
-			App.Tap("Done");
+			var dismissId = App is AppiumIOSApp iosApp && HelperExtensions.IsIOS26OrHigher(iosApp) ? "selected" : "Done";
+			App.WaitForElement(dismissId);
+			App.Tap(dismissId);
 #elif WINDOWS
 			App.Tap("Option 2 - Second option");
 #endif
