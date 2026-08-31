@@ -25,10 +25,9 @@ public partial class PickerControlMainPage : ContentPage
 
 	private async void NavigateToOptionsPage_Clicked(object sender, EventArgs e)
 	{
-		_viewModel = new PickerViewModel();
-		BindingContext = _viewModel;
+		_viewModel.ResetToDefaults();
 		await Navigation.PushAsync(new PickerOptionsPage(_viewModel));
-		// Reset counter after the rebind-driven event fires but before the user interacts with the Options page.
+		// Reset counter after the reset-driven event fires but before the user interacts with the Options page.
 		_selectedIndexChangedCount = 0;
 		SelectedIndexChangedStatusLabel.Text = string.Empty;
 		SelectedIndexChangedCountLabel.Text = string.Empty;

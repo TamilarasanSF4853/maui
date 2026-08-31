@@ -304,6 +304,47 @@ public class PickerViewModel : INotifyPropertyChanged
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
+	public void ResetToDefaults()
+	{
+		_characterSpacing = 0;
+		_flowDirection = FlowDirection.LeftToRight;
+		_fontAttributes = FontAttributes.None;
+		_fontAutoScalingEnabled = true;
+		_fontFamily = null;
+		_fontSize = -1;
+		_horizontalTextAlignment = TextAlignment.Start;
+		_isEnabled = true;
+		// _itemDisplayBinding = null;
+		_isOpen = false;
+		_isVisible = true;
+		_selectedIndex = -1;
+		_selectedItem = null;
+		_shadow = null;
+		_textColor = Colors.Black;
+		_title = "Picker Title";
+		_titleColor = Colors.Black;
+		_verticalTextAlignment = TextAlignment.Center;
+
+		OnPropertyChanged(nameof(CharacterSpacing));
+		OnPropertyChanged(nameof(FlowDirection));
+		OnPropertyChanged(nameof(FontAttributes));
+		OnPropertyChanged(nameof(FontAutoScalingEnabled));
+		OnPropertyChanged(nameof(FontFamily));
+		OnPropertyChanged(nameof(FontSize));
+		OnPropertyChanged(nameof(HorizontalTextAlignment));
+		OnPropertyChanged(nameof(IsEnabled));
+		// OnPropertyChanged(nameof(ItemDisplayBinding));
+		OnPropertyChanged(nameof(IsOpen));
+		OnPropertyChanged(nameof(IsVisible));
+		OnPropertyChanged(nameof(SelectedIndex));
+		OnPropertyChanged(nameof(SelectedItem));
+		OnPropertyChanged(nameof(Shadow));
+		OnPropertyChanged(nameof(TextColor));
+		OnPropertyChanged(nameof(Title));
+		OnPropertyChanged(nameof(TitleColor));
+		OnPropertyChanged(nameof(VerticalTextAlignment));
+	}
+
 	// Clears ItemsSource before setting SelectedIndex so the value is stored as pending, then restores items to trigger pending-apply.
 	public void TestPendingSelectedIndex(int pendingIndex)
 	{
