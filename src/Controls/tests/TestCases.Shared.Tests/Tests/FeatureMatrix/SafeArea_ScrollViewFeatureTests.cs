@@ -205,7 +205,7 @@ namespace Microsoft.Maui.TestCases.Tests
 #if TEST_FAILS_ON_IOS // On iOS, when setting SoftInput, the bottom label are positioned incorrectly
 
 		[Test, Order(4)]
-		[Description("ScrollView SoftInput respects safe area on top/sides but bottom is edge-to-edge without keyboard")]
+		[Description("ScrollView SoftInput is edge-to-edge")]
 		public void Validate_ScrollView_SafeAreaEdges_SoftInput()
 		{
 			ClickScrollViewSafeAreaButton();
@@ -214,13 +214,12 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("SafeAreaSoftInputButton");
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Verify top label: Y should be ≈ insets.Top (SoftInput respects notch/safe area)
+			// SoftInput flows beneath system bars and notches.
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"SoftInput: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelRect.Y, Is.EqualTo(0),
+				$"SoftInput: top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
 
 			// Scroll to bottom to verify bottom label
 			ScrollToBottom();
@@ -556,13 +555,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(0),
+				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be 0 (edge-to-edge)");
 
 			ScrollToBottom();
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -839,8 +837,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With SoftInput, bottom should move up to keyboard top
 			var topLabelDuringSoftInputRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top),
-				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelDuringSoftInputRect.Y, Is.EqualTo(0),
+				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be 0 (edge-to-edge)");
 
 			var bottomLabelDuringSoftInputRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY).Within(1),
@@ -852,8 +850,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(0),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be 0 (edge-to-edge)");
 
 			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -1001,8 +999,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With SoftInput, bottom should move up to keyboard top
 			var topLabelDuringSoftInputRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top),
-				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelDuringSoftInputRect.Y, Is.EqualTo(0),
+				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be 0 (edge-to-edge)");
 
 			var bottomLabelDuringSoftInputRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY).Within(1),
@@ -1014,8 +1012,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(0),
+				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be 0 (edge-to-edge)");
 
 			ScrollToBottom();
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -1110,8 +1108,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top),
-				$"SoftInput (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelRect.Y, Is.EqualTo(0),
+				$"SoftInput (keyboard open) - top label Y ({topLabelRect.Y}) should be 0 (edge-to-edge)");
 
 			ScrollToBottom();
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -1367,7 +1365,7 @@ namespace Microsoft.Maui.TestCases.Tests
 #if TEST_FAILS_ON_IOS // On iOS, when setting SoftInput, the bottom label are positioned incorrectly
 
 		[Test, Order(25)]
-		[Description("SoftInput: landscape left/right inset by safe area, bottom edge-to-edge")]
+		[Description("SoftInput: landscape edges are edge-to-edge")]
 		public void Validate_ScrollView_Orientation_SoftInput_Landscape()
 		{
 			ClickScrollViewSafeAreaButton();
@@ -1380,19 +1378,17 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area
+			// Left: edge-to-edge
 			var leftRectBeforeScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRectBeforeScroll.X), Is.EqualTo(insetsLandscape.Left),
-				$"SoftInput: left X ({leftRectBeforeScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftRectBeforeScroll.X, Is.EqualTo(0),
+				$"SoftInput: left X ({leftRectBeforeScroll.X}) should be 0 (edge-to-edge)");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: edge-to-edge
 			var rightRectBeforeScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdgeBeforeScroll = rightRectBeforeScroll.X + rightRectBeforeScroll.Width;
-			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdgeBeforeScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"SoftInput: right edge ({rightEdgeBeforeScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdgeBeforeScroll), Is.EqualTo(screenWidth).Within(1),
+				$"SoftInput: right edge ({rightEdgeBeforeScroll}) should be = screenWidth ({screenWidth})");
 
 			// Bottom: edge-to-edge (SoftInput doesn't avoid bottom without keyboard)
 			ScrollToBottom();
@@ -1400,16 +1396,16 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(Math.Abs(bottomRect.Bottom), Is.EqualTo(screenHeight).Within(1),
 				$"SoftInput: bottom edge ({bottomRect.Bottom}) should be = screenHeight ({screenHeight})");
 
-			// Left: inset by safe area
+			// Left: edge-to-edge
 			var leftRectAfterScroll = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRectAfterScroll.X), Is.EqualTo(insetsLandscape.Left),
-				$"SoftInput: left X ({leftRectAfterScroll.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftRectAfterScroll.X, Is.EqualTo(0),
+				$"SoftInput: left X ({leftRectAfterScroll.X}) should be 0 (edge-to-edge)");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: edge-to-edge
 			var rightRectAfterScroll = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdgeAfterScroll = rightRectAfterScroll.X + rightRectAfterScroll.Width;
-			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth - expectedRight).Within(1),
-				$"SoftInput: right edge ({rightEdgeAfterScroll}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(Math.Abs(rightEdgeAfterScroll), Is.EqualTo(screenWidth).Within(1),
+				$"SoftInput: right edge ({rightEdgeAfterScroll}) should be = screenWidth ({screenWidth})");
 
 			App.SetOrientationPortrait();
 			Thread.Sleep(1000);
@@ -1555,7 +1551,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(28)]
-		[Description("Landscape SoftInput: bottom moves up to keyboard, left/right stay inset")]
+		[Description("Landscape SoftInput: bottom moves up to keyboard while left/right stay edge-to-edge")]
 		public void Validate_ScrollView_Keyboard_SoftInput_Landscape()
 		{
 			ClickScrollViewSafeAreaButton();
@@ -1569,17 +1565,16 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftBeforeRect.X, Is.EqualTo(0),
+				$"Before keyboard - left X ({leftBeforeRect.X}) should be 0 (edge-to-edge)");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right).Within(1),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right})");
+			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth).Within(1),
+				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth ({screenWidth})");
 
 			ScrollToBottom();
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
