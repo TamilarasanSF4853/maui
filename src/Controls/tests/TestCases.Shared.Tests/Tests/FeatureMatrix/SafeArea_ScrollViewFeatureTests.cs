@@ -170,7 +170,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			ScrollToTop();
 		}
 
-#if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the top label and bottom label are positioned incorrectly
+#if TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/36863
 
 		[Test, Order(3)]
 		[Description("ScrollView content avoids system bars/notch but can extend under keyboard area")]
@@ -202,7 +202,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // On iOS, when setting SoftInput, the bottom label are positioned incorrectly
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/36770
 
 		[Test, Order(4)]
 		[Description("ScrollView SoftInput is edge-to-edge")]
@@ -234,7 +234,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the top label and bottom label are positioned incorrectly
+#if TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/36863
 
 		[Test, Order(5)]
 		[Description("ScrollView Default applies safe area insets on all edges (behaves like Container)")]
@@ -1362,7 +1362,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // On iOS, when setting SoftInput, the bottom label are positioned incorrectly
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/36770
 
 		[Test, Order(25)]
 		[Description("SoftInput: landscape edges are edge-to-edge")]
@@ -1413,7 +1413,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-#if TEST_FAILS_ON_IOS // On iOS, when setting Container or Default, the top label and bottom label are positioned incorrectly
+#if TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/36863
 
 		[Test, Order(26)]
 		[Description("Default: landscape left/right/bottom inset by safe area (Default behaves like Container)")]
