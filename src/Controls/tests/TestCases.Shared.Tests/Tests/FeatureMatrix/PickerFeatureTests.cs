@@ -102,8 +102,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			VerifyPickerScreenshot();
 		}
 
-#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30464
-
 		[Test, Order(6)]
 		[Category(UITestCategories.Picker)]
 		public void Picker_SetCharacterSpacing_VerifyCharacterSpacingLabel()
@@ -119,9 +117,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			VerifyPickerScreenshot();
 		}
-#endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30463, https://github.com/dotnet/maui/issues/30464
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30463
 
 		[Test, Order(7)]
 		[Category(UITestCategories.Picker)]

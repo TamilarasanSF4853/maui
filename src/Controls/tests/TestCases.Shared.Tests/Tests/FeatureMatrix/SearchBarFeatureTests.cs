@@ -42,7 +42,7 @@ public class SearchBarFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/14061
+#if TEST_FAILS_ON_ANDROID // Issue Link - https://github.com/dotnet/maui/issues/14061
 
 	[Test, Order(2)]
 	[Category(UITestCategories.SearchBar)]
@@ -379,7 +379,7 @@ public class SearchBarFeatureTests : _GalleryUITest
 		App.WaitForNoElement("SearchBar");
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/29547
+#if TEST_FAILS_ON_ANDROID // Issue Link - https://github.com/dotnet/maui/issues/29547
 
         [Test, Order(21)]
         [Category(UITestCategories.SearchBar)]
@@ -473,7 +473,7 @@ public class SearchBarFeatureTests : _GalleryUITest
 		Assert.That(textLength, Is.EqualTo(10));
 	}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30366
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30366
 
 	[Test, Order(26)]
 	[Category(UITestCategories.SearchBar)]
@@ -581,7 +581,7 @@ public class SearchBarFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30366
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30366
 
 	[Test, Order(32)]
 	[Category(UITestCategories.SearchBar)]
@@ -618,7 +618,7 @@ public class SearchBarFeatureTests : _GalleryUITest
 		Assert.That(text, Is.EqualTo("SEARCHTEXT"));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS
 
     [Test, Order(34)]
     [Category(UITestCategories.SearchBar)]

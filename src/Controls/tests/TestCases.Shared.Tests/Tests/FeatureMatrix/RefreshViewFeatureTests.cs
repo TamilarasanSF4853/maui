@@ -132,8 +132,6 @@ public class RefreshViewFeatureTests : _GalleryUITest
 		App.WaitForNoElement("RefreshView");
 	}
 
-#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30535
-
 	[Test, Order(9)]
 	[Category(UITestCategories.RefreshView)]
 	public void RefreshView_SetIsRefreshingAndScrollView_VerifyStatusChanges()
@@ -181,7 +179,6 @@ public class RefreshViewFeatureTests : _GalleryUITest
 		App.WaitForElement("RefreshView");
 		Assert.That(App.FindElement("IsRefreshingValueLabel").GetText(), Is.EqualTo("True"));
 	}
-#endif
 
 #if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/29812
 

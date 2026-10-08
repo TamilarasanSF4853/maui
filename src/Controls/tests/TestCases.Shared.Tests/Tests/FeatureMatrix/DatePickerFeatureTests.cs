@@ -15,7 +15,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	{
 	}
 
-#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS //Issue Link: https://github.com/dotnet/maui/issues/30736, https://github.com/dotnet/maui/issues/31167
+#if TEST_FAILS_ON_IOS //Issue Link: https://github.com/dotnet/maui/issues/31167
 	[Test, Order(1)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_InitialState_VerifyVisualState()
@@ -84,7 +84,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS // Issue Links - https://github.com/dotnet/maui/issues/30066, https://github.com/dotnet/maui/issues/31167
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Links - https://github.com/dotnet/maui/issues/31167
 	[Test, Order(4)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetCharacterSpacingAndDate_VerifyVisualState()
