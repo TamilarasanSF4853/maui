@@ -955,7 +955,6 @@ public class EntryFeatureTests : _GalleryUITest
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
 
-#if TEST_FAILS_ON_WINDOWS //related issue link: https://github.com/dotnet/maui/issues/30071
 	[Test]
 	public void VerifyPlaceholderWithCharacterSpacing()
 	{
@@ -971,7 +970,6 @@ public class EntryFeatureTests : _GalleryUITest
 		App.WaitForElement("TestEntry");
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
-#endif
 
 	[Test]
 	public void VerifyPlaceholderWithFontFamily()

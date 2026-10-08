@@ -464,7 +464,6 @@ public class ImageFeatureTests : _GalleryUITest
 		Assert.That(tapResult, Is.EqualTo("Tapped"));
 	}
 
-#if TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/36694
 	[Test, Order(27)]
 	[Category(UITestCategories.Image)]
 	public void VerifyImageWithBackgroundColorYellow()
@@ -480,8 +479,8 @@ public class ImageFeatureTests : _GalleryUITest
 		App.WaitForElement(ImageControl);
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/36302, https://github.com/dotnet/maui/issues/36694
+
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/36302
 	[Test, Order(28)]
 	[Category(UITestCategories.Image)]
 	public void VerifyImageWithBackgroundColorNone()
