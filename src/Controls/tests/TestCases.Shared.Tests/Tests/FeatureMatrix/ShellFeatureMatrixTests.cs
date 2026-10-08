@@ -619,7 +619,7 @@ public class ShellFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/32416
+#if TEST_FAILS_ON_ANDROID // Issue Link: https://github.com/dotnet/maui/issues/32416
 	[Test, Order(30)]
 	[Category(UITestCategories.Shell)]
 	public void VerifyShellFlyout_FlyoutVerticalScrollModeDisabled()
@@ -636,7 +636,13 @@ public class ShellFeatureTests : _GalleryUITest
 		App.TapShellFlyoutIcon();
 		App.WaitForElement(OpenFlyout);
 		App.ScrollDown("MenuItem1", ScrollStrategy.Gesture, 0.99, 1000);
+#if WINDOWS // After scrolling down, the flyout closes on Windows, so we need to open it again
+		App.TapShellFlyoutIcon();
+#endif
 		App.ScrollDown("MenuItem2", ScrollStrategy.Gesture, 0.99, 1000);
+#if WINDOWS
+		App.TapShellFlyoutIcon();
+#endif
 		App.WaitForElement("MenuItem1");
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
@@ -697,7 +703,7 @@ public class ShellFeatureTests : _GalleryUITest
 		FlyoutScreenshot();
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_MACCATALYST && TEST_FAILS_ON_WINDOWS// Issue Link: https://github.com/dotnet/maui/issues/32419, https://github.com/dotnet/maui/issues/32476
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST// Issue Link: https://github.com/dotnet/maui/issues/32419
 	[Test, Order(34)]
 	[Category(UITestCategories.Shell)]
 	public void VerifyShellFlyout_FlyoutBehaviorDisabledAndRTL()
@@ -759,7 +765,7 @@ public class ShellFeatureTests : _GalleryUITest
 		FlyoutScreenshot();
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_MACCATALYST && TEST_FAILS_ON_WINDOWS// Issue Link: https://github.com/dotnet/maui/issues/32419, https://github.com/dotnet/maui/issues/32476
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/32419
 	[Test, Order(38)]
 	[Category(UITestCategories.Shell)]
 	public void VerifyShellFlyout_FlowDirection()
@@ -977,7 +983,7 @@ public class ShellFeatureTests : _GalleryUITest
 		App.Tap(Apply);
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_MACCATALYST && TEST_FAILS_ON_WINDOWS  //Issue Link: https://github.com/dotnet/maui/issues/32419, https://github.com/dotnet/maui/issues/32476
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST  //Issue Link: https://github.com/dotnet/maui/issues/32419
 	[Test, Order(49)]
 	[Category(UITestCategories.Shell)]
 	public void VerifyShellFlyout_FlyoutIsPresentedAndRTL()
