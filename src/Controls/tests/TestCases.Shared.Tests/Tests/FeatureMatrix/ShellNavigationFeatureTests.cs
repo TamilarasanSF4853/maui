@@ -630,7 +630,6 @@ public class ShellNavigationFeatureTests : _GalleryUITest
 			Does.Contain("Source=ShellItemChanged"));
 	}
 
-#if TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/34318
 	// Navigating event fires with Source=ShellContentChanged when switching ShellContent tabs.
 	[Test, Order(34)]
 	[ShardedTestCategory(UITestCategories.Shell, shard: 2)]
@@ -666,7 +665,6 @@ public class ShellNavigationFeatureTests : _GalleryUITest
 			Is.EqualTo("ShellContentChanged"));
 		GoBackToMain();
 	}
-#endif
 
 	// Navigating event fires with Source=ShellSectionChanged when switching ShellSection tabs.
 	[Test, Order(36)]
