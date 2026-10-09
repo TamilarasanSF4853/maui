@@ -142,7 +142,7 @@ public class RefreshViewFeatureTests : _GalleryUITest
 		App.Tap("IsRefreshingTrueRadioButton");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("RefreshView");
+		App.WaitForElement("Options");
 		App.WaitForElement("ScrollViewContentButton");
 		App.Tap("ScrollViewContentButton");
 		Assert.That(App.FindElement("IsRefreshingValueLabel").GetText(), Is.EqualTo("True"));
@@ -158,7 +158,7 @@ public class RefreshViewFeatureTests : _GalleryUITest
 		App.Tap("IsRefreshingTrueRadioButton");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("RefreshView");
+		App.WaitForElement("Options");
 		App.WaitForElement("CollectionViewContentButton");
 		App.Tap("CollectionViewContentButton");
 		Assert.That(App.FindElement("IsRefreshingValueLabel").GetText(), Is.EqualTo("True"));
@@ -176,7 +176,7 @@ public class RefreshViewFeatureTests : _GalleryUITest
 		App.Tap("RefreshColorRedRadio");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("RefreshView");
+		App.WaitForElement("Options");
 		Assert.That(App.FindElement("IsRefreshingValueLabel").GetText(), Is.EqualTo("True"));
 	}
 
