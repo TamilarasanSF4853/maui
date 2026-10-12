@@ -455,7 +455,7 @@ public class ShellPagesFeatureTests : _GalleryUITest
 	}
 #endif 
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS// Issue Link: https://github.com/dotnet/maui/issues/33909
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/33909
 	[Test, Order(30)]
 	[Category(UITestCategories.Shell)]
 	public void ShellPages_VerifyForegroundColorResetForBackButton()
