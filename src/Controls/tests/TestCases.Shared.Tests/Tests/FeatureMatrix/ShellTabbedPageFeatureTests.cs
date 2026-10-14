@@ -167,7 +167,7 @@ public class ShellTabbedPageFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/32996, https://github.com/dotnet/maui/issues/33158
+#if TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/33158
 	[Test, Order(10)]
 	[Category(UITestCategories.Shell)]
 	public void VerifyShell_TabBarIsEnabled()
@@ -313,7 +313,7 @@ public class ShellTabbedPageFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST //Issue Link:  https://github.com/dotnet/maui/issues/32994
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //Issue Link:  https://github.com/dotnet/maui/issues/32994
 	[Test, Order(18)]
 	[Category(UITestCategories.Shell)]
 	public void VerifyShell_TabBarIsVisible()

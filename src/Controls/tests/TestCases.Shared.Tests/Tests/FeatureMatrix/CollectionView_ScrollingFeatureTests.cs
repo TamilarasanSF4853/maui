@@ -85,7 +85,6 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 		VerifyScreenshot();
 	}
 
-#if TEST_FAILS_ON_WINDOWS // [Windows] NullReferenceException thrown When Toggling IsGrouped to True in ObservableCollection Binding Issue Link: https://github.com/dotnet/maui/issues/28824
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 2)]
 	public void VerifyMeasureAllItemsWithGroupedList()
@@ -140,7 +139,6 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 		App.Tap(Apply);
 		VerifyScreenshot();
 	}
-#endif
 
 #if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST
 	//CollectionView2 ItemSizingStrategy="MeasureFirstItem" Fails to Apply Correct Sizing Issue Link: https://github.com/dotnet/maui/issues/29130
@@ -1221,7 +1219,7 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 #endif
 #endif
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // In windows, related issue: https://github.com/dotnet/maui/issues/34772
+#if TEST_FAILS_ON_ANDROID // In windows, related issue: https://github.com/dotnet/maui/issues/34772
 	//[Android] KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link:  https://github.com/dotnet/maui/issues/29131
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 4)]
@@ -1307,9 +1305,8 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 		App.WaitForElement("Pumpkin");
 	}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS
 //CollectionView Fails to Preserve Scroll Offset with GridItemsLayout Using KeepScrollOffset Issue Link: https://github.com/dotnet/maui/issues/29202
-//CollectionView ItemsLayout does not update while switch from LinearItemsLayout to GridItemsLayout Issue Link: https://github.com/dotnet/maui/issues/27946
 //CollectionView CollectionView2 doesnot change ItemsLayout Issue Link: https://github.com/dotnet/maui/issues/28656
 
 	[Test]
@@ -1337,6 +1334,7 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 		Assert.That(App.WaitForElement("ScrolledEventLabel").GetText(), Is.EqualTo("Fired"));
 	}
 
+#if TEST_FAILS_ON_WINDOWS //CollectionView ItemsLayout does not update while switch from LinearItemsLayout to GridItemsLayout Issue Link: https://github.com/dotnet/maui/issues/27946
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 7)]
 	public void VerifyKeepScrollOffsetWithObservableListWhenHorizontalList()
@@ -1389,6 +1387,7 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 		App.WaitForElement("Cabbage");
 		Assert.That(App.WaitForElement("ScrolledEventLabel").GetText(), Is.EqualTo("Fired"));
 	}
+#endif
 
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 4)]
@@ -1574,7 +1573,6 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 	}
 
 	// ScrollTo By Index Tests
-#if TEST_FAILS_ON_WINDOWS // Related issue: https://github.com/dotnet/maui/issues/34772
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 4)]
 	public void VerifyScrollToByIndexWithMakeVisiblePositionAndVerticalList_Carrot()
@@ -1787,7 +1785,6 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 		Assert.That(App.WaitForElement("ItemLabel").GetText(), Is.EqualTo("Carrot"));
 		VerifyScreenshot();
 	}
-#endif
 
 	// Grouped ScrollTo By Index Tests
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS // Issue - https://github.com/dotnet/maui/issues/17664
