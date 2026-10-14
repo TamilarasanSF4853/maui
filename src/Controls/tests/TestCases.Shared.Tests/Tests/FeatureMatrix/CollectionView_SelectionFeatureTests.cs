@@ -145,7 +145,7 @@ public class CollectionView_SelectionFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS //In CV2 related issue link: https://github.com/dotnet/maui/issues/28509 and In windows, relates issue: https://github.com/dotnet/maui/issues/28824
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //In CV2 related issue link: https://github.com/dotnet/maui/issues/28509 
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 6)]
 	public void VerifySelectionModeNoneWhenItemsSourceGroupList()
