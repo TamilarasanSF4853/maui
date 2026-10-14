@@ -50,7 +50,7 @@ public class TimePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30199
+#if TEST_FAILS_ON_CATALYST // Issue Link - https://github.com/dotnet/maui/issues/30199
 
 	[Test, Order(4)]
 	public void TimePicker_SetTimeAndCharacterSpacing_VerifyVisualState()

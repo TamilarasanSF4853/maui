@@ -448,7 +448,7 @@ public class TitleBarFeatureTests : _GalleryUITest
 		VerifyScreenshot(includeTitleBar: true);
 	}
 
-#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_MACCATALYST //For more information see: https://github.com/dotnet/maui/issues/30399
+#if TEST_FAILS_ON_CATALYST //For more information see: https://github.com/dotnet/maui/issues/30399
 	[Test]
 	[Category(UITestCategories.TitleView)]
 	public void TitleBar_RTL_WithTrailingContentAndLeadingContent()
