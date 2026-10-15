@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // The app crashes on Windows on CI causing NoSuchWindowException: Currently selected window has been closed
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -21,4 +20,3 @@ public class Issue23832 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif

@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS //Test failing on windows for more information see https://github.com/dotnet/maui/issues/18481
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -17,11 +16,9 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 
 		[Test]
 		[ShardedTestCategory(UITestCategories.CollectionView, shard: 4)]
-		[FailsOnWindowsWhenRunningOnXamarinUITest]
 		public void AddingItemsToGroupedCollectionViewShouldNotCrash()
 		{
 			App.WaitForElement(Success, timeout: TimeSpan.FromSeconds(5));
 		}
 	}
 }
-#endif
