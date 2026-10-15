@@ -1,5 +1,3 @@
-#if TEST_FAILS_ON_WINDOWS
-// https://github.com/dotnet/maui/issues/13027 In windows, .NET MAUI CollectionView does not reorder when grouped
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -21,4 +19,3 @@ public class Issue28530 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif

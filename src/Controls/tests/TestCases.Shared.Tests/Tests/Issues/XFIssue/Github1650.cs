@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // Need to Implement App.PressEnter() for Catalyst and Windows.
+﻿#if TEST_FAILS_ON_CATALYST // Need to Implement App.PressEnter() for Catalyst
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using UITest.Appium;
