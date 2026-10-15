@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // test fails on windows , see https://github.com/dotnet/maui/issues/29930
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,4 +19,3 @@ public class Issue11812 : _IssuesUITest
 		App.WaitForElement("ChangeInnerContent");
 	}
 }
-#endif
