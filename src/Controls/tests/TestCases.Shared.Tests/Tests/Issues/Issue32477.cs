@@ -1,5 +1,4 @@
 
-#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/32416
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -27,4 +26,3 @@ public class Issue32477 : _IssuesUITest
 		App.WaitForElement("Item 1");
 	}
 }
-#endif
