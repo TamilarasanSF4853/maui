@@ -1219,8 +1219,7 @@ public class CollectionView_ScrollingFeatureTests : _GalleryUITest
 #endif
 #endif
 
-#if TEST_FAILS_ON_ANDROID // In windows, related issue: https://github.com/dotnet/maui/issues/34772
-	//[Android] KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link:  https://github.com/dotnet/maui/issues/29131
+#if TEST_FAILS_ON_ANDROID //[Android] KeepScrollOffset doesn't not works as expected when new items are added in CollectionView Issue Link:  https://github.com/dotnet/maui/issues/29131
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 4)]
 	public void VerifyKeepScrollOffsetWithObservableList()
