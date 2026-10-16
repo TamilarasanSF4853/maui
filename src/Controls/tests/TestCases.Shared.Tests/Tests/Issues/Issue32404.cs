@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_WINDOWS // https://github.com/dotnet/maui/issues/18551
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -23,4 +22,3 @@ public class Issue32404 : _IssuesUITest
         VerifyScreenshot("FlowDirectionShouldWorkOnEmptyView_LeftToRight");
     }
 }
-#endif

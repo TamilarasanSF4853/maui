@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_WINDOWS // Existing PR for windows - https://github.com/dotnet/maui/pull/26728
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -27,4 +26,3 @@ public class Issue33158 : _IssuesUITest
 		App.WaitForElement("SecondPageLabel");
 	}
 }
-#endif
