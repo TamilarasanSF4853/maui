@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // This issue was resolved for both iOS and macOS in this PR: https://github.com/dotnet/maui/pull/31258
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -26,4 +25,3 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		}
 	}
 }
-#endif

@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // Issue Link - https://github.com/dotnet/maui/issues/32477
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -21,4 +20,3 @@ public class Issue32416 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif

@@ -350,7 +350,6 @@ public class AbsoluteLayoutFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/31496
 	[Test]
 	[Category(UITestCategories.Layout)]
 	public void VerifyAbsoluteLayout_BackgroundColor()
@@ -391,5 +390,4 @@ public class AbsoluteLayoutFeatureTests : _GalleryUITest
 		App.Tap(Apply);
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 }

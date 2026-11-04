@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_ANDROID // Issue Link for Android: https://github.com/dotnet/maui/issues/30576
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -24,4 +23,3 @@ public class Issue30006 : _IssuesUITest
 		Assert.That(downsizedLabelText, Is.EqualTo("Success"));
 	}
 }
-#endif

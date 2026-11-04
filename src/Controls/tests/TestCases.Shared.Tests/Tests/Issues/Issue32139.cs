@@ -1,4 +1,4 @@
-#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // Related issues have been reported for both Android and Windows : Android (https://github.com/dotnet/maui/issues/29529) and Windows (https://github.com/dotnet/maui/issues/31670)
+#if TEST_FAILS_ON_WINDOWS // Related issues have been reported for Windows : Windows (https://github.com/dotnet/maui/issues/31670)
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

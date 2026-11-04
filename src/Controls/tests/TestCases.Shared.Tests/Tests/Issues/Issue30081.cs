@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST	  // More Info: https://github.com/dotnet/maui/issues/32271
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -19,4 +18,3 @@ public class Issue30081 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif
