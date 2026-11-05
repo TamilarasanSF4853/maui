@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // Test fails on Android , see https://github.com/dotnet/maui/issues/11812
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,4 +19,3 @@ public class Issue29930 : _IssuesUITest
 		App.WaitForElement("ChangeInnerContent");
 	}
 }
-#endif

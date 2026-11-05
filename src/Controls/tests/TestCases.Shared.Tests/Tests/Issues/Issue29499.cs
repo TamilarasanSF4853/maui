@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Secondary ToolBar still not supported for Shell page of iOS and Catalyst Issue Link: https://github.com/dotnet/maui/issues/30674
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -25,4 +24,3 @@ public class Issue29499 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif

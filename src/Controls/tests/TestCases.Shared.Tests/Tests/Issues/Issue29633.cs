@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_CATALYST // Highlighting Not Working Properly on Mac Catalyst, https://github.com/dotnet/maui/issues/27519
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -22,4 +21,3 @@ public class Issue29633 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif
