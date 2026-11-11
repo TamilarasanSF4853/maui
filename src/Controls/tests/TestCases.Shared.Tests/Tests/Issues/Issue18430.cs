@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // https://github.com/dotnet/maui/issues/30783
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,4 +19,3 @@ public class Issue18430 : _IssuesUITest
 		App.WaitForElement("Issue18430DescriptionLabel");
 	}
 }
-#endif

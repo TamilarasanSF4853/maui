@@ -1,5 +1,3 @@
-#if TEST_FAILS_ON_CATALYST // TabBar not visible on Catalyst: https://github.com/dotnet/maui/issues/32329
-
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -22,4 +20,3 @@ public class Issue12324 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif

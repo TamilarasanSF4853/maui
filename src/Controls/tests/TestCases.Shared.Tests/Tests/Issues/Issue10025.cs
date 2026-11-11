@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Select items traces are preserved Issue Link - https://github.com/dotnet/maui/issues/26187
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -24,4 +23,3 @@ public class Issue10025 : _IssuesUITest
 		VerifyScreenshot();
 	}
 }
-#endif

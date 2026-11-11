@@ -60,7 +60,6 @@ public class WebViewFeatureTests : _GalleryUITest
 		Assert.That(App.FindElement(CanGoForwardLabel).GetText(), Is.EqualTo("False"));
 	}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/30381
 	[Test, Order(2)]
 	[Category(UITestCategories.WebView)]
 	public void WebView_VerifyCanGoBackForward()
@@ -86,7 +85,6 @@ public class WebViewFeatureTests : _GalleryUITest
 		App.WaitForElement(CanGoForwardLabel, timeout: TimeSpan.FromSeconds(5));
 		Assert.That(App.FindElement(CanGoForwardLabel).GetText(), Is.EqualTo("True"));
 	}
-#endif
 
 	[Test, Order(3)]
 	[Category(UITestCategories.WebView)]
@@ -234,7 +232,6 @@ public class WebViewFeatureTests : _GalleryUITest
 		Assert.That(navigatedText, Is.EqualTo("Navigated: Success"));
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/30515
 	[Test]
 	[Category(UITestCategories.WebView)]
 	public void WebView_VerifyReloadFunctionalityForHtmlWebViewSource()
@@ -249,7 +246,6 @@ public class WebViewFeatureTests : _GalleryUITest
 		var navigatedText = App.FindElement(NavigatedStatusLabel).GetText();
 		Assert.That(navigatedText, Is.EqualTo("Navigated: Success"));
 	}
-#endif
 
 	[Test]
 	[Category(UITestCategories.WebView)]
