@@ -38,8 +38,6 @@ public class CollectionView_DynamicChangesFeatureTests : _GalleryUITest
 		App.WaitForElement("Template 2 - Orange");
 	}
 
-#if TEST_FAILS_ON_ANDROID
-	//Dynamic Updates to CollectionView Header/Footer and Templates Are Not Displayed Issue Link: https://github.com/dotnet/maui/issues/28676
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 2)]
 	public void ValidateDynamicHeaderStringDisplayed()
@@ -147,7 +145,6 @@ public class CollectionView_DynamicChangesFeatureTests : _GalleryUITest
 		App.Tap("FooterTemplateButton");
 		App.WaitForElement("Footer Template2");
 	}
-#endif
 
 	[Test]
 	[ShardedTestCategory(UITestCategories.CollectionView, shard: 2)]

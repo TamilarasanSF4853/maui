@@ -1107,7 +1107,6 @@ public class EditorFeatureTests : _GalleryUITest
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //related issue link: https://github.com/dotnet/maui/issues/34611
 	[Test, Order(65)]
 	public void VerifyEditorBackgroundColorResetToNone()
 	{
@@ -1127,7 +1126,6 @@ public class EditorFeatureTests : _GalleryUITest
 		App.WaitForElement("TestEditor");
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
-#endif
 
 	/// <summary>
 	/// Helper method to handle keyboard visibility and take a screenshot with appropriate cropping

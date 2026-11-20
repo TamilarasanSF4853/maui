@@ -835,7 +835,7 @@ public class ClipFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/34114
+#if TEST_FAILS_ON_WINDOWS // Issue: https://github.com/dotnet/maui/issues/34114
 
 	[Test, Order(40)]
 	[Category(UITestCategories.ViewBaseTests)]

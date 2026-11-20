@@ -92,8 +92,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 		VerifyScreenshotWithPlatformCropping();
 	}
 
-#if TEST_FAILS_ON_ANDROID // Issue Link - https://github.com/dotnet/maui/issues/30367
-
 	[Test, Order(5)]
 	[Category(UITestCategories.SearchBar)]
 	public void SearchBar_SetFlowDirection_VerifyVisualState()
@@ -109,9 +107,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 		App.EnterText("SearchBar", "Search Text");
 		VerifyScreenshotWithPlatformCropping();
 	}
-#endif
-
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30368
 
 	[Test, Order(6)]
 	[Category(UITestCategories.SearchBar)]
@@ -199,7 +194,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 		App.EnterText("SearchBar", "Search Text");
 		VerifyScreenshotWithPlatformCropping();
 	}
-#endif
 
 	[Test, Order(11)]
 	[Category(UITestCategories.SearchBar)]
@@ -473,8 +467,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 		Assert.That(textLength, Is.EqualTo(10));
 	}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30366
-
 	[Test, Order(26)]
 	[Category(UITestCategories.SearchBar)]
 	public void SearchBar_SetPlaceholderAndCharacterSpacing_VerifyVisualState()
@@ -491,7 +483,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 		App.WaitForElementTillPageNavigationSettled("SearchBar");
 		VerifyScreenshotWithPlatformCropping();
 	}
-#endif
 
 	[Test, Order(27)]
 	[Category(UITestCategories.SearchBar)]
@@ -581,8 +572,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30366
-
 	[Test, Order(32)]
 	[Category(UITestCategories.SearchBar)]
 	public void SearchBar_SetTextAndCharacterSpacing_VerifyVisualState()
@@ -599,7 +588,6 @@ public class SearchBarFeatureTests : _GalleryUITest
 		App.EnterText("SearchBar", "SearchText");
 		VerifyScreenshotWithPlatformCropping();
 	}
-#endif
 
 	[Test, Order(33)]
 	[Category(UITestCategories.SearchBar)]

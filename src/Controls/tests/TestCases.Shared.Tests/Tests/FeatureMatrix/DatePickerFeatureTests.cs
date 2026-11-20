@@ -15,7 +15,6 @@ public class DatePickerFeatureTests : _GalleryUITest
 	{
 	}
 
-#if TEST_FAILS_ON_IOS //Issue Link: https://github.com/dotnet/maui/issues/31167
 	[Test, Order(1)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_InitialState_VerifyVisualState()
@@ -82,9 +81,8 @@ public class DatePickerFeatureTests : _GalleryUITest
 #endif
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Links - https://github.com/dotnet/maui/issues/31167
+#if TEST_FAILS_ON_CATALYST // Issue Links - https://github.com/dotnet/maui/issues/31167
 	[Test, Order(4)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetCharacterSpacingAndDate_VerifyVisualState()
@@ -117,7 +115,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/23793, https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
 	[Test, Order(6)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetDateAndFormat_VerifyVisualState()
@@ -141,7 +139,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Links -https://github.com/dotnet/maui/issues/20904, https://github.com/dotnet/maui/issues/31167
+#if TEST_FAILS_ON_CATALYST // Issue Links -https://github.com/dotnet/maui/issues/20904
 	[Test, Order(7)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetDateAndTextColor_VerifyVisualState()
@@ -157,7 +155,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Links - https://github.com/dotnet/maui/issues/30065
+#if TEST_FAILS_ON_CATALYST // Issue Links - https://github.com/dotnet/maui/issues/30065
 	[Test, Order(8)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetDateAndFlowDirection_VerifyVisualState()
@@ -173,7 +171,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link: https://github.com/dotnet/maui/issues/31167
+#if TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/31167
 	[Test, Order(9)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetFontAttributesAndFontFamily_VerifyVisualState()
@@ -225,7 +223,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/23793, https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
 	[Test, Order(11)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetFontAttributesAndFormat_VerifyVisualState()
@@ -246,7 +244,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/23793, https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
 	[Test, Order(13)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetFontFamilyAndFormat_VerifyVisualState()
@@ -267,7 +265,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/23793, https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/29099, https://github.com/dotnet/maui/issues/30011
 	[Test, Order(14)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetFontSizeAndFormat_VerifyVisualState()
@@ -291,7 +289,6 @@ public class DatePickerFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_IOS //Issue Link: https://github.com/dotnet/maui/issues/31167
 	[Test, Order(15)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetDateAndIsEnabled_VerifyVisualState()
@@ -307,7 +304,6 @@ public class DatePickerFeatureTests : _GalleryUITest
 		App.Tap("DatePickerControl");
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 
 	[Test, Order(16)]
 	[Category(UITestCategories.DatePicker)]
@@ -323,7 +319,7 @@ public class DatePickerFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS// Issue Links - https://github.com/dotnet/maui/issues/29812, https://github.com/dotnet/maui/issues/31167
+#if TEST_FAILS_ON_WINDOWS // Issue Links - https://github.com/dotnet/maui/issues/29812
 	[Test, Order(17)]
 	[Category(UITestCategories.DatePicker)]
 	public void DatePicker_SetDateAndShadowOpacity_VerifyVisualState()

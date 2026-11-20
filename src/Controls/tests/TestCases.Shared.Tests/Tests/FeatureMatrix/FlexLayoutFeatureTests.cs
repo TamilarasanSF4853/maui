@@ -214,7 +214,7 @@ public class FlexLayoutFeatureTests : _GalleryUITest
         VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
     }
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/31565
+#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/31565
 
     [Test, Order(13)]
     public void FlexLayout_SetWrapReverseAlignContentSpaceAround()

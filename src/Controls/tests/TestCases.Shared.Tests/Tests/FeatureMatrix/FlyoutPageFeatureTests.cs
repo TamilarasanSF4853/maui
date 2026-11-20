@@ -42,7 +42,7 @@ public class FlyoutPageFeatureTests : _GalleryUITest
 		Assert.That(App.FindElement("NavigatedFromLabel").GetText(), Is.EqualTo("NavigatedFrom: Detail 1"));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/31374, https://github.com/dotnet/maui/issues/31372
+#if TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/31372
 	[Test, Order(2)]
 	[Category(UITestCategories.FlyoutPage)]
 	public void VerifyFlyoutPage_IsPresented()
@@ -173,7 +173,6 @@ public class FlyoutPageFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link: https://github.com/dotnet/maui/issues/26726
 	[Test, Order(7)]
 	[Category(UITestCategories.FlyoutPage)]
 	public void VerifyFlyoutPage_IsFlowDirectionRTL()
@@ -187,7 +186,7 @@ public class FlyoutPageFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link:  https://github.com/dotnet/maui/issues/31374, https://github.com/dotnet/maui/issues/31372
+#if TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/31372
 	[Test, Order(8)]
 	[Category(UITestCategories.FlyoutPage)]
 	public void VerifyFlyoutPage_IsFlowDirectionRTLWithIsPresented()
@@ -203,9 +202,8 @@ public class FlyoutPageFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 #endif
-#endif
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS //  Orientation not supported in Catalyst and Windows , Android Issue Link: https://github.com/dotnet/maui/issues/31374
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS //  Orientation not supported in Catalyst and Windows
 	[Test, Order(9)]
 	[Category(UITestCategories.FlyoutPage)]
 	public void VerifyFlyoutPage_IsPresented_OrientationLandscape()
@@ -340,7 +338,7 @@ public class FlyoutPageFeatureTests : _GalleryUITest
 	}
 #endif
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/31390, https://github.com/dotnet/maui/issues/31374
+#if TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/31374
 	[Test, Order(18)]
 	[Category(UITestCategories.FlyoutPage)]
 	public void VerifyFlyoutPage_FlyoutLayoutBehaviorPopover_IsPresented()

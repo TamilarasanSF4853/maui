@@ -96,7 +96,7 @@ public class SwitchFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/30046, https://github.com/dotnet/maui/issues/29812
+#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/29812
 	[Test]
 	[Order(7)]
 	public void Switch_SetShadowAndToggled_VerifyVisualState()
@@ -271,7 +271,7 @@ public class SwitchFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS //For more information: // Issue Link: https://github.com/dotnet/maui/issues/19883
+#if TEST_FAILS_ON_WINDOWS //For more information: // Issue Link: https://github.com/dotnet/maui/issues/19883
 	[Test]
 	[Order(17)]
 	public void Switch_SetOnColorAndThumbColor_VerifyVisualState()

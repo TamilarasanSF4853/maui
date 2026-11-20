@@ -653,7 +653,6 @@ public class BorderFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // For more information, see: https://github.com/dotnet/maui/issues/29898
 	[Test]
 	[Order(33)]
 	public void Border_StrokeDashArray_Reset()
@@ -679,6 +678,5 @@ public class BorderFeatureTests : _GalleryUITest
 
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 
 }

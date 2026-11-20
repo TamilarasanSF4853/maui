@@ -247,7 +247,6 @@ public class CheckBoxFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Related Issue: https://github.com/dotnet/maui/issues/34278
 	[Test, Order(18)]
 	public void CheckBox_VerifyColorAfterReset()
 	{
@@ -260,6 +259,5 @@ public class CheckBoxFeatureTests : _GalleryUITest
 		App.WaitForElement(CheckBoxControl);
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 }
 

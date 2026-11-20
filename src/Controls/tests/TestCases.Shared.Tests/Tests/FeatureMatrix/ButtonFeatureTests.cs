@@ -35,7 +35,6 @@ public class ButtonFeatureTests : _GalleryUITest
 		Assert.That(App.FindElement("ButtonControl").GetText(), Is.EqualTo("Command Executed with Parameter"));
 	}
 
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //CharacterSpacingEntry property not working on iOS and Catalyst, Issue: https://github.com/dotnet/maui/issues/21488
 	[Test, Order(2)]
 	public void VerifyButton_CharacterSpacingAndText()
 	{
@@ -54,7 +53,6 @@ public class ButtonFeatureTests : _GalleryUITest
 		App.Tap("ClickedEventLabel");
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 
 	[Test, Order(3)]
 	public void VerifyButton_BorderWidthAndLineBreakMode()
