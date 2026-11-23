@@ -1158,7 +1158,6 @@ public class ScrollViewFeatureTests : _GalleryUITest
 #endif
 #endif
 
-#if TEST_FAILS_ON_ANDROID // Issue Link: https://github.com/dotnet/maui/issues/30081
 	[Test]
 	[Category(UITestCategories.ScrollView)]
 	public void VerifyScrollViewWithRTLWhenOrientationBoth()
@@ -1178,9 +1177,8 @@ public class ScrollViewFeatureTests : _GalleryUITest
 		App.WaitForElement("ScrollViewControl");
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS// Issue Link for Android: https://github.com/dotnet/maui/issues/30081 and Issue Link For iOS: https://github.com/dotnet/maui/issues/30070
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS// Issue Link For iOS: https://github.com/dotnet/maui/issues/30070
 	[Test]
 	[Category(UITestCategories.ScrollView)]
 	public void VerifyScrollViewWithRTLWhenHorizontalOrientation()

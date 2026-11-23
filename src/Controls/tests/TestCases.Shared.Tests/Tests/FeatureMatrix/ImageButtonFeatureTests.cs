@@ -597,8 +597,6 @@ public class ImageButtonFeatureTests : _GalleryUITest
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
  
-
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS  // Issue Link: https://github.com/dotnet/maui/issues/36302
 	[Test, Order(36)]
 	[Category(UITestCategories.ImageButton)]
 	public void VerifyImageButtonWithBackgroundColorNone()
@@ -614,5 +612,4 @@ public class ImageButtonFeatureTests : _GalleryUITest
 		App.WaitForElement("ImageButtonControl");
 		VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 	}
-#endif
 }

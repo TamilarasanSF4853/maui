@@ -293,8 +293,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			// Screenshot: Title icon applied on current page
 			VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 		}
-
-#if TEST_FAILS_ON_ANDROID      //Issue Link: https://github.com/dotnet/maui/issues/31445                                                                
+                                   
 		[Test, Order(12)]
 		public void TitleIcon_AddingTwice_DoesNotDuplicate()
 		{
@@ -309,7 +308,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("TitleIconButton");
 			VerifyScreenshot(tolerance: 0.5, retryTimeout: TimeSpan.FromSeconds(2));
 		}
-#endif
 
 		[Test, Order(13)]
 		public void Combine_BarBackgroundColor_TextColor_IconColor_Visual()

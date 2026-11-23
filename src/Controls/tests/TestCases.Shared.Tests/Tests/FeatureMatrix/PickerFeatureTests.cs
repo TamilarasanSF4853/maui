@@ -203,8 +203,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			VerifyPickerScreenshot();
 		}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30463
-
 		[Test, Order(11)]
 		[Category(UITestCategories.Picker)]
 		public void Picker_SetFlowDirectionRTLAndTitle_VerifyFlowDirectionAndTitle()
@@ -221,7 +219,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			VerifyPickerScreenshot();
 		}
-#endif
 
 		[Test, Order(12)]
 		[Category(UITestCategories.Picker)]
@@ -289,8 +286,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			VerifyPickerScreenshot();
 		}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30463
-
 		[Test, Order(16)]
 		[Category(UITestCategories.Picker)]
 		public void Picker_SetHorizontalTextAlignmentEndAndTitle_VerifyTitleAlignment()
@@ -307,7 +302,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			VerifyPickerScreenshot();
 		}
-#endif
 
 		[Test, Order(17)]
 		[Category(UITestCategories.Picker)]
@@ -327,8 +321,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			VerifyPickerScreenshot();
 		}
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30463
-
 		[Test, Order(18)]
 		[Category(UITestCategories.Picker)]
 		public void Picker_SetVerticalTextAlignmentEndAndTitle_VerifyTitleAlignment()
@@ -345,7 +337,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			VerifyPickerScreenshot();
 		}
-#endif
 
 #if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/29812
 
@@ -381,8 +372,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			VerifyPickerScreenshot();
 		}
-
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Issue Link - https://github.com/dotnet/maui/issues/30463
 
 		[Test, Order(21)]
 		[Category(UITestCategories.Picker)]
@@ -468,7 +457,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Picker");
 			VerifyPickerScreenshot();
 		}
-#endif
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/4818
 
