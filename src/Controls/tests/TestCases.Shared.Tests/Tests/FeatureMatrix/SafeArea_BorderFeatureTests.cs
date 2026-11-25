@@ -187,7 +187,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(4)]
-		[Description("Border SoftInput respects safe area on top/sides but bottom is edge-to-edge without keyboard")]
+		[Description("Border SoftInput avoids only the keyboard and remains edge-to-edge without keyboard")]
 		public void ValidateSafeAreaEdges_SoftInput_Border()
 		{
 			ClickBorderSafeAreaButton();
@@ -197,13 +197,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
-			// Portrait: top label Y should be ≈ insets.Top (SoftInput respects notch/safe area)
+			// Portrait: SoftInput ignores safe area at the top.
 			var topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"SoftInput: top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"SoftInput: top label Y ({topLabelRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			// Portrait: bottom label bottom edge should be ≈ screenHeight (edge-to-edge, no safe area applied)
 			var bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -528,13 +527,12 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
 			// ── Before keyboard ──
 			var topLabelBeforeRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelBeforeRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"Before keyboard - top label Y ({topLabelBeforeRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelBeforeRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"Before keyboard (SoftInput) - top label Y ({topLabelBeforeRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			var bottomLabelBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokePx).Within(_positionTolerance),
@@ -762,7 +760,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("SafeAreaNoneButton");
 			App.Tap("SafeAreaNoneButton");
 
-			var insets = GetSafeAreaInsets();
 			var (_, screenHeight) = GetScreenSize();
 
 			// ── Before keyboard (None) ──
@@ -798,8 +795,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With SoftInput, bottom should move up to keyboard top
 			var topLabelDuringSoftInputRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelDuringSoftInputRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			var bottomLabelDuringSoftInputRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY - BorderStrokePx).Within(_positionTolerance),
@@ -810,10 +807,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			// After keyboard (SoftInput): top at insets.Top, bottom at screenHeight (edge-to-edge without keyboard)
+			// After keyboard (SoftInput): top and bottom are edge-to-edge, allowing for the Border stroke.
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"After keyboard (SoftInput) - top label Y ({topLabelAfterRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - BorderStrokePx).Within(_positionTolerance),
@@ -948,8 +945,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// With SoftInput, bottom should move up to keyboard top
 			var topLabelDuringSoftInputRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelDuringSoftInputRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelDuringSoftInputRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"During keyboard (SoftInput) - top label Y ({topLabelDuringSoftInputRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			var bottomLabelDuringSoftInputRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelDuringSoftInputRect.Bottom, Is.EqualTo(keyboardY - BorderStrokePx).Within(_positionTolerance),
@@ -960,10 +957,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForKeyboardToHide();
 			Assert.That(App.IsKeyboardShown(), Is.False, "Keyboard should be hidden after dismissal");
 
-			// After keyboard (SoftInput): top at insets.Top, bottom at screenHeight (edge-to-edge without keyboard)
+			// After keyboard (SoftInput): top and bottom are edge-to-edge, allowing for the Border stroke.
 			var topLabelAfterRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelAfterRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"After keyboard - top label Y ({topLabelAfterRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelAfterRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"After keyboard (SoftInput) - top label Y ({topLabelAfterRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			var bottomLabelAfterRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomLabelAfterRect.Bottom), Is.EqualTo(screenHeight - BorderStrokePx).Within(_positionTolerance),
@@ -1046,8 +1043,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			Assert.That(App.FindElement("SafeAreaEdgesValueLabel").GetText(), Is.EqualTo("SoftInput"));
 
 			topLabelRect = App.WaitForElement("TopEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(topLabelRect.Y), Is.EqualTo(insets.Top + BorderStrokePx).Within(_positionTolerance),
-				$"SoftInput (keyboard open) - top label Y ({topLabelRect.Y}) should be equal to insets.Top ({insets.Top})");
+			Assert.That(topLabelRect.Y, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"SoftInput (keyboard open) - top label Y ({topLabelRect.Y}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			bottomLabelRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(bottomLabelRect.Bottom, Is.EqualTo(keyboardY - BorderStrokePx).Within(_positionTolerance),
@@ -1247,7 +1244,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(25)]
-		[Description("SoftInput: landscape left/right inset by safe area, bottom edge-to-edge")]
+		[Description("SoftInput: landscape left/right/bottom edge-to-edge without keyboard")]
 		public void ValidateOrientation_SoftInput_Landscape_Border()
 		{
 			ClickBorderSafeAreaButton();
@@ -1260,19 +1257,17 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
 
-			// Left: inset by safe area
+			// Left: edge-to-edge
 			var leftRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokePx).Within(_positionTolerance),
-				$"SoftInput: left X ({leftRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftRect.X, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"SoftInput: left X ({leftRect.X}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
-			// Right: inset by safe area (Android uses display cutout for right inset)
+			// Right: edge-to-edge
 			var rightRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightEdge = rightRect.X + rightRect.Width;
-			var expectedRight = GetLandscapeRightInset(insetsLandscape.Right, insetsLandscape.CutoutR);
-			Assert.That(Math.Abs(rightEdge), Is.EqualTo(screenWidth - expectedRight - BorderStrokePx).Within(_positionTolerance),
-				$"SoftInput: right edge ({rightEdge}) should be = screenWidth - expectedRight ({screenWidth - expectedRight})");
+			Assert.That(rightEdge, Is.EqualTo(screenWidth - BorderStrokePx).Within(_positionTolerance),
+				$"SoftInput: right edge ({rightEdge}) should equal screenWidth - BorderStrokePx ({screenWidth - BorderStrokePx}), ignoring safe area");
 
 			// Bottom: edge-to-edge (SoftInput doesn't avoid bottom without keyboard)
 			var bottomRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
@@ -1404,7 +1399,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 
 		[Test, Order(28)]
-		[Description("Landscape SoftInput: bottom moves up to keyboard, left/right stay inset")]
+		[Description("Landscape SoftInput: bottom moves up to keyboard, left/right stay edge-to-edge")]
 		public void ValidateKeyboard_SoftInput_Landscape_Border()
 		{
 			ClickBorderSafeAreaButton();
@@ -1418,17 +1413,16 @@ namespace Microsoft.Maui.TestCases.Tests
 			Thread.Sleep(1000);
 
 			var (screenWidth, screenHeight) = GetScreenSize();
-			var insetsLandscape = GetSafeAreaInsets();
 
 			// ── Before keyboard ──
 			var leftBeforeRect = App.WaitForElement("LeftEdgeIndicator").GetRect();
-			Assert.That(Math.Abs(leftBeforeRect.X), Is.EqualTo(insetsLandscape.Left + BorderStrokePx).Within(_positionTolerance),
-				$"Before keyboard - left X ({leftBeforeRect.X}) should be = insetsLandscape.Left ({insetsLandscape.Left})");
+			Assert.That(leftBeforeRect.X, Is.EqualTo(BorderStrokePx).Within(_positionTolerance),
+				$"Before keyboard (SoftInput) - left X ({leftBeforeRect.X}) should equal BorderStrokePx ({BorderStrokePx}), ignoring safe area");
 
 			var rightBeforeRect = App.WaitForElement("RightEdgeIndicator").GetRect();
 			var rightBeforeEdge = rightBeforeRect.X + rightBeforeRect.Width;
-			Assert.That(Math.Abs(rightBeforeEdge), Is.EqualTo(screenWidth - insetsLandscape.Right - BorderStrokePx).Within(_positionTolerance),
-				$"Before keyboard - right edge ({rightBeforeEdge}) should be = screenWidth - insetsLandscape.Right ({screenWidth - insetsLandscape.Right})");
+			Assert.That(rightBeforeEdge, Is.EqualTo(screenWidth - BorderStrokePx).Within(_positionTolerance),
+				$"Before keyboard (SoftInput) - right edge ({rightBeforeEdge}) should equal screenWidth - BorderStrokePx ({screenWidth - BorderStrokePx}), ignoring safe area");
 
 			var bottomBeforeRect = App.WaitForElement("BottomEdgeIndicator").GetRect();
 			Assert.That(Math.Abs(bottomBeforeRect.Bottom), Is.EqualTo(screenHeight - BorderStrokePx).Within(_positionTolerance),
