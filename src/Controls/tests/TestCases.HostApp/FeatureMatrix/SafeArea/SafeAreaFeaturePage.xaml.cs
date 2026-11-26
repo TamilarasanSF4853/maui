@@ -45,4 +45,9 @@ public partial class SafeAreaFeatureMainPage : ContentPage
   {
       Application.Current.Windows[0].Page = new SafeAreaScrollViewPage(_viewModel);
   }
+
+	private void OnFlexLayoutSafeAreaButtonClicked(object sender, EventArgs e)
+    {
+        Application.Current.Windows[0].Page = new SafeAreaFlexLayoutPage(_viewModel);
+    }
 }
